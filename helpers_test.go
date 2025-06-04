@@ -1,0 +1,36 @@
+package invgo_test
+
+import (
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"testing"
+
+	"github.com/Bay-Shore-Systems-Inc/invgo"
+	"github.com/stretchr/testify/assert"
+)
+
+func newTestClient(t *testing.T, server *httptest.Server, scopes ...invgo.ScopeType) *invgo.Client {
+	uri, err := url.Parse(server.URL)
+	assert.NoError(t, err)
+
+	return &invgo.Client{
+		APIURL:        uri,
+		HttpClient:    server.Client(),
+		CurrentScopes: scopes,
+	}
+}
+
+func newTestServer(t *testing.T, expectedMethod, expectedPath string, response any) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, r.Method, expectedMethod)
+		assert.Equal(t, expectedPath, r.URL.Path)
+
+		w.WriteHeader(http.StatusOK)
+		b, err := json.Marshal(&response)
+		assert.NoError(t, err)
+
+		w.Write(b)
+	}))
+}
