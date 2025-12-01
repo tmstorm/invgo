@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-// IncidentsResponse is used to map an incident returned from the Invgate API
+// Incident is used to map an incident returned from the Invgate API
 type Incident struct {
 	ID                    int                       `json:"id,omitempty"`
 	CategoryID            int                       `json:"category_id,omitempty"`
@@ -18,7 +18,7 @@ type Incident struct {
 	CreatorID             int                       `json:"creator_id,omitempty"`
 	SourceID              int                       `json:"source_id,omitempty"`
 	Attachments           []int                     `json:"attachments,omitempty"`
-	DateOcurred           int                       `json:"date_ocurred,omitempty"`
+	DateOcurred           int                       `json:"date_ocurred,omitempty"` // NOTE: The misspelling here is from the Invgate API
 	StatusID              int                       `json:"status_id,omitempty"`
 	ClosedAt              int                       `json:"closed_at,omitempty"`
 	SlaIncidentFirstReply string                    `json:"sla_incident_first_reply,omitempty"`
@@ -259,7 +259,7 @@ type IncidentPutParams struct {
 	CustomerID   int    `json:"customer_id,omitempty"`
 }
 
-// Put is used to update an incident using the given changes and ID is requried
+// Put is used to update an incident using the given changes and ID is required
 // See https://releases.invgate.com/service-desk/api/#incident-PUT
 // NOTE: Invgate documentation says it returns and array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
