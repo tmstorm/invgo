@@ -1,4 +1,6 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tmstorm/invgo)
+[![Go Reference](https://pkg.go.dev/badge/github.com/tmstorm/invgo.svg)](https://pkg.go.dev/github.com/tmstorm/invgo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tmstorm/invgo)](https://goreportcard.com/report/github.com/tmstorm/invgo)
 [![CI Pipeline](https://github.com/tmstorm/invgo/actions/workflows/ci.yaml/badge.svg)](https://github.com/tmstorm/invgo/actions/workflows/ci.yaml)
 # Invgo
 
