@@ -190,9 +190,8 @@ func (c *Client) BreakingNewsAll() ([]BreakingNews, error) {
 	var d []BreakingNews
 	err = json.Unmarshal(resp, &d)
 	if err != nil {
-		err = nil
 		var s BreakingNews
-		err = json.Unmarshal(resp, &s)
+		err := json.Unmarshal(resp, &s)
 		if err != nil {
 			return nil, err
 		}

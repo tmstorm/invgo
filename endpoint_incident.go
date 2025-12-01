@@ -21,7 +21,7 @@ type Incident struct {
 	DateOcurred           int                       `json:"date_ocurred,omitempty"` // NOTE: The misspelling here is from the Invgate API
 	StatusID              int                       `json:"status_id,omitempty"`
 	ClosedAt              int                       `json:"closed_at,omitempty"`
-	SlaIncidentFirstReply string                    `json:"sla_incident_first_reply,omitempty"`
+	SLAIncidentFirstReply string                    `json:"sla_incident_first_reply,omitempty"`
 	Comments              []IncidentCommentResponse `json:"comments,omitempty"`
 	TypeID                int                       `json:"type_id,omitempty"`
 	LastUpdate            int                       `json:"last_update,omitempty"`
@@ -34,7 +34,7 @@ type Incident struct {
 	PrettyID              string                    `json:"pretty_id,omitempty"`
 	PriorityID            int                       `json:"priority_id,omitempty"`
 	SolvedAt              int                       `json:"solved_at,omitempty"`
-	SlaIncidentResolution string                    `json:"sla_incident_resolution,omitempty"`
+	SLAIncidentResolution string                    `json:"sla_incident_resolution,omitempty"`
 }
 
 // IncidentCommentResponse is used to map an comment returned from the Invgate API
