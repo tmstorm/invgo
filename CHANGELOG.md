@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.3](https://github.com/Bay-Shore-Systems-Inc/invgo/compare/v0.1.2...v0.1.3) (2025-12-01)
+
+
+### 📝 Documentation
+
+* spelling and grammar ([9c23c5c](https://github.com/Bay-Shore-Systems-Inc/invgo/commit/9c23c5c2a8030847ca563b1e0bf9c54a058c88b8))
+
+
+### 🧹 Maintenance
+
+* **ci:** update go test versions ([068ac59](https://github.com/Bay-Shore-Systems-Inc/invgo/commit/068ac590ed6add9e201a290d49925926110bca88))
+* set min go version to base 1.24 ([af27f39](https://github.com/Bay-Shore-Systems-Inc/invgo/commit/af27f39366df84af4fc1aee5ec3c109b02b482f0))
+
 ## [0.1.2](https://github.com/Bay-Shore-Systems-Inc/invgo/compare/v0.1.1...v0.1.2) (2025-11-24)
 
 
