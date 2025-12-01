@@ -20,7 +20,7 @@ A Go module for integrating with the Invgate API, supporting per-instance authen
 ## Install
 
 ```bash
-go get github.com/Bay-Shore-Systems-Inc/invgo
+go get github.com/tmstorm/invgo
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ go get github.com/Bay-Shore-Systems-Inc/invgo
 package main
 
 import (
-        "github.com/Bay-Shore-Systems-Inc/invgo"
+        "github.com/tmstorm/invgo"
         "log"
 )
 
@@ -90,7 +90,7 @@ Scopes are defined in `invgo.ScopeType` constants. All supported scope types can
 >However if an endpoint only accepts one method I have shortened the scope name to indicate that it only supports one method.
 
 ```go
-import "github.com/Bay-Shore-Systems-Inc/invgo"
+import "github.com/tmstorm/invgo"
 
 main() {
    scopes := []invgo.ScopeType{

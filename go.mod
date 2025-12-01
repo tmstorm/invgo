@@ -1,4 +1,4 @@
-module github.com/Bay-Shore-Systems-Inc/invgo
+module github.com/tmstorm/invgo
 
 go 1.24
 

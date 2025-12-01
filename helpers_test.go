@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/Bay-Shore-Systems-Inc/invgo"
 	"github.com/stretchr/testify/assert"
+	"github.com/tmstorm/invgo"
 )
 
 func newTestClient(t *testing.T, server *httptest.Server, scopes ...invgo.ScopeType) *invgo.Client {

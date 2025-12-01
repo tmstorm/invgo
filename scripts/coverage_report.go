@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/Bay-Shore-Systems-Inc/invgo"
+	"github.com/tmstorm/invgo"
 	"golang.org/x/net/html"
 )
 

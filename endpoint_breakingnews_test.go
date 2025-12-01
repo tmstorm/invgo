@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/Bay-Shore-Systems-Inc/invgo"
 	"github.com/brianvoe/gofakeit/v7"
 	"github.com/stretchr/testify/assert"
+	"github.com/tmstorm/invgo"
 )
 
 func TestBreakingNewsGet(t *testing.T) {
