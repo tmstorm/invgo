@@ -1,3 +1,5 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tmstorm/invgo)
+[![CI Pipeline](https://github.com/tmstorm/invgo/actions/workflows/ci.yaml/badge.svg)](https://github.com/tmstorm/invgo/actions/workflows/ci.yaml)
 # Invgo
 
 A Go module for integrating with the Invgate API, supporting per-instance authentication and API access.
