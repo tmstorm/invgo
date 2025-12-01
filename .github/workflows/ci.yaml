@@ -1,6 +1,3 @@
-# This CI Pipeline should be in all company repos
-# It will need to be changed to match the requirements
-# of your repo.
 name: CI Pipeline
 
 permissions:
@@ -15,21 +12,15 @@ on:
 jobs:
 
   test:
-    # Use this if using Go to test more than one version
-    # if not change it to match the language and tests needed
     name: Run Tests (Go ${{ matrix.go }}) and build
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        go: [1.23, 1.24] # Change this to the go versions you want to test
+        go: [1.24, 1.25]
 
     steps:
       - uses: actions/checkout@v4
-
-      ###############################
-      ## Add any dependencies here ##
-      ###############################
 
       - name: Set up Go
         uses: actions/setup-go@v5
