@@ -1,6 +1,6 @@
 module github.com/Bay-Shore-Systems-Inc/invgo
 
-go 1.24.2
+go 1.24
 
 require (
 	github.com/brianvoe/gofakeit/v7 v7.2.1
