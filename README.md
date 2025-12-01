@@ -11,11 +11,11 @@ A Go module for integrating with the Invgate API, supporting per-instance authen
 * 🔐 Handle authentication securely
 * 📦 Simplified API client for Invgate endpoints
 
-[Install](#install)
-[Usage](#usage)
-[Configure](#configure)
-    [Scopes](#scopes)
-[Contributing](#contributing)
+- [Install](#install)
+- [Usage](#usage)
+- [Configure](#configure)
+    - [Scopes](#scopes)
+- [Contributing](#contributing)
 
 ## Install
 
@@ -83,9 +83,11 @@ api.{version}.{endpoint}.{subresource}:{method}
 
 Example: `api.v1.breakingnews.all:get`
 
-Scopes are defined in `invgo.ScopeType` constants. All supported scope types can be found in `scopes.go`.
-The Ingvate does not allow a generic 'all' for an endpoints methods, so you must add the corresponding scope for every method you intend on using for that endpoint.
-However if an endpoint only accepts on method I have shortened the scope name to indicate that it only supports one method.
+Scopes are defined in `invgo.ScopeType` constants. All supported scope types can be found in `scopes.go`. 
+
+>[!NOTE]
+>Ingvate does not allow a generic 'all' for an endpoints methods, so you must add the corresponding scope for every method you intend on using for that endpoint.
+>However if an endpoint only accepts one method I have shortened the scope name to indicate that it only supports one method.
 
 ```go
 import "github.com/Bay-Shore-Systems-Inc/invgo"
@@ -93,7 +95,7 @@ import "github.com/Bay-Shore-Systems-Inc/invgo"
 main() {
    scopes := []invgo.ScopeType{
         invgo.BreakingNewsAll, // BreakingNewsAll only supports the GET method
-        invgo.BreakingNewsGet, // BreakingNews is its own endpoint the supports GET, POST, and PUT
+        invgo.BreakingNewsGet, // BreakingNews is its own endpoint that supports GET, POST, and PUT
         invgo.BreakingNewsPost,
         invgo.BreakingNewsPut,
     }
