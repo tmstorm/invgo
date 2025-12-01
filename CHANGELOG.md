@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4](https://github.com/tmstorm/invgo/compare/v0.1.3...v0.1.4) (2025-12-01)
+
+
+### 🧹 Maintenance
+
+* add license and badges ([6ec7e87](https://github.com/tmstorm/invgo/commit/6ec7e87b2b016361b29199d51c7a9777224a726a))
+* change repo refs ([29adcac](https://github.com/tmstorm/invgo/commit/29adcac7e5f6098bf423db299dea5005837d31a9))
+
 ## [0.1.3](https://github.com/tmstorm/invgo/compare/v0.1.2...v0.1.3) (2025-12-01)
 
 
