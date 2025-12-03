@@ -115,3 +115,4 @@ If you implement an endpoint please add it to the coverage.go and run the covera
 go run ./scripts/coverage_report.go
 
 ```
+When adding new structs for endpoint params the StructToQuery util uses the `url:"field_name"` tag to create them. These must be defined in the structs. If there is a required param then adding `required` to the tag will ensure that it is caught by the util if not provided.
