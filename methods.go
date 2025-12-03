@@ -57,7 +57,7 @@ func methodConstructor(methodType string, m *MethodCall, body io.Reader) ([]byte
 		return nil, err
 	}
 
-	resp, err := m.client.HttpClient.Do(req)
+	resp, err := m.client.HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
 	}

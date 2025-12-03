@@ -17,7 +17,7 @@ func newTestClient(t *testing.T, server *httptest.Server, scopes ...invgo.ScopeT
 
 	return &invgo.Client{
 		APIURL:        uri,
-		HttpClient:    server.Client(),
+		HTTPClient:    server.Client(),
 		CurrentScopes: scopes,
 	}
 }

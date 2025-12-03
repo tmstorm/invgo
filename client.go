@@ -1,3 +1,4 @@
+// Package invgo
 package invgo
 
 import (
@@ -22,8 +23,8 @@ type (
 
 	// Client is used to build a connection with an Invgate api instance
 	Client struct {
-		// HttpClient is used to access the underlying *http.Client
-		HttpClient *http.Client
+		// HTTPClient is used to access the underlying *http.Client
+		HTTPClient *http.Client
 		// CurrentScopes are used to keep track of the allowed scopes when making requests
 		CurrentScopes []ScopeType
 		// APIURL is used to se the BaseURL URL for connecting to an API Invgate instance
@@ -55,15 +56,15 @@ func New(cfg *Invgate) (*Client, error) {
 	}
 
 	// Parse base url given to ensure it is not malformed
-	baseUrl := strings.TrimSuffix(cfg.BaseURL, "/")
-	apiURL, err := url.Parse(baseUrl + invgateAPIPath)
+	baseURL := strings.TrimSuffix(cfg.BaseURL, "/")
+	apiURL, err := url.Parse(baseURL + invgateAPIPath)
 	if err != nil {
 		return nil, err
 	}
 
 	// Create a client for future use
 	client := &Client{
-		HttpClient:    cred.Client(context.Background()),
+		HTTPClient:    cred.Client(context.Background()),
 		CurrentScopes: cfg.Scopes,
 		APIURL:        apiURL,
 	}
