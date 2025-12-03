@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.1.5](https://github.com/tmstorm/invgo/compare/v0.1.4...v0.1.5) (2025-12-03)
+
+
+### 🐛 Bug Fixes
+
+* misused err assignment and fix naming ([74a52db](https://github.com/tmstorm/invgo/commit/74a52db4f7f75fadb210305849b8fd998e9815bc))
+
+
+### 📝 Documentation
+
+* add clarity from refactor ([d6a9a48](https://github.com/tmstorm/invgo/commit/d6a9a48caa8561e3c9d061e1c0820f8ce6b97b62))
+* add go pkg badges ([0895e70](https://github.com/tmstorm/invgo/commit/0895e70caff4180640c6f01d9f2c8a5cd17acc50))
+
+
+### 🔨 Refactoring
+
+* use reflect to create query params ([1b07adb](https://github.com/tmstorm/invgo/commit/1b07adbe6b783a3982d6bd7c21f008c1acfdb8ca))
+
+
+### 🧹 Maintenance
+
+* correct comments and spelling ([1a75562](https://github.com/tmstorm/invgo/commit/1a755624c461b187044e472db844503144a2afab))
+
 ## [0.1.4](https://github.com/tmstorm/invgo/compare/v0.1.3...v0.1.4) (2025-12-01)
 
 
