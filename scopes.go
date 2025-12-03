@@ -3,6 +3,7 @@ package invgo
 import (
 	"errors"
 	"fmt"
+	"slices"
 )
 
 // Scopes defines all scopes for the Invgate API.
@@ -104,7 +105,7 @@ var ServiceDeskVersionGet ScopeType = ScopeType(base + ".sd.version" + methods.G
 // for creating the initial Invgate connection
 func createScopes(scopes []ScopeType) []string {
 	strings := []string{}
-	for i := 0; i < len(scopes); i++ {
+	for i := range len(scopes) {
 		scope := string(scopes[i])
 		strings = append(strings, scope)
 	}
@@ -122,11 +123,9 @@ func checkScopes(scopes []ScopeType, requestScopes ...ScopeType) error {
 		return errors.New("current scopes were not provided")
 	}
 
-	for i := range scopes {
-		for j := range requestScopes {
-			if scopes[i] == requestScopes[j] {
-				return nil
-			}
+	for _, v := range scopes {
+		if ok := slices.Contains(requestScopes, v); ok {
+			return nil
 		}
 	}
 	return fmt.Errorf("the scope for the current request has not been acquired for the current client: %s", requestScopes)
