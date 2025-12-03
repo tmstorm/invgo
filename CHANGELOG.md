@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/tmstorm/invgo/compare/v0.1.5...v0.1.6) (2025-12-03)
+
+
+### 🐛 Bug Fixes
+
+* **utils:** nested structs were not being parsed causing malformed calls ([65897d7](https://github.com/tmstorm/invgo/commit/65897d7d07d38efadf6cd43e2c5721ed95a47733))
+
 ## [0.1.5](https://github.com/tmstorm/invgo/compare/v0.1.4...v0.1.5) (2025-12-03)
 
 
