@@ -2,7 +2,8 @@ package invgo
 
 import (
 	"encoding/json"
-	"strconv"
+
+	"github.com/tmstorm/invgo/internal/utils"
 )
 
 // HelpDesksMethods is used to call methods for HelpDesks
@@ -28,22 +29,25 @@ type HelpDesksGetResponse struct {
 	ID           int    `json:"id,omitempty"`
 }
 
+type HelpDeskGetParams struct {
+	ID             int    `url:"id"`
+	Name           string `url:"name"`
+	IncludeDeleted bool   `url:"include_deleted"`
+}
+
 // Get returns all active help desks, or one in particular
 // See https://releases.invgate.com/service-desk/api/#helpdesks-GET
-func (h *HelpDesksMethods) Get(id int, name string, includeDeleted bool) ([]HelpDesksGetResponse, error) {
+// If an ID of 0 is passed all help desks will be returned
+func (h *HelpDesksMethods) Get(p HelpDeskGetParams) ([]HelpDesksGetResponse, error) {
 	err := checkScopes(h.client.CurrentScopes, HelpDesksGet)
 	if err != nil {
 		return []HelpDesksGetResponse{}, err
 	}
 
-	q := h.Endpoint.Query()
-	if name != "" {
-		q.Add("name", name)
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return nil, err
 	}
-	if id > 0 {
-		q.Add("id", strconv.Itoa(id))
-	}
-	q.Add("include_deleted", strconv.FormatBool(includeDeleted))
 	h.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*h)
@@ -53,7 +57,7 @@ func (h *HelpDesksMethods) Get(id int, name string, includeDeleted bool) ([]Help
 	}
 
 	var d []HelpDesksGetResponse
-	if name != "" || id > 0 {
+	if p.Name != "" || p.ID > 0 {
 		var calledDesk HelpDesksGetResponse
 		err = json.Unmarshal(resp, &calledDesk)
 		if err != nil {

@@ -2,9 +2,9 @@ package invgo
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
-	"strconv"
+
+	"github.com/tmstorm/invgo/internal/utils"
 )
 
 // BreakingNewsMethods is used to call methods for BreakingNews
@@ -23,84 +23,95 @@ func (c *Client) BreakingNews() *BreakingNewsMethods {
 	}
 }
 
-// BreakingNews is used to construct BreakingNews news posts
-// This is used to get a post, create new, or modify existing posts
-type BreakingNews struct {
-	CreatedByID         int           `json:"created_by_id,omitempty"`
-	AffectedHelpDeskIDs []int         `json:"affected_helpdesk_ids,omitempty"`
-	ResolutionTime      int           `json:"resolution_time,omitempty"`
-	Body                template.HTML `json:"body,omitempty"`
-	TypeID              int           `json:"type_id,omitempty"`
-	StatusID            int           `json:"status_id,omitempty"`
-	CreatedAt           int           `json:"created_at,omitempty"`
-	AffectedGroupIDs    []int         `json:"affected_group_ids,omitempty"`
-	Title               string        `json:"title,omitempty"`
-	ID                  int           `json:"id,omitempty"`
-}
+type (
+	// BreakingNewsBase is used as a base to map BreakingNews requests and responses.
+	// Invgate has different requirements for each call type. This implements the fields they all share
+	// and each request must extend this struct as needed.
+	BreakingNewsBase struct {
+		CreatedByID         int   `json:"created_by_id,omitempty" url:"created_by_id"`
+		AffectedHelpDeskIDs []int `json:"affected_helpdesk_ids,omitempty" url:"affected_helpdesk_ids"`
+		ResolutionTime      int   `json:"resolution_time,omitempty" url:"resolution_time"`
+		StatusID            int   `json:"status_id,omitempty" url:"status_id"`
+		CreatedAt           int   `json:"created_at,omitempty" url:"created_at"`
+		AffectedGroupIDs    []int `json:"affected_group_ids,omitempty" url:"affected_group_ids"`
+	}
+
+	// BreakingNewsGetResponse extends BreakingNewsBase for GET responses
+	BreakingNewsGetResponse struct {
+		ID     int           `json:"id,omitempty"`
+		TypeID int           `json:"type_id,omitempty"`
+		Title  string        `json:"title,omitempty"`
+		Body   template.HTML `json:"body,omitempty"`
+		BreakingNewsBase
+	}
+
+	// BreakingNewsGetParams extends BreakingNewsBase for GET requests
+	BreakingNewsGetParams struct {
+		ID         int    `url:"id,required"`
+		DateFormat string `url:"date_format"`
+		BreakingNewsBase
+	}
+)
 
 // Get for BreakingNews
 // See https://releases.invgate.com/service-desk/api/#breakingnews-GET
-func (b *BreakingNewsMethods) Get(id int, dateFormat string) (BreakingNews, error) {
+func (b *BreakingNewsMethods) Get(p BreakingNewsGetParams) (BreakingNewsGetResponse, error) {
+	news := BreakingNewsGetResponse{}
 	err := checkScopes(b.client.CurrentScopes, BreakingNewsGet)
 	if err != nil {
-		return BreakingNews{}, err
+		return news, err
 	}
 
-	q := b.Endpoint.Query()
-	q.Add("id", strconv.Itoa(id))
-	if dateFormat != "" {
-		q.Add("date_format", dateFormat)
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return BreakingNewsGetResponse{}, err
 	}
 	b.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*b)
 	resp, err := m.get()
 	if err != nil {
-		return BreakingNews{}, err
+		return news, err
 	}
 
-	var d BreakingNews
-	err = json.Unmarshal(resp, &d)
+	err = json.Unmarshal(resp, &news)
 	if err != nil {
-		return BreakingNews{}, err
+		return news, err
 	}
-	return d, nil
+	return news, nil
 }
 
-// BreakingNewsInfoResponse is used to map responses from Post and Put requests
-type BreakingNewsInfoResponse struct {
-	Info   string `json:"info,omitempty"`
-	ID     string `json:"id,omitempty"`
-	Status string `json:"status,omitempty"`
-}
+type (
+	// BreakingNewsPostParams extends BreakingNewsBase for POST requests
+	BreakingNewsPostParams struct {
+		TypeID    int           `json:"type_id,omitempty" url:"type_id,required"`
+		CreatorID int           `json:"creator_id" url:"creator_id"`
+		Title     string        `json:"title,omitempty" url:"title,required"`
+		Body      template.HTML `json:"body,omitempty" url:"body,required"`
+		BreakingNewsBase
+	}
+
+	// BreakingNewsInfoResponse is used to map responses from POST and PUT requests
+	BreakingNewsInfoResponse struct {
+		Info   string `json:"info,omitempty"`
+		ID     string `json:"id,omitempty"`
+		Status string `json:"status,omitempty"`
+	}
+)
 
 // Post creates breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnews-POST
-func (b *BreakingNewsMethods) Post(p BreakingNews) (BreakingNewsInfoResponse, error) {
+func (b *BreakingNewsMethods) Post(p BreakingNewsPostParams) (BreakingNewsInfoResponse, error) {
 	err := checkScopes(b.client.CurrentScopes, BreakingNewsPost)
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
 
-	q := b.Endpoint.Query()
-	for i := range p.AffectedHelpDeskIDs {
-		affected := fmt.Sprintf("affected_helpdesk_ids[%d]", i)
-		q.Add(affected, strconv.Itoa(p.AffectedHelpDeskIDs[i]))
-	}
-	if p.ResolutionTime > 0 {
-		q.Add("resolution_time", strconv.Itoa(p.ResolutionTime))
-	}
-	if p.CreatedByID > 0 {
-		q.Add("creator_id", strconv.Itoa(p.CreatedByID))
-	}
-	for i := range p.AffectedGroupIDs {
-		affected := fmt.Sprintf("affected_group_ids[%d]", i)
-		q.Add(affected, strconv.Itoa(p.AffectedGroupIDs[i]))
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return BreakingNewsInfoResponse{}, err
 	}
 
-	q.Add("body", string(p.Body))
-	q.Add("type_id", strconv.Itoa(p.TypeID))
-	q.Add("title", p.Title)
 	b.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*b)
@@ -118,40 +129,28 @@ func (b *BreakingNewsMethods) Post(p BreakingNews) (BreakingNewsInfoResponse, er
 	return d, nil
 }
 
+// BreakingNewsPutParams extends BreakingNewsBase for PUT requests
+type BreakingNewsPutParams struct {
+	ID     int           `json:"id,omitempty" url:"id,required"`
+	TypeID int           `json:"type_id,omitempty" url:"type_id"`
+	Title  string        `json:"title,omitempty" url:"title"`
+	Body   template.HTML `json:"body,omitempty" url:"body"`
+	BreakingNewsBase
+}
+
 // Put modifies a set of breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnews-PUT
-func (b *BreakingNewsMethods) Put(id int, CreatorID int, p BreakingNews) (BreakingNewsInfoResponse, error) {
+func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResponse, error) {
 	err := checkScopes(b.client.CurrentScopes, BreakingNewsPut)
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
 
-	q := b.Endpoint.Query()
-	for i := range p.AffectedHelpDeskIDs {
-		affected := fmt.Sprintf("affected_helpdesk_ids[%d]", i)
-		q.Add(affected, strconv.Itoa(p.AffectedHelpDeskIDs[i]))
-	}
-	if p.ResolutionTime > 0 {
-		q.Add("resolution_time", strconv.Itoa(p.ResolutionTime))
-	}
-	if p.Body != "" {
-		q.Add("body", string(p.Body))
-	}
-	if p.TypeID > 0 {
-		q.Add("type_id", strconv.Itoa(p.TypeID))
-	}
-	if CreatorID > 0 {
-		q.Add("creator_id", strconv.Itoa(CreatorID))
-	}
-	for i := range p.AffectedGroupIDs {
-		affected := fmt.Sprintf("affected_group_ids[%d]", i)
-		q.Add(affected, strconv.Itoa(p.AffectedGroupIDs[i]))
-	}
-	if p.Title != "" {
-		q.Add("title", p.Title)
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return BreakingNewsInfoResponse{}, err
 	}
 
-	q.Add("id", strconv.Itoa(id))
 	b.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*b)
@@ -171,10 +170,10 @@ func (b *BreakingNewsMethods) Put(id int, CreatorID int, p BreakingNews) (Breaki
 
 // BreakingNewsAll gets all the Breaking News.
 // See https://releases.invgate.com/service-desk/api/#breakingnewsall
-func (c *Client) BreakingNewsAll() ([]BreakingNews, error) {
+func (c *Client) BreakingNewsAll() ([]BreakingNewsGetResponse, error) {
 	err := checkScopes(c.CurrentScopes, BreakingNewsAll)
 	if err != nil {
-		return []BreakingNews{}, err
+		return nil, err
 	}
 
 	ep := c.APIURL.JoinPath("/breakingnews.all")
@@ -187,18 +186,18 @@ func (c *Client) BreakingNewsAll() ([]BreakingNews, error) {
 		return nil, err
 	}
 
-	var d []BreakingNews
-	err = json.Unmarshal(resp, &d)
+	news := []BreakingNewsGetResponse{}
+	err = json.Unmarshal(resp, &news)
 	if err != nil {
-		var s BreakingNews
+		var s BreakingNewsGetResponse
 		err := json.Unmarshal(resp, &s)
 		if err != nil {
 			return nil, err
 		}
-		d = append(d, s)
+		news = append(news, s)
 	}
 
-	return d, nil
+	return news, nil
 }
 
 // BreakingNewsAttributesStatus gets all the possible status for the Breaking News'
@@ -238,6 +237,12 @@ func (c *Client) BreakingNewsStatus() *BreakingNewsStatusMethods {
 	}
 }
 
+// BreakingNewsStatusGetParams is used to construct GET requests to BreakingNewsStatus
+type BreakingNewsStatusGetParams struct {
+	ID         int    `url:"id,required"`
+	dateFormat string `url:"date_format"`
+}
+
 // BreakingNewsStatusGetResponse maps breaking news updates
 type BreakingNewsStatusGetResponse struct {
 	CreatedAt int    `json:"created_at,omitempty"`
@@ -247,16 +252,15 @@ type BreakingNewsStatusGetResponse struct {
 
 // Get returns updates of the requestd breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-GET
-func (b *BreakingNewsStatusMethods) Get(id int, dateFormat string) ([]BreakingNewsStatusGetResponse, error) {
+func (b *BreakingNewsStatusMethods) Get(p BreakingNewsStatusGetParams) ([]BreakingNewsStatusGetResponse, error) {
 	err := checkScopes(b.client.CurrentScopes, BreakingNewsStatusGet)
 	if err != nil {
 		return []BreakingNewsStatusGetResponse{}, err
 	}
 
-	q := b.Endpoint.Query()
-	q.Add("id", strconv.Itoa(id))
-	if dateFormat != "" {
-		q.Add("date_format", dateFormat)
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return nil, err
 	}
 	b.Endpoint.RawQuery = q.Encode()
 
@@ -275,26 +279,26 @@ func (b *BreakingNewsStatusMethods) Get(id int, dateFormat string) ([]BreakingNe
 	return d, nil
 }
 
+// BreakingNewsStatusPostParams is used to construct POST requests to BreakingNewsStatus
+type BreakingNewsStatusPostParams struct {
+	ID          int    `url:"id,required"`
+	Body        string `url:"body,required"`
+	CreatorID   int    `url:"creator_id"`
+	IsSolutions bool   `url:"is_solution"`
+}
+
 // Post creates a new update to the given breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-POST
-func (b *BreakingNewsStatusMethods) Post(id int, body string, creatorID int, isSolution bool) (BreakingNewsInfoResponse, error) {
+func (b *BreakingNewsStatusMethods) Post(p BreakingNewsStatusPostParams) (BreakingNewsInfoResponse, error) {
 	err := checkScopes(b.client.CurrentScopes, BreakingNewsStatusPost)
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
 
-	q := b.Endpoint.Query()
-	q.Add("id", strconv.Itoa(id))
-	q.Add("body", body)
-	if creatorID > 0 {
-		q.Add("creator_id", strconv.Itoa(creatorID))
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return BreakingNewsInfoResponse{}, err
 	}
-
-	solution := 0
-	if isSolution {
-		solution = 1
-	}
-	q.Add("is_solution", strconv.Itoa(solution))
 	b.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*b)

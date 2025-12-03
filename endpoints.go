@@ -2,7 +2,8 @@ package invgo
 
 import (
 	"encoding/json"
-	"strconv"
+
+	"github.com/tmstorm/invgo/internal/utils"
 )
 
 type (
@@ -16,20 +17,27 @@ type (
 		ID          int     `json:"id,omitempty"`
 		CostPerHour float64 `json:"cost_per_hour,omitempty"`
 	}
+
+	// AttributesGetParams is used to contruct a GET call to AttributesMethods
+	// NOTE: Even though this is required, 0 is a valid input so required is not specified in the tag.
+	// A better aproach should be taken to this at some point
+	AttributesGetParams struct {
+		ID int `url:"id"`
+	}
 )
 
 // Get method for Attribute endpoints
 // If ID > 0 is provided, only one will be listed.
 // This Get method works for all attribute endpoints see the related endpoints documentation
 // for ID definition and return definitions
-func (b *AttributesMethods) Get(id int) ([]AttributesResponse, error) {
+func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, error) {
 	// NOTE: Scopes are not checked here because this method can be called
 	// by every Attributes endpoint. Scopes will need to be checked in a different way.
-	if id > 0 {
-		q := b.Endpoint.Query()
-		q.Add("id", strconv.Itoa(id))
-		b.Endpoint.RawQuery = q.Encode()
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return nil, err
 	}
+	b.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*b)
 

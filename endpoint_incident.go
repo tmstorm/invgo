@@ -2,9 +2,8 @@ package invgo
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
-	"strconv"
+
+	"github.com/tmstorm/invgo/internal/utils"
 )
 
 // Incident is used to map an incident returned from the Invgate API
@@ -13,7 +12,7 @@ type Incident struct {
 	CategoryID            int                       `json:"category_id,omitempty"`
 	CreatedAt             int                       `json:"created_at,omitempty"`
 	UserID                int                       `json:"user_id,omitempty"`
-	CustomFields          interface{}               `json:"custom_fields,omitempty"`
+	CustomFields          any                       `json:"custom_fields,omitempty"`
 	Description           string                    `json:"description,omitempty"`
 	CreatorID             int                       `json:"creator_id,omitempty"`
 	SourceID              int                       `json:"source_id,omitempty"`
@@ -76,32 +75,27 @@ func (c *Client) Incident() *IncidentMethods {
 	}
 }
 
+type IncidentGetParams struct {
+	ID                       int    `url:"id,required"`
+	DecodedSpecialCharacters bool   `url:"decoded_special_character"`
+	DateFormat               string `url:"date_format"`
+	Comments                 bool   `url:"comments"`
+}
+
 // Get Method is used to get an incident using the given ID
 // See https://releases.invgate.com/service-desk/api/#incident-GET
 // NOTE: Invgate documentation says it returns and array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
-func (i *IncidentMethods) Get(id int, decodedSpecialCharacters bool, dateFormat string, comments bool) ([]Incident, error) {
+func (i *IncidentMethods) Get(p IncidentGetParams) ([]Incident, error) {
 	err := checkScopes(i.client.CurrentScopes, IncidentGet)
 	if err != nil {
 		return nil, err
 	}
 
-	if id == 0 {
-		return nil, errors.New("no ID provided for get incident")
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return nil, err
 	}
-
-	q := i.Endpoint.Query()
-	q.Add("id", strconv.Itoa(id))
-	if decodedSpecialCharacters {
-		q.Add("decoded_special_character", strconv.FormatBool(decodedSpecialCharacters))
-	}
-	if dateFormat != "" {
-		q.Add("date_format", dateFormat)
-	}
-	if comments {
-		q.Add("comments", strconv.FormatBool(comments))
-	}
-
 	i.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*i)
@@ -110,33 +104,33 @@ func (i *IncidentMethods) Get(id int, decodedSpecialCharacters bool, dateFormat 
 		return nil, err
 	}
 
-	var d []Incident
-	err = json.Unmarshal(resp, &d)
+	var incs []Incident
+	err = json.Unmarshal(resp, &incs)
 	if err != nil {
 		var inc Incident
 		err = json.Unmarshal(resp, &inc)
 		if err != nil {
 			return nil, err
 		}
-		d = append(d, inc)
+		incs = append(incs, inc)
 	}
-	return d, nil
+	return incs, nil
 }
 
 // IncidentPostParams is used to construct a new POST request to create a new incident
 type IncidentPostParams struct {
-	Date        string                       `json:"date,omitempty"`
-	PriorityID  int                          `json:"priority_id,omitempty"`
-	CategoryID  int                          `json:"category_id,omitempty"`
-	TypeID      int                          `json:"type_id,omitempty"`
-	SourceID    int                          `json:"source_id,omitempty"`
-	Title       string                       `json:"title,omitempty"`
-	LocationID  int                          `json:"location_id,omitempty"`
-	CreatorID   int                          `json:"creator_id,omitempty"`
-	Description string                       `json:"description,omitempty"`
-	RelatedTo   []int                        `json:"related_to,omitempty"`
-	CustomerID  int                          `json:"customer_id,omitempty"`
-	Attachments []IncidentAttachmentResponse `json:"attachments,omitempty"`
+	Title       string                       `url:"title,required"`
+	TypeID      int                          `url:"type_id,required"`
+	CreatorID   int                          `url:"creator_id,required"`
+	PriorityID  int                          `url:"priority_id,required"`
+	CustomerID  int                          `url:"customer_id,required"`
+	Date        string                       `url:"date"`
+	CategoryID  int                          `url:"category_id"`
+	SourceID    int                          `url:"source_id"`
+	LocationID  int                          `url:"location_id"`
+	Description string                       `url:"description"`
+	RelatedTo   []int                        `url:"related_to"`
+	Attachments []IncidentAttachmentResponse `url:"attachments"`
 }
 
 // IncidentPostResponse is used to map the response after posting a new incident
@@ -148,84 +142,16 @@ type IncidentPostResponse struct {
 
 // Post method creates a new incident and returns a success response
 // See https://releases.invgate.com/service-desk/api/#incident-POST
-func (i *IncidentMethods) Post(inc IncidentPostParams) (IncidentPostResponse, error) {
+func (i *IncidentMethods) Post(p IncidentPostParams) (IncidentPostResponse, error) {
 	err := checkScopes(i.client.CurrentScopes, IncidentPost)
 	if err != nil {
 		return IncidentPostResponse{}, err
 	}
 
-	q := i.Endpoint.Query()
-	if inc.Date != "" {
-		q.Add("date", inc.Date)
-	}
-
-	if inc.PriorityID < 1 || inc.PriorityID > 5 {
-		return IncidentPostResponse{}, fmt.Errorf("a valid priority id must be provided. Got %v wanted a number between 1 and 5", inc.PriorityID)
-	} else {
-		q.Add("priority_id", strconv.Itoa(inc.PriorityID))
-	}
-
-	if inc.CategoryID == 0 {
-		return IncidentPostResponse{}, fmt.Errorf("a valid category id must be provided but got %v", inc.CategoryID)
-	}
-	_, err = i.client.Categories().Get(inc.CategoryID)
+	q, err := utils.StructToQuery(p)
 	if err != nil {
 		return IncidentPostResponse{}, err
 	}
-	q.Add("category_id", strconv.Itoa(inc.CategoryID))
-
-	if inc.TypeID < 1 || inc.TypeID > 6 {
-		return IncidentPostResponse{}, fmt.Errorf("a valid type id must be provided. Got %v wanted a number between 1 and 6", inc.TypeID)
-	} else {
-		q.Add("type_id", strconv.Itoa(inc.TypeID))
-	}
-
-	if inc.SourceID > 0 {
-		q.Add("source_id", strconv.Itoa(inc.SourceID))
-	}
-
-	if inc.Title == "" {
-		return IncidentPostResponse{}, errors.New("a title is required when creating a new incident")
-	}
-	q.Add("title", inc.Title)
-
-	if inc.LocationID > 0 {
-		q.Add("location_id", strconv.Itoa(inc.LocationID))
-	}
-
-	if inc.CreatorID == 0 {
-		return IncidentPostResponse{}, errors.New("a creator id is required")
-	}
-	q.Add("creator_id", strconv.Itoa(inc.CreatorID))
-
-	if inc.Description != "" {
-		q.Add("description", inc.Description)
-	}
-
-	if len(inc.RelatedTo) > 0 {
-		for k := range inc.RelatedTo {
-			id := strconv.Itoa(inc.RelatedTo[k])
-			related := fmt.Sprintf("related_to[%d]", k)
-			q.Add(related, id)
-		}
-	}
-
-	if inc.CustomerID == 0 {
-		return IncidentPostResponse{}, errors.New("a customer id is required")
-	}
-	q.Add("customer_id", strconv.Itoa(inc.CustomerID))
-
-	if len(inc.Attachments) > 0 {
-		for k := range inc.Attachments {
-			at, err := json.Marshal(inc.Attachments[k])
-			if err != nil {
-				return IncidentPostResponse{}, err
-			}
-			attachment := fmt.Sprintf("attachments[%d]", k)
-			q.Add(attachment, string(at))
-		}
-	}
-
 	i.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*i)
@@ -234,82 +160,44 @@ func (i *IncidentMethods) Post(inc IncidentPostParams) (IncidentPostResponse, er
 		return IncidentPostResponse{}, err
 	}
 
-	var d IncidentPostResponse
-	err = json.Unmarshal(resp, &d)
+	var inc IncidentPostResponse
+	err = json.Unmarshal(resp, &inc)
 	if err != nil {
 		return IncidentPostResponse{}, err
 	}
 
-	return d, nil
+	return inc, nil
 }
 
 // IncidentPutParams is used to construct a PUT request to update an incident
 type IncidentPutParams struct {
-	Date         string `json:"date,omitempty"`
-	PriorityID   int    `json:"priority_id,omitempty"`
-	TypeID       int    `json:"type_id,omitempty"`
-	ID           int    `json:"id,omitempty"`
-	SourceID     int    `json:"source_id,omitempty"`
-	Title        string `json:"title,omitempty"`
-	LocationID   int    `json:"location_id,omitempty"`
-	CategoryID   int    `json:"category_id,omitempty"`
-	Description  string `json:"description,omitempty"`
-	Reassignment bool   `json:"reassignment,omitempty"`
-	DateFormat   string `json:"date_format,omitempty"`
-	CustomerID   int    `json:"customer_id,omitempty"`
+	ID           int    `url:"id,required"`
+	Date         string `url:"date"`
+	PriorityID   int    `url:"priority_id"`
+	TypeID       int    `url:"type_id"`
+	SourceID     int    `url:"source_id"`
+	Title        string `url:"title"`
+	LocationID   int    `url:"location_id"`
+	CategoryID   int    `url:"category_id"`
+	Description  string `url:"description"`
+	Reassignment bool   `url:"reassignment"`
+	DateFormat   string `url:"date_format"`
+	CustomerID   int    `url:"customer_id"`
 }
 
 // Put is used to update an incident using the given changes and ID is required
 // See https://releases.invgate.com/service-desk/api/#incident-PUT
-// NOTE: Invgate documentation says it returns and array. This does not appear to be the case.
+// NOTE: Invgate documentation says it returns an array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
-func (i *IncidentMethods) Put(params IncidentPutParams) ([]Incident, error) {
+func (i *IncidentMethods) Put(p IncidentPutParams) ([]Incident, error) {
 	err := checkScopes(i.client.CurrentScopes, IncidentPut)
 	if err != nil {
 		return []Incident{}, err
 	}
 
-	if params.ID == 0 {
-		return []Incident{}, errors.New("no ID provided for incident to be updated")
-	}
-	q := i.Endpoint.Query()
-	q.Add("id", strconv.Itoa(params.ID))
-	if params.Date != "" {
-		q.Add("date", params.Date)
-	}
-	if params.PriorityID > 5 {
-		return []Incident{}, fmt.Errorf("a valid priority id must be provided. Got %v wanted a number between 1 and 5", params.PriorityID)
-	} else if params.PriorityID != 0 {
-		q.Add("priority_id", strconv.Itoa(params.PriorityID))
-	}
-	if params.TypeID > 6 {
-		return []Incident{}, fmt.Errorf("a valid type id must be provided. Got %v wanted a number between 1 and 6", params.TypeID)
-	} else if params.TypeID != 0 {
-		q.Add("type_id", strconv.Itoa(params.TypeID))
-	}
-	if params.SourceID > 0 {
-		q.Add("source_id", strconv.Itoa(params.SourceID))
-	}
-	if params.Title != "" {
-		q.Add("title", params.Title)
-	}
-	if params.LocationID > 0 {
-		q.Add("location_id", strconv.Itoa(params.LocationID))
-	}
-	if params.CategoryID > 0 {
-		q.Add("category_id", strconv.Itoa(params.CategoryID))
-	}
-	if params.Description != "" {
-		q.Add("description", params.Description)
-	}
-	if params.Reassignment {
-		q.Add("reassignment", strconv.FormatBool(params.Reassignment))
-	}
-	if params.DateFormat != "" {
-		q.Add("date_format", params.DateFormat)
-	}
-	if params.CustomerID > 0 {
-		q.Add("customer_id", strconv.Itoa(params.CustomerID))
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return []Incident{}, err
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
@@ -319,17 +207,17 @@ func (i *IncidentMethods) Put(params IncidentPutParams) ([]Incident, error) {
 		return []Incident{}, err
 	}
 
-	var d []Incident
-	err = json.Unmarshal(resp, &d)
+	var incs []Incident
+	err = json.Unmarshal(resp, &incs)
 	if err != nil {
 		var inc Incident
 		err = json.Unmarshal(resp, &inc)
 		if err != nil {
 			return nil, err
 		}
-		d = append(d, inc)
+		incs = append(incs, inc)
 	}
-	return d, nil
+	return incs, nil
 }
 
 // IncidentAttributesStatus gets all the status types usable for an incident
@@ -365,31 +253,24 @@ func (c *Client) Incidents() *IncidentsMethods {
 	}
 }
 
+type IncidentsGetParams struct {
+	IDs             []int  `url:"ids,required"`
+	IncludeComments bool   `url:"comments"`
+	DateFormat      string `url:"date_format"`
+}
+
 // Get method is used to get a incindents the match the given incident ids
 // At least one incident must be provided
 // See https://releases.invgate.com/service-desk/api/#incidents-GET
-func (i *IncidentsMethods) Get(ids []int, includeComments bool, dateFormat string) ([]Incident, error) {
-	if len(ids) == 0 {
-		return nil, fmt.Errorf("expected at least one incident ID but got: %v", ids)
-	}
+func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
 	err := checkScopes(i.client.CurrentScopes, IncidentsGet)
 	if err != nil {
 		return nil, err
 	}
 
-	q := i.Endpoint.Query()
-	for i := range ids {
-		id := fmt.Sprintf("ids[%d]", i)
-		q.Add(id, strconv.Itoa(ids[i]))
-	}
-	switch includeComments {
-	case false:
-		q.Add("comments", strconv.Itoa(0))
-	case true:
-		q.Add("comments", strconv.Itoa(1))
-	}
-	if dateFormat != "" {
-		q.Add("date_format", dateFormat)
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return nil, err
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
@@ -405,12 +286,12 @@ func (i *IncidentsMethods) Get(ids []int, includeComments bool, dateFormat strin
 		return nil, err
 	}
 
-	var incidents []Incident
+	var incs []Incident
 	for k := range d {
-		incidents = append(incidents, d[k])
+		incs = append(incs, d[k])
 	}
 
-	return incidents, nil
+	return incs, nil
 }
 
 // IncidentsByStatusMethods is used to call methods for IncidentsByStatus
@@ -436,27 +317,23 @@ func (c *Client) IncidentsByStatus() *IncidentsByStatusMethods {
 	}
 }
 
+type IncidentsByStatusGetParams struct {
+	StatusIDs []int `url:"status_ids"`
+	Limit     int   `url:"limit"`
+	Offset    int   `url:"offset"`
+}
+
 // Get method for IncidentsByStatus at least one Status ID must be provided
 // See https://releases.invgate.com/service-desk/api/#incidentsbystatus-GET
-func (i *IncidentsByStatusMethods) Get(statusIDs []int, limit int, offset int) (IncidentsByStatusResponse, error) {
+func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsByStatusResponse, error) {
 	err := checkScopes(i.client.CurrentScopes, IncidentsByStatusGet)
 	if err != nil {
 		return IncidentsByStatusResponse{}, err
 	}
 
-	q := i.Endpoint.Query()
-	if len(statusIDs) == 0 {
-		return IncidentsByStatusResponse{}, fmt.Errorf("expected at least one status ID but got: %v", statusIDs)
-	}
-	for i := range statusIDs {
-		status = fmt.Sprintf("status_ids[%d]", i)
-		q.Add(status, strconv.Itoa(statusIDs[i]))
-	}
-	if limit > 0 {
-		q.Add("limit", strconv.Itoa(limit))
-	}
-	if offset > 0 {
-		q.Add("offset", strconv.Itoa(offset))
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return IncidentsByStatusResponse{}, err
 	}
 	i.Endpoint.RawQuery = q.Encode()
 

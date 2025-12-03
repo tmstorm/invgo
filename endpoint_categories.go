@@ -2,7 +2,8 @@ package invgo
 
 import (
 	"encoding/json"
-	"strconv"
+
+	"github.com/tmstorm/invgo/internal/utils"
 )
 
 // CategoriesMethods is used to call CategoriesMethods
@@ -25,20 +26,24 @@ type CategoriesGetResponse struct {
 	Name             string `json:"name,omitempty"`
 }
 
+type CategoriesGetParams struct {
+	ID int `url:"id"`
+}
+
 // Get method returns an array of categories in the current Invgate instance
 // If id == 0 all IDs will be provided
 // See https://releases.invgate.com/service-desk/api/#categories-GET
-func (cat *CategoriesMethods) Get(id int) ([]CategoriesGetResponse, error) {
+func (cat *CategoriesMethods) Get(p CategoriesGetParams) ([]CategoriesGetResponse, error) {
 	err := checkScopes(cat.client.CurrentScopes, CategoriesGet)
 	if err != nil {
 		return []CategoriesGetResponse{}, err
 	}
 
-	if id > 0 {
-		q := cat.Endpoint.Query()
-		q.Add("id", strconv.Itoa(id))
-		cat.Endpoint.RawQuery = q.Encode()
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return nil, err
 	}
+	cat.Endpoint.RawQuery = q.Encode()
 
 	m := MethodCall(*cat)
 	resp, err := m.get()

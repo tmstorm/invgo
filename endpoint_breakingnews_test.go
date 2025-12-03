@@ -11,21 +11,24 @@ import (
 
 func TestBreakingNewsGet(t *testing.T) {
 	a := assert.New(t)
-	var news invgo.BreakingNews
+	var news invgo.BreakingNewsGetResponse
 	gofakeit.Struct(&news)
+
+	var req invgo.BreakingNewsGetParams
+	gofakeit.Struct(&req)
 
 	server := newTestServer(t, http.MethodGet, "/breakingnews", news)
 
 	c := newTestClient(t, server, invgo.BreakingNewsGet)
 
-	got, err := c.BreakingNews().Get(news.ID, "")
+	got, err := c.BreakingNews().Get(req)
 	a.NoError(err)
 	a.EqualValues(news, got)
 }
 
 func TestBreakingNewsPost(t *testing.T) {
 	a := assert.New(t)
-	var newPost invgo.BreakingNews
+	var newPost invgo.BreakingNewsPostParams
 	gofakeit.Struct(&newPost)
 	resp := invgo.BreakingNewsInfoResponse{
 		Status: "OK",
@@ -44,7 +47,7 @@ func TestBreakingNewsPost(t *testing.T) {
 
 func TestBreakingNewsPut(t *testing.T) {
 	a := assert.New(t)
-	var updatePost invgo.BreakingNews
+	var updatePost invgo.BreakingNewsPutParams
 	gofakeit.Struct(&updatePost)
 	resp := invgo.BreakingNewsInfoResponse{
 		Status: "OK",
@@ -55,14 +58,14 @@ func TestBreakingNewsPut(t *testing.T) {
 
 	c := newTestClient(t, server, invgo.BreakingNewsPut)
 
-	got, err := c.BreakingNews().Put(updatePost.ID, 0, updatePost)
+	got, err := c.BreakingNews().Put(updatePost)
 	a.NoError(err)
 	a.EqualValues(resp, got)
 }
 
 func TestBreakingNewsAll(t *testing.T) {
 	a := assert.New(t)
-	var allNews []invgo.BreakingNews
+	var allNews []invgo.BreakingNewsGetResponse
 	gofakeit.Struct(&allNews)
 
 	server := newTestServer(t, http.MethodGet, "/breakingnews.all", allNews)
@@ -92,7 +95,7 @@ func TestBreakingNewsAttributesStatus(t *testing.T) {
 
 	c := newTestClient(t, server, invgo.BreakingNewsAttributesStatus)
 
-	got, err := c.BreakingNewsAttributesStatus().Get(0)
+	got, err := c.BreakingNewsAttributesStatus().Get(invgo.AttributesGetParams{ID: 0})
 	a.NoError(err)
 	a.EqualValues(resp, got)
 }
@@ -115,7 +118,7 @@ func TestBreakingNewsAttributesType(t *testing.T) {
 
 	c := newTestClient(t, server, invgo.BreakingNewsAttributesType)
 
-	got, err := c.BreakingNewsAttributesType().Get(0)
+	got, err := c.BreakingNewsAttributesType().Get(invgo.AttributesGetParams{ID: 0})
 	a.NoError(err)
 	a.EqualValues(resp, got)
 }
@@ -125,11 +128,14 @@ func TestBreakingNewsStatusGet(t *testing.T) {
 	var newsStatus []invgo.BreakingNewsStatusGetResponse
 	gofakeit.Struct(&newsStatus)
 
+	var req invgo.BreakingNewsStatusGetParams
+	gofakeit.Struct(&req)
+
 	server := newTestServer(t, http.MethodGet, "/breakingnews.status", newsStatus)
 
 	c := newTestClient(t, server, invgo.BreakingNewsStatusGet)
 
-	got, err := c.BreakingNewsStatus().Get(1, "")
+	got, err := c.BreakingNewsStatus().Get(req)
 	a.NoError(err)
 	a.EqualValues(newsStatus, got)
 }
@@ -141,11 +147,14 @@ func TestBreakingNewsStatusPost(t *testing.T) {
 		Info:   "post updated",
 	}
 
+	var req invgo.BreakingNewsStatusPostParams
+	gofakeit.Struct(&req)
+
 	server := newTestServer(t, http.MethodPost, "/breakingnews.status", resp)
 
 	c := newTestClient(t, server, invgo.BreakingNewsStatusPost)
 
-	got, err := c.BreakingNewsStatus().Post(1, "Body", 0, false)
+	got, err := c.BreakingNewsStatus().Post(req)
 	a.NoError(err)
 	a.EqualValues(resp, got)
 }

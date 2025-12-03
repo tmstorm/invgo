@@ -21,7 +21,7 @@ type (
 	// ScopeType used to safely set and get scopes
 	ScopeType string
 
-	// Methods used to safely define and get methods for each scope
+	// MethodTypes used to safely define and get methods for each scope
 	MethodTypes struct {
 		Get    string
 		Post   string
@@ -65,7 +65,7 @@ var (
 	BreakingNewsStatusPost       ScopeType = ScopeType(base + breakingnews + status + methods.Post)
 )
 
-// Categories
+// CategoriesGet
 var CategoriesGet ScopeType = ScopeType(base + ".categories" + methods.Get)
 
 // Help Desks
@@ -97,7 +97,7 @@ var (
 	IncidentsByStatusGet ScopeType = ScopeType(base + incidents + ".by" + ".status" + methods.Get)
 )
 
-// Service Desk Version
+// ServiceDeskVersionGet
 var ServiceDeskVersionGet ScopeType = ScopeType(base + ".sd.version" + methods.Get)
 
 // createScopes is used to take all scopes provided in the config and convert them to strings
