@@ -41,6 +41,12 @@ func addQuery(q url.Values, v any, prefix string) error {
 				continue
 			}
 
+			if field.Kind() == reflect.Struct {
+				if err := addQuery(q, field.Interface(), prefix); err != nil {
+					return err
+				}
+			}
+
 			tag := t.Field(i).Tag.Get("url")
 			if tag == "" || tag == "-" {
 				continue
