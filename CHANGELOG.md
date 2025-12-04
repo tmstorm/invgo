@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/tmstorm/invgo/compare/v0.1.6...v0.2.0) (2025-12-04)
+
+
+### 🚀 Features
+
+* refactor code base ([87ed8ea](https://github.com/tmstorm/invgo/commit/87ed8ea7db04fa73fdbc48a155a82c1d875034c3))
+
+
+### 🧹 Maintenance
+
+* add clarity to endpoints.go ([fd652b9](https://github.com/tmstorm/invgo/commit/fd652b99012fffa5e9725df240cf7ed5d61c000a))
+* correct var and field names ([d182ca2](https://github.com/tmstorm/invgo/commit/d182ca222ab7ddfe2ea195a4820223b027ef8687))
+* modernize for loops ([bc942c1](https://github.com/tmstorm/invgo/commit/bc942c1916830cf46d1088df3b9042b73aaba0a6))
+
 ## [0.1.6](https://github.com/tmstorm/invgo/compare/v0.1.5...v0.1.6) (2025-12-03)
 
 
