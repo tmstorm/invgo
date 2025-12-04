@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/tmstorm/invgo/compare/v0.2.0...v0.2.1) (2025-12-04)
+
+
+### 🐛 Bug Fixes
+
+* correct public endpoint parameter structs ([a392670](https://github.com/tmstorm/invgo/commit/a39267088ab4e06ef8ff2162276990fa6f5b1b18))
+* endpoint struct could not be imported to client code ([8894ca6](https://github.com/tmstorm/invgo/commit/8894ca6779e3bfb2ef689a44161aa7bada3b46c9))
+
 ## [0.2.0](https://github.com/tmstorm/invgo/compare/v0.1.6...v0.2.0) (2025-12-04)
 
 
