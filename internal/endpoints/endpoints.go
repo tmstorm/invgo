@@ -1,4 +1,7 @@
+// Package endpoints
 package endpoints
+
+// NOTE: This is just a catch all for misc endpoints and might be renamed or moved in the future
 
 import (
 	"encoding/json"
@@ -20,7 +23,7 @@ type (
 		CostPerHour float64 `json:"cost_per_hour,omitempty"`
 	}
 
-	// AttributesGetParams is used to contruct a GET call to AttributesMethods
+	// AttributesGetParams is used to construct a GET call to AttributesMethods
 	// NOTE: Even though this is required, 0 is a valid input so required is not specified in the tag.
 	// A better aproach should be taken to this at some point
 	AttributesGetParams struct {
