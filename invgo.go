@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/tmstorm/invgo/internal/endpoints"
+	"github.com/tmstorm/invgo/endpoints"
 	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/scopes"
 	"golang.org/x/oauth2/clientcredentials"

@@ -6,7 +6,7 @@ import (
 
 	"github.com/brianvoe/gofakeit/v7"
 	"github.com/stretchr/testify/assert"
-	"github.com/tmstorm/invgo/internal/endpoints"
+	"github.com/tmstorm/invgo/endpoints"
 	"github.com/tmstorm/invgo/scopes"
 )
 
