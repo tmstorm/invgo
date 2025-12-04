@@ -1,23 +1,15 @@
-package invgo
+package endpoints
 
 import (
 	"encoding/json"
 
+	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/internal/utils"
+	"github.com/tmstorm/invgo/scopes"
 )
 
 // CategoriesMethods is used to call CategoriesMethods
-type CategoriesMethods MethodCall
-
-// Categories is used to get all categories for the current Invgate instance
-// See https://releases.invgate.com/service-desk/api/#categories
-func (c *Client) Categories() *CategoriesMethods {
-	ep := c.APIURL.JoinPath("/categories")
-	return &CategoriesMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
+type CategoriesMethods struct{ methods.MethodCall }
 
 // CategoriesGetResponse is used to map a category from the Categories GET method
 type CategoriesGetResponse struct {
@@ -34,7 +26,7 @@ type CategoriesGetParams struct {
 // If id == 0 all IDs will be provided
 // See https://releases.invgate.com/service-desk/api/#categories-GET
 func (cat *CategoriesMethods) Get(p CategoriesGetParams) ([]CategoriesGetResponse, error) {
-	err := checkScopes(cat.client.CurrentScopes, CategoriesGet)
+	err := scopes.CheckScopes(cat.Client.CurrentScopes, scopes.CategoriesGet)
 	if err != nil {
 		return []CategoriesGetResponse{}, err
 	}
@@ -45,8 +37,7 @@ func (cat *CategoriesMethods) Get(p CategoriesGetParams) ([]CategoriesGetRespons
 	}
 	cat.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*cat)
-	resp, err := m.get()
+	resp, err := cat.RemoteGet()
 	if err != nil {
 		return []CategoriesGetResponse{}, err
 	}

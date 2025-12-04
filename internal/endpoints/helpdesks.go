@@ -1,23 +1,15 @@
-package invgo
+package endpoints
 
 import (
 	"encoding/json"
 
+	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/internal/utils"
+	"github.com/tmstorm/invgo/scopes"
 )
 
 // HelpDesksMethods is used to call methods for HelpDesks
-type HelpDesksMethods MethodCall
-
-// HelpDesks manages the help desks
-// See https://releases.invgate.com/service-desk/api/#helpdesks
-func (c *Client) HelpDesks() *HelpDesksMethods {
-	ep := c.APIURL.JoinPath("/helpdesks")
-	return &HelpDesksMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
+type HelpDesksMethods struct{ methods.MethodCall }
 
 // HelpDesksGetResponse maps an individual help desk
 type HelpDesksGetResponse struct {
@@ -39,7 +31,7 @@ type HelpDeskGetParams struct {
 // See https://releases.invgate.com/service-desk/api/#helpdesks-GET
 // If an ID of 0 is passed all help desks will be returned
 func (h *HelpDesksMethods) Get(p HelpDeskGetParams) ([]HelpDesksGetResponse, error) {
-	err := checkScopes(h.client.CurrentScopes, HelpDesksGet)
+	err := scopes.CheckScopes(h.Client.CurrentScopes, scopes.HelpDesksGet)
 	if err != nil {
 		return []HelpDesksGetResponse{}, err
 	}
@@ -50,8 +42,7 @@ func (h *HelpDesksMethods) Get(p HelpDeskGetParams) ([]HelpDesksGetResponse, err
 	}
 	h.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*h)
-	resp, err := m.get()
+	resp, err := h.RemoteGet()
 	if err != nil {
 		return []HelpDesksGetResponse{}, err
 	}

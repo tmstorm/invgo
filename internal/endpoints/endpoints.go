@@ -1,14 +1,16 @@
-package invgo
+package endpoints
 
 import (
 	"encoding/json"
 
+	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/internal/utils"
+	"github.com/tmstorm/invgo/scopes"
 )
 
 type (
 	// AttributesMethods is used to call methods for all Attributes endpoints
-	AttributesMethods MethodCall
+	AttributesMethods struct{ methods.MethodCall }
 
 	// AttributesResponse is used to map all Attributes endpoints
 	AttributesResponse struct {
@@ -39,9 +41,7 @@ func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, er
 	}
 	b.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*b)
-
-	resp, err := m.get()
+	resp, err := b.RemoteGet()
 	if err != nil {
 		return []AttributesResponse{}, err
 	}
@@ -60,28 +60,17 @@ func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, er
 }
 
 // ServiceDeskVersionMethods is used to call methods for ServiceDeskVersionMethods
-type ServiceDeskVersionMethods MethodCall
-
-// ServiceDeskVersion returns the current version of the Service Desk instance
-// See https://releases.invgate.com/service-desk/api/#sdversion
-func (c *Client) ServiceDeskVersion() *ServiceDeskVersionMethods {
-	ep := c.APIURL.JoinPath("/sd.version")
-	return &ServiceDeskVersionMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
+type ServiceDeskVersionMethods struct{ methods.MethodCall }
 
 // Get returns the current version of the Service Desk instance
 // See https://releases.invgate.com/service-desk/api/#sdversion-GET
 func (s *ServiceDeskVersionMethods) Get() (string, error) {
-	err := checkScopes(s.client.CurrentScopes, ServiceDeskVersionGet)
+	err := scopes.CheckScopes(s.Client.CurrentScopes, scopes.ServiceDeskVersionGet)
 	if err != nil {
 		return "", err
 	}
 
-	m := MethodCall(*s)
-	resp, err := m.get()
+	resp, err := s.RemoteGet()
 	if err != nil {
 		return "", err
 	}

@@ -1,9 +1,11 @@
-package invgo
+package endpoints
 
 import (
 	"encoding/json"
 
+	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/internal/utils"
+	"github.com/tmstorm/invgo/scopes"
 )
 
 // Incident is used to map an incident returned from the Invgate API
@@ -60,20 +62,7 @@ type IncidentAttachmentResponse struct {
 }
 
 // IncidentMethods is use to call methods for Incident
-type IncidentMethods MethodCall
-
-// Incident manages the /incident endpoint
-// Get: Returns the information of the given request
-// Post: Creates a request
-// Put: Change attributes of a request
-// See https://releases.invgate.com/service-desk/api/#incident
-func (c *Client) Incident() *IncidentMethods {
-	ep := c.APIURL.JoinPath("/incident")
-	return &IncidentMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
+type IncidentMethods struct{ methods.MethodCall }
 
 type IncidentGetParams struct {
 	ID                       int    `url:"id,required"`
@@ -87,7 +76,7 @@ type IncidentGetParams struct {
 // NOTE: Invgate documentation says it returns and array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
 func (i *IncidentMethods) Get(p IncidentGetParams) ([]Incident, error) {
-	err := checkScopes(i.client.CurrentScopes, IncidentGet)
+	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentGet)
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +87,7 @@ func (i *IncidentMethods) Get(p IncidentGetParams) ([]Incident, error) {
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*i)
-	resp, err := m.get()
+	resp, err := i.RemoteGet()
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +131,7 @@ type IncidentPostResponse struct {
 // Post method creates a new incident and returns a success response
 // See https://releases.invgate.com/service-desk/api/#incident-POST
 func (i *IncidentMethods) Post(p IncidentPostParams) (IncidentPostResponse, error) {
-	err := checkScopes(i.client.CurrentScopes, IncidentPost)
+	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentPost)
 	if err != nil {
 		return IncidentPostResponse{}, err
 	}
@@ -154,8 +142,7 @@ func (i *IncidentMethods) Post(p IncidentPostParams) (IncidentPostResponse, erro
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*i)
-	resp, err := m.post()
+	resp, err := i.RemotePost()
 	if err != nil {
 		return IncidentPostResponse{}, err
 	}
@@ -190,7 +177,7 @@ type IncidentPutParams struct {
 // NOTE: Invgate documentation says it returns an array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
 func (i *IncidentMethods) Put(p IncidentPutParams) ([]Incident, error) {
-	err := checkScopes(i.client.CurrentScopes, IncidentPut)
+	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentPut)
 	if err != nil {
 		return []Incident{}, err
 	}
@@ -201,8 +188,7 @@ func (i *IncidentMethods) Put(p IncidentPutParams) ([]Incident, error) {
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*i)
-	resp, err := m.put()
+	resp, err := i.RemotePut()
 	if err != nil {
 		return []Incident{}, err
 	}
@@ -220,38 +206,8 @@ func (i *IncidentMethods) Put(p IncidentPutParams) ([]Incident, error) {
 	return incs, nil
 }
 
-// IncidentAttributesStatus gets all the status types usable for an incident
-// See https://releases.invgate.com/service-desk/api/#incidentattributestype
-func (c *Client) IncidentAttributesStatus() *AttributesMethods {
-	ep := c.APIURL.JoinPath("/incident.attributes.status")
-	return &AttributesMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
-
-// IncidentAttributesType gets all the types usable for an incident
-// See https://releases.invgate.com/service-desk/api/#incidentattributestype
-func (c *Client) IncidentAttributesType() *AttributesMethods {
-	ep := c.APIURL.JoinPath("/incident.attributes.type")
-	return &AttributesMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
-
 // IncidentsMethods is use to call methods for Incidents
-type IncidentsMethods MethodCall
-
-// Incidents is used to get Incidents from the Invgate API
-// See https://releases.invgate.com/service-desk/api/#incidents
-func (c *Client) Incidents() *IncidentsMethods {
-	ep := c.APIURL.JoinPath("/incidents")
-	return &IncidentsMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
+type IncidentsMethods struct{ methods.MethodCall }
 
 type IncidentsGetParams struct {
 	IDs             []int  `url:"ids,required"`
@@ -263,7 +219,7 @@ type IncidentsGetParams struct {
 // At least one incident must be provided
 // See https://releases.invgate.com/service-desk/api/#incidents-GET
 func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
-	err := checkScopes(i.client.CurrentScopes, IncidentsGet)
+	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentsGet)
 	if err != nil {
 		return nil, err
 	}
@@ -274,8 +230,7 @@ func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*i)
-	resp, err := m.get()
+	resp, err := i.RemoteGet()
 	if err != nil {
 		return nil, err
 	}
@@ -295,7 +250,7 @@ func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
 }
 
 // IncidentsByStatusMethods is used to call methods for IncidentsByStatus
-type IncidentsByStatusMethods MethodCall
+type IncidentsByStatusMethods struct{ methods.MethodCall }
 
 // IncidentsByStatusResponse is used to map responses from GET requests for IncidentsByStatus
 type IncidentsByStatusResponse struct {
@@ -307,16 +262,6 @@ type IncidentsByStatusResponse struct {
 	Status     string `json:"status,omitempty"`
 }
 
-// IncidentsByStatus gets incidents by the given set of status IDs
-// See https://releases.invgate.com/service-desk/api/#incidentsbystatus
-func (c *Client) IncidentsByStatus() *IncidentsByStatusMethods {
-	ep := c.APIURL.JoinPath("/incidents.by.status")
-	return &IncidentsByStatusMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
-
 type IncidentsByStatusGetParams struct {
 	StatusIDs []int `url:"status_ids"`
 	Limit     int   `url:"limit"`
@@ -326,7 +271,7 @@ type IncidentsByStatusGetParams struct {
 // Get method for IncidentsByStatus at least one Status ID must be provided
 // See https://releases.invgate.com/service-desk/api/#incidentsbystatus-GET
 func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsByStatusResponse, error) {
-	err := checkScopes(i.client.CurrentScopes, IncidentsByStatusGet)
+	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentsByStatusGet)
 	if err != nil {
 		return IncidentsByStatusResponse{}, err
 	}
@@ -337,8 +282,7 @@ func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsB
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*i)
-	resp, err := m.get()
+	resp, err := i.RemoteGet()
 	if err != nil {
 		return IncidentsByStatusResponse{}, err
 	}

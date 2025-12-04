@@ -1,4 +1,5 @@
-package invgo
+// Package Scopes
+package scopes
 
 import (
 	"errors"
@@ -103,7 +104,7 @@ var ServiceDeskVersionGet ScopeType = ScopeType(base + ".sd.version" + methods.G
 
 // createScopes is used to take all scopes provided in the config and convert them to strings
 // for creating the initial Invgate connection
-func createScopes(scopes []ScopeType) []string {
+func CreateScopes(scopes []ScopeType) []string {
 	strings := []string{}
 	for i := range len(scopes) {
 		scope := string(scopes[i])
@@ -114,7 +115,7 @@ func createScopes(scopes []ScopeType) []string {
 
 // checkScopes is an internal function to check if the current set of scopes
 // match the required scope for an end point.
-func checkScopes(scopes []ScopeType, requestScopes ...ScopeType) error {
+func CheckScopes(scopes []ScopeType, requestScopes ...ScopeType) error {
 	if requestScopes == nil {
 		return errors.New("a request scope was not provided")
 	}

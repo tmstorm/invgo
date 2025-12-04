@@ -1,4 +1,4 @@
-package invgo_test
+package endpoints_test
 
 import (
 	"net/http"
@@ -6,23 +6,24 @@ import (
 
 	"github.com/brianvoe/gofakeit/v7"
 	"github.com/stretchr/testify/assert"
-	"github.com/tmstorm/invgo"
+	"github.com/tmstorm/invgo/internal/endpoints"
+	"github.com/tmstorm/invgo/scopes"
 )
 
 func TestHelpDesksGet(t *testing.T) {
 	a := assert.New(t)
-	desks := []invgo.HelpDesksGetResponse{}
+	desks := []endpoints.HelpDesksGetResponse{}
 	for range 4 {
-		var desk invgo.HelpDesksGetResponse
+		var desk endpoints.HelpDesksGetResponse
 		gofakeit.Struct(&desk)
 		desks = append(desks, desk)
 	}
 
 	server := newTestServer(t, http.MethodGet, "/helpdesks", desks)
 
-	c := newTestClient(t, server, invgo.HelpDesksGet)
+	c := newTestClient(t, server, scopes.HelpDesksGet)
 
-	got, err := c.HelpDesks().Get(invgo.HelpDeskGetParams{ID: 0})
+	got, err := c.HelpDesks().Get(endpoints.HelpDeskGetParams{ID: 0})
 	a.NoError(err)
 	a.EqualValues(desks, got)
 }

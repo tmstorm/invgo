@@ -6,7 +6,7 @@
 
 A Go module for integrating with the Invgate API, supporting per-instance authentication and API access.
 
->[!NOTE]
+>[!WARNING]
 >This is under active development. Not all endpoints are implemented. See [API Coverage](./API_COVERAGE.md) for a detailed list of what is currently covered.
 
 ## Features
@@ -34,6 +34,7 @@ package main
 
 import (
         "github.com/tmstorm/invgo"
+        "github.com/tmstorm/invgo/scopes"
         "log"
 )
 
@@ -41,8 +42,8 @@ func main() {
     // Set Invgate scopes
     // these must be defined before creating the client to
     // ensure it is given the correct access permissions to the API
-    scopes := []invgo.ScopeType{
-        invgo.BreakingNewsAll,
+    scopes := []scopes.ScopeType{
+        scopes.BreakingNewsAll,
     }
 
     // Create the client
@@ -87,21 +88,21 @@ api.{version}.{endpoint}.{subresource}:{method}
 
 Example: `api.v1.breakingnews.all:get`
 
-Scopes are defined in `invgo.ScopeType` constants. All supported scope types can be found in `scopes.go`. 
+Scopes are defined in `scopes.ScopeType` constants. All supported scope types can be found in `scopes/scopes.go`. 
 
 >[!NOTE]
 >Ingvate does not allow a generic 'all' for an endpoints methods, so you must add the corresponding scope for every method you intend on using for that endpoint.
 >However if an endpoint only accepts one method I have shortened the scope name to indicate that it only supports one method.
 
 ```go
-import "github.com/tmstorm/invgo"
+import "github.com/tmstorm/invgo/scopes"
 
 main() {
-   scopes := []invgo.ScopeType{
-        invgo.BreakingNewsAll, // BreakingNewsAll only supports the GET method
-        invgo.BreakingNewsGet, // BreakingNews is its own endpoint that supports GET, POST, and PUT
-        invgo.BreakingNewsPost,
-        invgo.BreakingNewsPut,
+   scopes := []scopes.ScopeType{
+        scopes.BreakingNewsAll, // BreakingNewsAll only supports the GET method
+        scopes.BreakingNewsGet, // BreakingNews is its own endpoint that supports GET, POST, and PUT
+        scopes.BreakingNewsPost,
+        scopes.BreakingNewsPut,
     }
 }
 ```

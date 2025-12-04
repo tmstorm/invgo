@@ -1,4 +1,4 @@
-package invgo_test
+package endpoints_test
 
 import (
 	"encoding/json"
@@ -9,9 +9,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/tmstorm/invgo"
+	"github.com/tmstorm/invgo/scopes"
 )
 
-func newTestClient(t *testing.T, server *httptest.Server, scopes ...invgo.ScopeType) *invgo.Client {
+func newTestClient(t *testing.T, server *httptest.Server, scopes ...scopes.ScopeType) *invgo.Client {
 	uri, err := url.Parse(server.URL)
 	assert.NoError(t, err)
 

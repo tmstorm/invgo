@@ -1,29 +1,18 @@
-package invgo
+package endpoints
 
 import (
 	"encoding/json"
 	"html/template"
 
+	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/internal/utils"
+	"github.com/tmstorm/invgo/scopes"
 )
 
-// BreakingNewsMethods is used to call methods for BreakingNews
-type BreakingNewsMethods MethodCall
-
-// BreakingNews manages the /breakingnews endpoint
-// Get: Returns the requested Breaking News
-// Post: Creates Breaking News
-// Put: Modifies a set of Breaking News
-// See https://releases.invgate.com/service-desk/api/#breakingnews
-func (c *Client) BreakingNews() *BreakingNewsMethods {
-	ep := c.APIURL.JoinPath("/breakingnews")
-	return &BreakingNewsMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
-
 type (
+	// BreakingNewsMethods is used to call methods for BreakingNews
+	BreakingNewsMethods struct{ methods.MethodCall }
+
 	// BreakingNewsBase is used as a base to map BreakingNews requests and responses.
 	// Invgate has different requirements for each call type. This implements the fields they all share
 	// and each request must extend this struct as needed.
@@ -57,7 +46,7 @@ type (
 // See https://releases.invgate.com/service-desk/api/#breakingnews-GET
 func (b *BreakingNewsMethods) Get(p BreakingNewsGetParams) (BreakingNewsGetResponse, error) {
 	news := BreakingNewsGetResponse{}
-	err := checkScopes(b.client.CurrentScopes, BreakingNewsGet)
+	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsGet)
 	if err != nil {
 		return news, err
 	}
@@ -68,8 +57,7 @@ func (b *BreakingNewsMethods) Get(p BreakingNewsGetParams) (BreakingNewsGetRespo
 	}
 	b.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*b)
-	resp, err := m.get()
+	resp, err := b.RemoteGet()
 	if err != nil {
 		return news, err
 	}
@@ -102,7 +90,7 @@ type (
 // Post creates breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnews-POST
 func (b *BreakingNewsMethods) Post(p BreakingNewsPostParams) (BreakingNewsInfoResponse, error) {
-	err := checkScopes(b.client.CurrentScopes, BreakingNewsPost)
+	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsPost)
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
@@ -114,9 +102,7 @@ func (b *BreakingNewsMethods) Post(p BreakingNewsPostParams) (BreakingNewsInfoRe
 
 	b.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*b)
-
-	resp, err := m.post()
+	resp, err := b.RemotePost()
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
@@ -141,7 +127,7 @@ type BreakingNewsPutParams struct {
 // Put modifies a set of breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnews-PUT
 func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResponse, error) {
-	err := checkScopes(b.client.CurrentScopes, BreakingNewsPut)
+	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsPut)
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
@@ -153,9 +139,7 @@ func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResp
 
 	b.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*b)
-
-	resp, err := m.put()
+	resp, err := b.RemotePut()
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
@@ -168,20 +152,18 @@ func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResp
 	return d, nil
 }
 
-// BreakingNewsAll gets all the Breaking News.
+// BreakingNewsAllMethods is used to get all BreakingNews
+type BreakingNewsAllMethods struct{ methods.MethodCall }
+
+// Get for BreakingNewsAll
 // See https://releases.invgate.com/service-desk/api/#breakingnewsall
-func (c *Client) BreakingNewsAll() ([]BreakingNewsGetResponse, error) {
-	err := checkScopes(c.CurrentScopes, BreakingNewsAll)
+func (c *BreakingNewsAllMethods) Get() ([]BreakingNewsGetResponse, error) {
+	err := scopes.CheckScopes(c.Client.CurrentScopes, scopes.BreakingNewsAll)
 	if err != nil {
 		return nil, err
 	}
 
-	ep := c.APIURL.JoinPath("/breakingnews.all")
-	m := MethodCall{
-		client:   c,
-		Endpoint: ep,
-	}
-	resp, err := m.get()
+	resp, err := c.RemoteGet()
 	if err != nil {
 		return nil, err
 	}
@@ -200,42 +182,8 @@ func (c *Client) BreakingNewsAll() ([]BreakingNewsGetResponse, error) {
 	return news, nil
 }
 
-// BreakingNewsAttributesStatus gets all the possible status for the Breaking News'
-// and their descriptions.
-// See https://releases.invgate.com/service-desk/api/#breakingnewsattributesstatus
-func (c *Client) BreakingNewsAttributesStatus() *AttributesMethods {
-	ep := c.APIURL.JoinPath("/breakingnews.attributes.status")
-
-	return &AttributesMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
-
-// BreakingNewsAttributesType gets all the importance types of the Breaking News.
-// See https://releases.invgate.com/service-desk/api/#breakingnewsattributestype
-func (c *Client) BreakingNewsAttributesType() *AttributesMethods {
-	ep := c.APIURL.JoinPath("/breakingnews.attributes.type")
-	return &AttributesMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
-
 // BreakingNewsStatusMethods is used to call methods for BreakingNewsStatus
-type BreakingNewsStatusMethods MethodCall
-
-// BreakingNewsStatus manages the updates of the breaking news.
-// Get: Returns the updates of the requested Breaking News
-// Post: Creates a new update to the given Breaking News
-// See https://releases.invgate.com/service-desk/api/#breakingnewsstatus
-func (c *Client) BreakingNewsStatus() *BreakingNewsStatusMethods {
-	ep := c.APIURL.JoinPath("/breakingnews.status")
-	return &BreakingNewsStatusMethods{
-		client:   c,
-		Endpoint: ep,
-	}
-}
+type BreakingNewsStatusMethods struct{ methods.MethodCall }
 
 // BreakingNewsStatusGetParams is used to construct GET requests to BreakingNewsStatus
 type BreakingNewsStatusGetParams struct {
@@ -253,7 +201,7 @@ type BreakingNewsStatusGetResponse struct {
 // Get returns updates of the requestd breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-GET
 func (b *BreakingNewsStatusMethods) Get(p BreakingNewsStatusGetParams) ([]BreakingNewsStatusGetResponse, error) {
-	err := checkScopes(b.client.CurrentScopes, BreakingNewsStatusGet)
+	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsStatusGet)
 	if err != nil {
 		return []BreakingNewsStatusGetResponse{}, err
 	}
@@ -264,8 +212,7 @@ func (b *BreakingNewsStatusMethods) Get(p BreakingNewsStatusGetParams) ([]Breaki
 	}
 	b.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*b)
-	resp, err := m.get()
+	resp, err := b.RemoteGet()
 	if err != nil {
 		return []BreakingNewsStatusGetResponse{}, err
 	}
@@ -290,7 +237,7 @@ type BreakingNewsStatusPostParams struct {
 // Post creates a new update to the given breaking news
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-POST
 func (b *BreakingNewsStatusMethods) Post(p BreakingNewsStatusPostParams) (BreakingNewsInfoResponse, error) {
-	err := checkScopes(b.client.CurrentScopes, BreakingNewsStatusPost)
+	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsStatusPost)
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
@@ -301,8 +248,7 @@ func (b *BreakingNewsStatusMethods) Post(p BreakingNewsStatusPostParams) (Breaki
 	}
 	b.Endpoint.RawQuery = q.Encode()
 
-	m := MethodCall(*b)
-	resp, err := m.post()
+	resp, err := b.RemotePost()
 	if err != nil {
 		return BreakingNewsInfoResponse{}, err
 	}
