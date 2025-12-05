@@ -17,6 +17,7 @@ import (
 
 	"github.com/tmstorm/invgo/endpoints"
 	"github.com/tmstorm/invgo/internal/methods"
+	"github.com/tmstorm/invgo/scopes"
 )
 
 // NewPublicMethod should be used when adding a new enpoint to the Invgo public API
@@ -68,13 +69,17 @@ func (c *Client) BreakingNewsStatus() *endpoints.BreakingNewsStatusMethods {
 // and their descriptions.
 // See https://releases.invgate.com/service-desk/api/#breakingnewsattributesstatus
 func (c *Client) BreakingNewsAttributesStatus() *endpoints.AttributesMethods {
-	return NewPublicMethod[endpoints.AttributesMethods](c, "/breakingnews.attributes.status")
+	m := NewPublicMethod[endpoints.AttributesMethods](c, "/breakingnews.attributes.status")
+	m.RequiredScope = scopes.BreakingNewsAttributesStatus
+	return m
 }
 
 // BreakingNewsAttributesType gets all the importance types of the Breaking News.
 // See https://releases.invgate.com/service-desk/api/#breakingnewsattributestype
 func (c *Client) BreakingNewsAttributesType() *endpoints.AttributesMethods {
-	return NewPublicMethod[endpoints.AttributesMethods](c, "/breakingnews.attributes.type")
+	m := NewPublicMethod[endpoints.AttributesMethods](c, "/breakingnews.attributes.type")
+	m.RequiredScope = scopes.BreakingNewsAttributesType
+	return m
 }
 
 // HelpDesks manages the help desks
@@ -113,13 +118,17 @@ func (c *Client) IncidentsByStatus() *endpoints.IncidentsByStatusMethods {
 // IncidentAttributesStatus gets all the status types usable for an incident
 // See https://releases.invgate.com/service-desk/api/#incidentattributestype
 func (c *Client) IncidentAttributesStatus() *endpoints.AttributesMethods {
-	return NewPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.status")
+	m := NewPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.status")
+	m.RequiredScope = scopes.IncidentAttributesStatusGet
+	return m
 }
 
 // IncidentAttributesType gets all the types usable for an incident
 // See https://releases.invgate.com/service-desk/api/#incidentattributestype
 func (c *Client) IncidentAttributesType() *endpoints.AttributesMethods {
-	return NewPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.type")
+	m := NewPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.type")
+	m.RequiredScope = scopes.IncidentAttributesTypeGet
+	return m
 }
 
 // ServiceDeskVersion returns the current version of the Service Desk instance

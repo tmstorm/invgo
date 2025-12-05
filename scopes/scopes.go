@@ -15,7 +15,7 @@ import (
 // The format for any given Invgate scope is as follows:
 // base.endpointname:method
 //
-// For example when makine a call to /breakingnews.all
+// For example when making a call to /breakingnews.all
 // the scope would look like: base = api.v1 + endpointname = .breakingnews.all + method = :get
 // Resulting in the scope: api.v1.breakingnews.all:get
 

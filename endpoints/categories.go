@@ -25,13 +25,11 @@ type (
 )
 
 // Get for Categories
+// Requires scope: CategoriesGet
 // If id == 0 all IDs will be provided
 // See https://releases.invgate.com/service-desk/api/#categories-GET
 func (cat *CategoriesMethods) Get(p CategoriesGetParams) ([]CategoriesGetResponse, error) {
-	err := scopes.CheckScopes(cat.Client.CurrentScopes, scopes.CategoriesGet)
-	if err != nil {
-		return []CategoriesGetResponse{}, err
-	}
+	cat.RequiredScope = scopes.CategoriesGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {

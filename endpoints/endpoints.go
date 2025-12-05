@@ -32,12 +32,15 @@ type (
 )
 
 // Get for Attributes
+// Requires scope: This depends on which attributes endpoint you are calling ensure its scope
+// is created in invgo/scopes/scopes.go
 // This Get method works for all attribute endpoints see the related endpoints documentation
 // for ID definition and return definitions.
 // If ID > 0 is provided, only one will be listed.
 func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, error) {
-	// NOTE: Scopes are not checked here because this method can be called
-	// by every Attributes endpoint. Scopes will need to be checked in a different way.
+	// NOTE: RequiredScope type should be set in invgo/endpoint_methods.go when
+	// creating the public method for each endpoint attribute since they all share this
+	// Get method.
 	q, err := utils.StructToQuery(p)
 	if err != nil {
 		return nil, err
@@ -66,12 +69,10 @@ func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, er
 type ServiceDeskVersionMethods struct{ methods.MethodCall }
 
 // Get for ServiceDeskVersion
+// Requires scope: ServiceDeskVersionGet
 // See https://releases.invgate.com/service-desk/api/#sdversion-GET
 func (s *ServiceDeskVersionMethods) Get() (string, error) {
-	err := scopes.CheckScopes(s.Client.CurrentScopes, scopes.ServiceDeskVersionGet)
-	if err != nil {
-		return "", err
-	}
+	s.RequiredScope = scopes.ServiceDeskVersionGet
 
 	resp, err := s.RemoteGet()
 	if err != nil {

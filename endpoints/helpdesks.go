@@ -28,13 +28,11 @@ type HelpDeskGetParams struct {
 }
 
 // Get for HelpDesks
+// Requires scope: HelpDesksGet
 // If an ID of 0 is passed all help desks will be returned
 // See https://releases.invgate.com/service-desk/api/#helpdesks-GET
 func (h *HelpDesksMethods) Get(p HelpDeskGetParams) ([]HelpDesksGetResponse, error) {
-	err := scopes.CheckScopes(h.Client.CurrentScopes, scopes.HelpDesksGet)
-	if err != nil {
-		return []HelpDesksGetResponse{}, err
-	}
+	h.RequiredScope = scopes.HelpDesksGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {

@@ -72,14 +72,12 @@ type IncidentGetParams struct {
 }
 
 // Get for Incident
+// Requires scope: IncidentGet
 // See https://releases.invgate.com/service-desk/api/#incident-GET
 // NOTE: Invgate documentation says it returns and array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
 func (i *IncidentMethods) Get(p IncidentGetParams) ([]Incident, error) {
-	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentGet)
-	if err != nil {
-		return nil, err
-	}
+	i.RequiredScope = scopes.IncidentGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -129,12 +127,10 @@ type IncidentPostResponse struct {
 }
 
 // Post for Incident
+// Requires scope: IncidentPost
 // See https://releases.invgate.com/service-desk/api/#incident-POST
 func (i *IncidentMethods) Post(p IncidentPostParams) (IncidentPostResponse, error) {
-	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentPost)
-	if err != nil {
-		return IncidentPostResponse{}, err
-	}
+	i.RequiredScope = scopes.IncidentPost
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -173,14 +169,12 @@ type IncidentPutParams struct {
 }
 
 // Put for Incident
+// Requires scope: IncidentPut
 // See https://releases.invgate.com/service-desk/api/#incident-PUT
 // NOTE: Invgate documentation says it returns an array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
 func (i *IncidentMethods) Put(p IncidentPutParams) ([]Incident, error) {
-	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentPut)
-	if err != nil {
-		return []Incident{}, err
-	}
+	i.RequiredScope = scopes.IncidentPut
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -216,13 +210,11 @@ type IncidentsGetParams struct {
 }
 
 // Get for Incidents
+// Requires scope: IncidentsGet
 // At least one incident must be provided
 // See https://releases.invgate.com/service-desk/api/#incidents-GET
 func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
-	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentsGet)
-	if err != nil {
-		return nil, err
-	}
+	i.RequiredScope = scopes.IncidentsGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -269,12 +261,10 @@ type IncidentsByStatusGetParams struct {
 }
 
 // Get for IncidentsByStatus
+// Requires scope: IncidentsByStatusGet
 // See https://releases.invgate.com/service-desk/api/#incidentsbystatus-GET
 func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsByStatusResponse, error) {
-	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentsByStatusGet)
-	if err != nil {
-		return IncidentsByStatusResponse{}, err
-	}
+	i.RequiredScope = scopes.IncidentsByStatusGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {

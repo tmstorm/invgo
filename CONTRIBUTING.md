@@ -1,4 +1,4 @@
-## Adding a new endpoint
+# Adding a new endpoint
 
 1. Create `invgo/endpoints/endpoint_name.go`
 2. Define:
@@ -18,21 +18,21 @@
     func (c *NewEnpointMethods) Get(p NewEnpointGetParams) (NewEndpointGetResponse, error) {
         r := NewEndpointGetResponse{}
 
-        // Ensure scope is checked before request is made
-        err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsGet)
-        if err != nil {
-            return r, err
-        }
+        // Ensure required scope is set before request is made.
+        // The only acception to this is if it is and Attribute endpoint.
+        // Since they all call the same Get method this must be set in
+        // endpoint_methods.go when creating the Invgo client method.
+        c.RequiredScope = scopes.NewEndpointGet
 
         // Construct url params
         q, err := utils.StructToQuery(p)
         if err != nil {
             return r, err
         }
-        b.Endpoint.RawQuery = q.Encode()
+        c.Endpoint.RawQuery = q.Encode()
 
         // Send Request to Invgate
-        resp, err := b.RemoteGet()
+        resp, err := c.RemoteGet()
         if err != nil {
             return r, err
         }

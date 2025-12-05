@@ -43,13 +43,12 @@ type (
 )
 
 // Get for BreakingNews
+// Requires scope: BreakingNewsGet
 // See https://releases.invgate.com/service-desk/api/#breakingnews-GET
 func (b *BreakingNewsMethods) Get(p BreakingNewsGetParams) (BreakingNewsGetResponse, error) {
 	news := BreakingNewsGetResponse{}
-	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsGet)
-	if err != nil {
-		return news, err
-	}
+
+	b.RequiredScope = scopes.BreakingNewsGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -88,12 +87,10 @@ type (
 )
 
 // Post for BreakingNews
+// Requires scope: BreakingNewsPost
 // See https://releases.invgate.com/service-desk/api/#breakingnews-POST
 func (b *BreakingNewsMethods) Post(p BreakingNewsPostParams) (BreakingNewsInfoResponse, error) {
-	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsPost)
-	if err != nil {
-		return BreakingNewsInfoResponse{}, err
-	}
+	b.RequiredScope = scopes.BreakingNewsPost
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -125,12 +122,10 @@ type BreakingNewsPutParams struct {
 }
 
 // Put for BreakingNews
+// Requires scope: BreakingNewsPut
 // See https://releases.invgate.com/service-desk/api/#breakingnews-PUT
 func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResponse, error) {
-	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsPut)
-	if err != nil {
-		return BreakingNewsInfoResponse{}, err
-	}
+	b.RequiredScope = scopes.BreakingNewsPut
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -156,12 +151,10 @@ func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResp
 type BreakingNewsAllMethods struct{ methods.MethodCall }
 
 // Get for BreakingNewsAll
+// Requires scope: BreakingNewsAll
 // See https://releases.invgate.com/service-desk/api/#breakingnewsall
 func (c *BreakingNewsAllMethods) Get() ([]BreakingNewsGetResponse, error) {
-	err := scopes.CheckScopes(c.Client.CurrentScopes, scopes.BreakingNewsAll)
-	if err != nil {
-		return nil, err
-	}
+	c.RequiredScope = scopes.BreakingNewsAll
 
 	resp, err := c.RemoteGet()
 	if err != nil {
@@ -201,12 +194,10 @@ type (
 )
 
 // Get for BreakingNewsStatus
+// Requires scope: BreakingNewsStatusGet
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-GET
 func (b *BreakingNewsStatusMethods) Get(p BreakingNewsStatusGetParams) ([]BreakingNewsStatusGetResponse, error) {
-	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsStatusGet)
-	if err != nil {
-		return []BreakingNewsStatusGetResponse{}, err
-	}
+	b.RequiredScope = scopes.BreakingNewsStatusGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -237,12 +228,10 @@ type BreakingNewsStatusPostParams struct {
 }
 
 // Post for BreakingNewsStatus
+// Requires scope: BreakingNewsStatusPost
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-POST
 func (b *BreakingNewsStatusMethods) Post(p BreakingNewsStatusPostParams) (BreakingNewsInfoResponse, error) {
-	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsStatusPost)
-	if err != nil {
-		return BreakingNewsInfoResponse{}, err
-	}
+	b.RequiredScope = scopes.BreakingNewsStatusPost
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {

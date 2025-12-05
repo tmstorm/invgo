@@ -18,7 +18,8 @@ type (
 		// for every connection
 		Client *Client
 		// Endpoint is the URl of the end point to be called in the invoked method
-		Endpoint *url.URL
+		Endpoint      *url.URL
+		RequiredScope scopes.ScopeType
 	}
 
 	// Client is used to build a connection with an Invgate api instance
@@ -80,6 +81,10 @@ func (m *MethodCall) delete() ([]byte, error) {
 
 // methodConstructor is used to build and call all internal methods the the Invgate API
 func methodConstructor(methodType string, m *MethodCall, body io.Reader) ([]byte, error) {
+	if err := scopes.CheckScopes(m.Client.CurrentScopes, m.RequiredScope); err != nil {
+		return nil, err
+	}
+
 	req, err := http.NewRequest(methodType, m.Endpoint.String(), body)
 	if err != nil {
 		return nil, err
