@@ -71,7 +71,7 @@ type IncidentGetParams struct {
 	Comments                 bool   `url:"comments"`
 }
 
-// Get Method is used to get an incident using the given ID
+// Get for Incident
 // See https://releases.invgate.com/service-desk/api/#incident-GET
 // NOTE: Invgate documentation says it returns and array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
@@ -128,7 +128,7 @@ type IncidentPostResponse struct {
 	Status    string `json:"status,omitempty"`
 }
 
-// Post method creates a new incident and returns a success response
+// Post for Incident
 // See https://releases.invgate.com/service-desk/api/#incident-POST
 func (i *IncidentMethods) Post(p IncidentPostParams) (IncidentPostResponse, error) {
 	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentPost)
@@ -172,7 +172,7 @@ type IncidentPutParams struct {
 	CustomerID   int    `url:"customer_id"`
 }
 
-// Put is used to update an incident using the given changes and ID is required
+// Put for Incident
 // See https://releases.invgate.com/service-desk/api/#incident-PUT
 // NOTE: Invgate documentation says it returns an array. This does not appear to be the case.
 // However this method still accounts for that if it is ever the case.
@@ -206,7 +206,7 @@ func (i *IncidentMethods) Put(p IncidentPutParams) ([]Incident, error) {
 	return incs, nil
 }
 
-// IncidentsMethods is use to call methods for Incidents
+// IncidentsMethods is used to call methods for Incidents
 type IncidentsMethods struct{ methods.MethodCall }
 
 type IncidentsGetParams struct {
@@ -215,7 +215,7 @@ type IncidentsGetParams struct {
 	DateFormat      string `url:"date_format"`
 }
 
-// Get method is used to get a incindents the match the given incident ids
+// Get for Incidents
 // At least one incident must be provided
 // See https://releases.invgate.com/service-desk/api/#incidents-GET
 func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
@@ -268,7 +268,7 @@ type IncidentsByStatusGetParams struct {
 	Offset    int   `url:"offset"`
 }
 
-// Get method for IncidentsByStatus at least one Status ID must be provided
+// Get for IncidentsByStatus
 // See https://releases.invgate.com/service-desk/api/#incidentsbystatus-GET
 func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsByStatusResponse, error) {
 	err := scopes.CheckScopes(i.Client.CurrentScopes, scopes.IncidentsByStatusGet)

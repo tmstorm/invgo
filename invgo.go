@@ -1,4 +1,3 @@
-// Package invgo
 package invgo
 
 import (

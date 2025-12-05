@@ -87,7 +87,7 @@ type (
 	}
 )
 
-// Post creates breaking news
+// Post for BreakingNews
 // See https://releases.invgate.com/service-desk/api/#breakingnews-POST
 func (b *BreakingNewsMethods) Post(p BreakingNewsPostParams) (BreakingNewsInfoResponse, error) {
 	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsPost)
@@ -124,7 +124,7 @@ type BreakingNewsPutParams struct {
 	BreakingNewsBase
 }
 
-// Put modifies a set of breaking news
+// Put for BreakingNews
 // See https://releases.invgate.com/service-desk/api/#breakingnews-PUT
 func (b *BreakingNewsMethods) Put(p BreakingNewsPutParams) (BreakingNewsInfoResponse, error) {
 	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsPut)
@@ -182,23 +182,25 @@ func (c *BreakingNewsAllMethods) Get() ([]BreakingNewsGetResponse, error) {
 	return news, nil
 }
 
-// BreakingNewsStatusMethods is used to call methods for BreakingNewsStatus
-type BreakingNewsStatusMethods struct{ methods.MethodCall }
+type (
+	// BreakingNewsStatusMethods is used to call methods for BreakingNewsStatus
+	BreakingNewsStatusMethods struct{ methods.MethodCall }
 
-// BreakingNewsStatusGetParams is used to construct GET requests to BreakingNewsStatus
-type BreakingNewsStatusGetParams struct {
-	ID         int    `url:"id,required"`
-	dateFormat string `url:"date_format"`
-}
+	// BreakingNewsStatusGetParams is used to construct GET requests to BreakingNewsStatus
+	BreakingNewsStatusGetParams struct {
+		ID         int    `url:"id,required"`
+		dateFormat string `url:"date_format"`
+	}
 
-// BreakingNewsStatusGetResponse maps breaking news updates
-type BreakingNewsStatusGetResponse struct {
-	CreatedAt int    `json:"created_at,omitempty"`
-	Body      string `json:"body,omitempty"`
-	CreatorID int    `json:"creator_id,omitempty"`
-}
+	// BreakingNewsStatusGetResponse maps breaking news updates
+	BreakingNewsStatusGetResponse struct {
+		CreatedAt int    `json:"created_at,omitempty"`
+		Body      string `json:"body,omitempty"`
+		CreatorID int    `json:"creator_id,omitempty"`
+	}
+)
 
-// Get returns updates of the requestd breaking news
+// Get for BreakingNewsStatus
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-GET
 func (b *BreakingNewsStatusMethods) Get(p BreakingNewsStatusGetParams) ([]BreakingNewsStatusGetResponse, error) {
 	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsStatusGet)
@@ -234,7 +236,7 @@ type BreakingNewsStatusPostParams struct {
 	IsSolutions bool   `url:"is_solution"`
 }
 
-// Post creates a new update to the given breaking news
+// Post for BreakingNewsStatus
 // See https://releases.invgate.com/service-desk/api/#breakingnewsstatus-POST
 func (b *BreakingNewsStatusMethods) Post(p BreakingNewsStatusPostParams) (BreakingNewsInfoResponse, error) {
 	err := scopes.CheckScopes(b.Client.CurrentScopes, scopes.BreakingNewsStatusPost)

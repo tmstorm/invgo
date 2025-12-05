@@ -8,21 +8,23 @@ import (
 	"github.com/tmstorm/invgo/scopes"
 )
 
-// CategoriesMethods is used to call CategoriesMethods
-type CategoriesMethods struct{ methods.MethodCall }
+type (
+	// CategoriesMethods is used to call CategoriesMethods
+	CategoriesMethods struct{ methods.MethodCall }
 
-// CategoriesGetResponse is used to map a category from the Categories GET method
-type CategoriesGetResponse struct {
-	ID               string `json:"id,omitempty"` // NOTE: API documentation says this is of type int but is delivered as type string
-	ParentCategoryID int    `json:"parent_category_id,omitempty"`
-	Name             string `json:"name,omitempty"`
-}
+	// CategoriesGetResponse is used to map a category from the Categories GET method
+	CategoriesGetResponse struct {
+		ID               string `json:"id,omitempty"` // NOTE: API documentation says this is of type int but is delivered as type string
+		ParentCategoryID int    `json:"parent_category_id,omitempty"`
+		Name             string `json:"name,omitempty"`
+	}
 
-type CategoriesGetParams struct {
-	ID int `url:"id"`
-}
+	CategoriesGetParams struct {
+		ID int `url:"id"`
+	}
+)
 
-// Get method returns an array of categories in the current Invgate instance
+// Get for Categories
 // If id == 0 all IDs will be provided
 // See https://releases.invgate.com/service-desk/api/#categories-GET
 func (cat *CategoriesMethods) Get(p CategoriesGetParams) ([]CategoriesGetResponse, error) {

@@ -1,5 +1,8 @@
 package invgo
 
+// ImplementedEndpoints when adding a new Invgate endpoint
+// this must be updated so that the coverage script knows which
+// endpoints Invgo supports calling.
 var ImplementedEndpoints = map[string][]string{
 	"/breakingnews":                   {"POST", "PUT", "GET"},
 	"/breakingnews.all":               {"GET"},

@@ -25,16 +25,16 @@ type (
 
 	// AttributesGetParams is used to construct a GET call to AttributesMethods
 	// NOTE: Even though this is required, 0 is a valid input so required is not specified in the tag.
-	// A better aproach should be taken to this at some point
+	// A better approach should be taken to this at some point
 	AttributesGetParams struct {
 		ID int `url:"id"`
 	}
 )
 
-// Get method for Attribute endpoints
-// If ID > 0 is provided, only one will be listed.
+// Get for Attributes
 // This Get method works for all attribute endpoints see the related endpoints documentation
-// for ID definition and return definitions
+// for ID definition and return definitions.
+// If ID > 0 is provided, only one will be listed.
 func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, error) {
 	// NOTE: Scopes are not checked here because this method can be called
 	// by every Attributes endpoint. Scopes will need to be checked in a different way.
@@ -65,7 +65,7 @@ func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, er
 // ServiceDeskVersionMethods is used to call methods for ServiceDeskVersionMethods
 type ServiceDeskVersionMethods struct{ methods.MethodCall }
 
-// Get returns the current version of the Service Desk instance
+// Get for ServiceDeskVersion
 // See https://releases.invgate.com/service-desk/api/#sdversion-GET
 func (s *ServiceDeskVersionMethods) Get() (string, error) {
 	err := scopes.CheckScopes(s.Client.CurrentScopes, scopes.ServiceDeskVersionGet)

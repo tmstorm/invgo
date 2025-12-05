@@ -9,6 +9,20 @@ import (
 	"strings"
 )
 
+/*
+StructToQuery uses reflection to parse a struct with the `url` tag and add them to url.Values.
+
+The expected `url` format is:
+
+	`field_name`: Name of the key for the query param to be added
+	`required`: If this is added addQuery will throw an error if the field is nil, 0, or ""
+
+Example:
+
+	type Foo struct {
+		Bar string `url:"bar,required"`
+	}
+*/
 func StructToQuery(v any) (url.Values, error) {
 	q := make(url.Values)
 	if v == nil {
@@ -20,6 +34,7 @@ func StructToQuery(v any) (url.Values, error) {
 	return q, nil
 }
 
+// addQuery is the internal implementation of StructToQuery
 func addQuery(q url.Values, v any, prefix string) error {
 	if v == nil {
 		return nil

@@ -27,9 +27,9 @@ type HelpDeskGetParams struct {
 	IncludeDeleted bool   `url:"include_deleted"`
 }
 
-// Get returns all active help desks, or one in particular
-// See https://releases.invgate.com/service-desk/api/#helpdesks-GET
+// Get for HelpDesks
 // If an ID of 0 is passed all help desks will be returned
+// See https://releases.invgate.com/service-desk/api/#helpdesks-GET
 func (h *HelpDesksMethods) Get(p HelpDeskGetParams) ([]HelpDesksGetResponse, error) {
 	err := scopes.CheckScopes(h.Client.CurrentScopes, scopes.HelpDesksGet)
 	if err != nil {
