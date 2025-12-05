@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/tmstorm/invgo/compare/v0.3.0...v0.3.1) (2025-12-05)
+
+
+### 🐛 Bug Fixes
+
+* invgate json tags got removed ([2f3dee5](https://github.com/tmstorm/invgo/commit/2f3dee5eed6e5afed5737ede43d6add2291f70c4))
+
 ## [0.3.0](https://github.com/tmstorm/invgo/compare/v0.2.1...v0.3.0) (2025-12-05)
 
 
