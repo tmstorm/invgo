@@ -75,12 +75,12 @@ func main() {
 
 | Field | Type | Default | Description |
 | -- | -- | -- | -- |
-| `BaseURL` | `string` | empty | the root URL of your Invgate instance
-| `TokenURL`| `string` | empty | the OAuth2 token URL
-| `ClientID`| `string` | empty | your API client ID
-| `ClientSecret`| `string` | empty | your API client secret
-| `AllowHTTP`| `bool` | false | weather 
-| `Scopes`| `[]scopes.ScopeType` | nil | a slice of ScopeType representing required permissions
+| `BaseURL` | `string` | `empty` | Root URL of your Invgate instance |
+| `TokenURL`| `string` | `empty` | OAuth2 token URL |
+| `ClientID`| `string` | `empty` | API client ID |
+| `ClientSecret`| `string` | `empty` | API client secret |
+| `AllowHTTP`| `bool` | `false` | If `http` should be allowed, if false `http` will be upgraded to `https` |
+| `Scopes`| `[]scopes.ScopeType` | `nil` | Slice of ScopeType representing required permissions |
 
 ## Scopes
 
