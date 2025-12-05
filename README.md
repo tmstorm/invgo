@@ -69,14 +69,18 @@ func main() {
 
 ## Configure
 
-The `New(cfg *Invgate)` function accepts an `Invgate` struct with:
-* `BaseURL`: the root URL of your Invgate instance
-* `TokenURL`: the OAuth2 token URL
-* `ClientID`: your API client ID
-* `ClientSecret`: your API client secret
-* `Scopes`: a slice of ScopeType representing required permissions
+`New(cfg *Invgate)` authenticates with Invgate using OAuth2 client credentials and returns a configured Client ready for API calls.
 
-`New` authenticates with Invgate using OAuth2 client credentials and returns a configured Client ready for API calls.
+`Invgate` contains the following options.
+
+| Field | Type | Default | Description |
+| -- | -- | -- | -- |
+| `BaseURL` | `string` | empty | the root URL of your Invgate instance
+| `TokenURL`| `string` | empty | the OAuth2 token URL
+| `ClientID`| `string` | empty | your API client ID
+| `ClientSecret`| `string` | empty | your API client secret
+| `AllowHTTP`| `bool` | false | weather 
+| `Scopes`| `[]scopes.ScopeType` | nil | a slice of ScopeType representing required permissions
 
 ## Scopes
 
