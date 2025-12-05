@@ -35,8 +35,9 @@ type (
 	Client methods.Client
 )
 
-// Define the base path for the invgate API
-var invgateAPIPath = "/api/v1"
+// InvgateAPIPath defines the base path for the Invgate API.
+// WARNING: This should not be changed unless you know for sure it will not break Invgo.
+var InvgateAPIPath = "/api/v1"
 
 // New authenticates with the Invgate using the provided options and returns the client for API calls.
 func New(cfg *Invgate) (*Client, error) {
@@ -55,7 +56,7 @@ func New(cfg *Invgate) (*Client, error) {
 	}
 
 	// Parse base url given to ensure it is not malformed
-	apiURL, err := utils.ParseURL(cfg.BaseURL, invgateAPIPath, cfg.AllowHTTP)
+	apiURL, err := utils.ParseURL(cfg.BaseURL, InvgateAPIPath, cfg.AllowHTTP)
 	if err != nil {
 		return nil, err
 	}
