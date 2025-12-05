@@ -18,7 +18,9 @@ type (
 		// for every connection
 		Client *Client
 		// Endpoint is the URl of the end point to be called in the invoked method
-		Endpoint      *url.URL
+		Endpoint *url.URL
+		// RequiredScope is used to set the required scope be the method that is calling it
+		// This must be set or invgo will throw an error when making request
 		RequiredScope scopes.ScopeType
 	}
 

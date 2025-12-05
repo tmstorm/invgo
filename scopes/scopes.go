@@ -1,4 +1,6 @@
-// Package Scopes
+// Package scopes defines all scopes available for use in the Invgate API.
+// If a new endpoint is added its related scope must be added here or
+// the API call will fail and Invgo will throw an error
 package scopes
 
 import (
@@ -102,7 +104,7 @@ var (
 // ServiceDeskVersionGet
 var ServiceDeskVersionGet ScopeType = ScopeType(base + ".sd.version" + methods.Get)
 
-// createScopes is used to take all scopes provided in the config and convert them to strings
+// CreateScopes is used to take all scopes provided in the config and convert them to strings
 // for creating the initial Invgate connection
 func CreateScopes(scopes []ScopeType) []string {
 	strings := []string{}
@@ -113,7 +115,7 @@ func CreateScopes(scopes []ScopeType) []string {
 	return strings
 }
 
-// checkScopes is an internal function to check if the current set of scopes
+// CheckScopes is an internal function to check if the current set of scopes
 // match the required scope for an end point.
 func CheckScopes(scopes []ScopeType, requestScopes ...ScopeType) error {
 	if requestScopes == nil {
