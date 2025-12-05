@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.3.0](https://github.com/tmstorm/invgo/compare/v0.2.1...v0.3.0) (2025-12-05)
+
+
+### 🚀 Features
+
+* add url parsing util, AllowHTTP, and comments to Invgate struct ([fc89ae4](https://github.com/tmstorm/invgo/commit/fc89ae4845427f9d645303976aa7000dd98e50ed))
+* expose InvgateAPIPath to public API ([faac90f](https://github.com/tmstorm/invgo/commit/faac90fa8c773fd5ea8983259c89252a83a2df41))
+
+
+### 📝 Documentation
+
+* add CONTRIBUTING.md ([78f5099](https://github.com/tmstorm/invgo/commit/78f50995cbbad0f017474f06018144d16c071bc1))
+* add doc.go ([4bb8fe6](https://github.com/tmstorm/invgo/commit/4bb8fe68b4f25fe9346d1b2cf82ed47814e12947))
+* clean up comments ([68ddf89](https://github.com/tmstorm/invgo/commit/68ddf89f76e2dfcd741032aec1f1b7be9deaa17a))
+* correct missing AllowHTTP description ([b02b555](https://github.com/tmstorm/invgo/commit/b02b555ba10d474624cc214b629fada5339ad56c))
+* fix comments and ensure packag is fully documented ([d3d4ded](https://github.com/tmstorm/invgo/commit/d3d4ded807092ec2ae42141945628849e711ef3f))
+* update docs for AllowHTTP ([b041a9e](https://github.com/tmstorm/invgo/commit/b041a9e54e81eac909275ede73ff82b982a4ae14))
+
+
+### 🔨 Refactoring
+
+* move scopes check to methods.go ([2c1425b](https://github.com/tmstorm/invgo/commit/2c1425b504a6362744f3ee2b3fbce3f0d193f793))
+
+
+### 🧹 Maintenance
+
+* eliminate endpoint boilerplate with NewPublicMethod ([e758668](https://github.com/tmstorm/invgo/commit/e758668c18e537088a7dd7fec1357d3120fd6f0d))
+* move client methods to endpoint_methods.go ([57fac43](https://github.com/tmstorm/invgo/commit/57fac437cf9028e3cf87df8060bd0b7704fe3630))
+
 ## [0.2.1](https://github.com/tmstorm/invgo/compare/v0.2.0...v0.2.1) (2025-12-04)
 
 
