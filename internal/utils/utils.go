@@ -3,6 +3,7 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 	"reflect"
 	"strings"
@@ -94,4 +95,41 @@ func addQuery(q url.Values, v any, prefix string) error {
 
 func isZero(v any) bool {
 	return reflect.DeepEqual(v, reflect.Zero(reflect.TypeOf(v)).Interface())
+}
+
+// ParseURL is used to pre-parse the provided rawURL before a client is created.
+// It will attempt to enforce https if allowHTTP = false. This should only be set to true
+// in testing, to prevent instances where the server is not configured correctly and data is
+// sent in cleartext.
+func ParseURL(rawURL string, invgateAPIPath string, allowHTTP bool) (*url.URL, error) {
+	base := strings.TrimSuffix(strings.TrimSpace(rawURL), "/")
+
+	path := invgateAPIPath
+	if path != "" && !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+
+	fullURL := base + path
+	u, err := url.Parse(fullURL)
+	if err != nil {
+		return nil, err
+	}
+
+	switch u.Scheme {
+	case "":
+		u.Scheme = "https"
+		log.Printf("[INVGO] No scheme in provided URL, defaulting to https://%s", u.Host)
+	case "http":
+		if !allowHTTP {
+			oldURL := u.String()
+			u.Scheme = "https"
+			log.Printf("[INVGO] SECURITY: Auto-upgrading insecure provided URL from %s -> %s\n"+
+				" This is to prevent accidental cleartext traffic. To disable, set AllowHTTP: true", oldURL, u)
+		} else {
+			log.Printf("[INVGO] WARNING: Client configured with insecure HTTP: %s\n"+
+				" this could be a security risk if the destination server is not configured correctly.\n"+
+				" to disable this set AllowHTTP=false or change the URL to https.", u)
+		}
+	}
+	return u, nil
 }

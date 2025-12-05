@@ -4,16 +4,16 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/tmstorm/invgo"
+	"github.com/tmstorm/invgo/internal/utils"
 	"github.com/tmstorm/invgo/scopes"
 )
 
 func newTestClient(t *testing.T, server *httptest.Server, scopes ...scopes.ScopeType) *invgo.Client {
-	uri, err := url.Parse(server.URL)
+	uri, err := utils.ParseURL(server.URL, "", true)
 	assert.NoError(t, err)
 
 	return &invgo.Client{

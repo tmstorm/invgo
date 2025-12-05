@@ -4,26 +4,34 @@ package invgo
 import (
 	"context"
 	"errors"
-	"net/url"
-	"strings"
 
 	"github.com/tmstorm/invgo/endpoints"
 	"github.com/tmstorm/invgo/internal/methods"
+	"github.com/tmstorm/invgo/internal/utils"
 	"github.com/tmstorm/invgo/scopes"
 	"golang.org/x/oauth2/clientcredentials"
 )
 
 type (
-	// Invgate is used to set the configuration options for connection to an Invgate API instance
+	// Invgate is used to set the configuration options for connection to an Invgate API instance.
 	Invgate struct {
-		BaseURL      string             `json:"base_url,omitempty"`
-		TokenURL     string             `json:"token_url,omitempty"`
-		ClientID     string             `json:"client_id,omitempty"`
-		ClientSecret string             `json:"client_secret,omitempty"`
-		Scopes       []scopes.ScopeType `json:"scopes,omitempty"`
+		// BaseURL defines the url of the Invgate instance.
+		BaseURL string
+		// TokenURL defines the oAuth2 token endpoint for authentication with instance.
+		TokenURL string
+		// ClientID defines the ClientID of the Invgate instance.
+		ClientID string
+		// ClientSecret defines the secret created in Invgate to allow Invgo to connect to the instance.
+		ClientSecret string
+		// AllowHTTP defines if the connection should be allowed to let the base url keep the scheme http or not.
+		// WARNING: This should only be set to true in testing or dev environments.
+		AllowHTTP bool
+		// Scopes defines which scopes will be requested when requestion the token from the Invgate instance.
+		// If a scope is not defined here the client will be denied access to its endpoint on future requests.
+		Scopes []scopes.ScopeType
 	}
 
-	// Client implements methods.Client for use to connect with Invgate
+	// Client implements methods.Client for use to connect with Invgate.
 	Client methods.Client
 )
 
@@ -47,8 +55,7 @@ func New(cfg *Invgate) (*Client, error) {
 	}
 
 	// Parse base url given to ensure it is not malformed
-	baseURL := strings.TrimSuffix(cfg.BaseURL, "/")
-	apiURL, err := url.Parse(baseURL + invgateAPIPath)
+	apiURL, err := utils.ParseURL(cfg.BaseURL, invgateAPIPath, cfg.AllowHTTP)
 	if err != nil {
 		return nil, err
 	}
