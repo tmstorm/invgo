@@ -14,19 +14,19 @@ type (
 	// Invgate is used to set the configuration options for connection to an Invgate API instance.
 	Invgate struct {
 		// BaseURL defines the url of the Invgate instance.
-		BaseURL string
+		BaseURL string `json:"base_url,omitempty"`
 		// TokenURL defines the oAuth2 token endpoint for authentication with instance.
-		TokenURL string
+		TokenURL string `json:"token_url,omitempty"`
 		// ClientID defines the ClientID of the Invgate instance.
-		ClientID string
+		ClientID string `json:"client_id,omitempty"`
 		// ClientSecret defines the secret created in Invgate to allow Invgo to connect to the instance.
-		ClientSecret string
+		ClientSecret string `json:"client_secret,omitempty"`
 		// AllowHTTP defines if the connection should be allowed to let the base url keep the scheme http or not.
 		// WARNING: This should only be set to true in testing or dev environments.
-		AllowHTTP bool
+		AllowHTTP bool `json:"allow_http,omitempty"`
 		// Scopes defines which scopes will be requested when requestion the token from the Invgate instance.
 		// If a scope is not defined here the client will be denied access to its endpoint on future requests.
-		Scopes []scopes.ScopeType
+		Scopes []scopes.ScopeType `json:"scopes,omitempty"`
 	}
 
 	// Client implements methods.Client for use to connect with Invgate.
