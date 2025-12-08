@@ -47,5 +47,5 @@ func (cat *CategoriesMethods) Get(p CategoriesGetParams) ([]CategoriesGetRespons
 	if err != nil {
 		return nil, err
 	}
-	return nil, nil
+	return d, nil
 }
