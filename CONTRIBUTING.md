@@ -52,8 +52,9 @@
         return NewPublicMethod[endpoints.NewEndpointMethods](c, "/newendpoint")
     }
     ```
-4. Add to `coverage.go`
-5. Run coverage script:
+4. Add tests to `invgo/endpoints/endpoint_name_test.go`, one for each method call the endpoint implements.
+5. Add to `coverage.go`
+6. Run coverage script:
     ```
     go run ./scripts/coverage_report.go
     ```
