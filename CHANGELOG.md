@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.2](https://github.com/tmstorm/invgo/compare/v0.3.1...v0.3.2) (2025-12-08)
+
+
+### 🐛 Bug Fixes
+
+* categories get was not returning response ([649b3cc](https://github.com/tmstorm/invgo/commit/649b3ccb114c7e494bd8511d38dcc3672399a9f3))
+
+
+### 🧹 Maintenance
+
+* add tests for core and endpoints ([8dd4014](https://github.com/tmstorm/invgo/commit/8dd4014257c2dccdbc5a5f71f4a5db7c9e732272))
+* fix spelling in CONTRIBUTING.md ([396a9dc](https://github.com/tmstorm/invgo/commit/396a9dcbdf703c5fe53c1260a87c8b1599e8f804))
+* make ServiceDeskVersionResponse public ([3a18c1e](https://github.com/tmstorm/invgo/commit/3a18c1e5133f66153c029fb2c51c6b9c514f97b9))
+
 ## [0.3.1](https://github.com/tmstorm/invgo/compare/v0.3.0...v0.3.1) (2025-12-05)
 
 
