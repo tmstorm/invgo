@@ -68,6 +68,10 @@ func (b *AttributesMethods) Get(p AttributesGetParams) ([]AttributesResponse, er
 // ServiceDeskVersionMethods is used to call methods for ServiceDeskVersionMethods
 type ServiceDeskVersionMethods struct{ methods.MethodCall }
 
+type ServiceDeskVersionResponse struct {
+	Version string `json:"version,omitempty"`
+}
+
 // Get for ServiceDeskVersion
 // Requires scope: ServiceDeskVersionGet
 // See https://releases.invgate.com/service-desk/api/#sdversion-GET
@@ -79,10 +83,7 @@ func (s *ServiceDeskVersionMethods) Get() (string, error) {
 		return "", err
 	}
 
-	type version struct {
-		Version string `json:"version,omitempty"`
-	}
-	var d version
+	var d ServiceDeskVersionResponse
 	err = json.Unmarshal(resp, &d)
 	if err != nil {
 		return "", err
