@@ -111,6 +111,21 @@ var (
 	TriggersExecutionsGet ScopeType = ScopeType(base + triggers + ".executions" + methods.Get)
 )
 
+// User
+var (
+	user                 = ".user"
+	UserGet    ScopeType = ScopeType(base + user + methods.Get)
+	UserPost   ScopeType = ScopeType(base + user + methods.Post)
+	UserPut    ScopeType = ScopeType(base + user + methods.Put)
+	UserDelete ScopeType = ScopeType(base + user + methods.Delete)
+)
+
+// Users
+var (
+	users              = ".users"
+	UsersGet ScopeType = ScopeType(base + users + methods.Get)
+)
+
 // CreateScopes is used to take all scopes provided in the config and convert them to strings
 // for creating the initial Invgate connection
 func CreateScopes(scopes []ScopeType) []string {

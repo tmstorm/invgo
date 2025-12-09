@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 11.95% (19/159 methods implemented)
+**coverage:** 15.09% (24/159 methods implemented)
 
 ### /breakingnews
 
@@ -589,10 +589,10 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
-| PUT | ❌ |
-| POST | ❌ |
-| DELETE | ❌ |
+| GET | ✅ |
+| PUT | ✅ |
+| POST | ✅ |
+| DELETE | ✅ |
 
 ### /user.by
 
@@ -640,7 +640,7 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /users.by
 

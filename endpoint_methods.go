@@ -148,3 +148,18 @@ func (c *Client) Triggers() *endpoints.TriggersMethods {
 func (c *Client) TriggersExecutions() *endpoints.TriggersExecutionsMethods {
 	return NewPublicMethod[endpoints.TriggersExecutionsMethods](c, "/triggers.executions")
 }
+
+// User manages the /user endpoint
+// Get: Returns the requested user
+// Post: Creates a user
+// Put: Modifies a user
+// See https://releases.invgate.com/service-desk/api/#user
+func (c *Client) User() *endpoints.UserMethods {
+	return NewPublicMethod[endpoints.UserMethods](c, "/user")
+}
+
+// Users returns a list of each of users in the Service Desk instance
+// See https://releases.invgate.com/service-desk/api/#users
+func (c *Client) Users() *endpoints.UsersMethods {
+	return NewPublicMethod[endpoints.UsersMethods](c, "/users")
+}
