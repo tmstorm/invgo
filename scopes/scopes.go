@@ -104,6 +104,13 @@ var (
 // ServiceDeskVersionGet
 var ServiceDeskVersionGet ScopeType = ScopeType(base + ".sd.version" + methods.Get)
 
+// Triggers
+var (
+	triggers                        = ".triggers"
+	TriggersGet           ScopeType = ScopeType(base + triggers + methods.Get)
+	TriggersExecutionsGet ScopeType = ScopeType(base + triggers + ".executions" + methods.Get)
+)
+
 // CreateScopes is used to take all scopes provided in the config and convert them to strings
 // for creating the initial Invgate connection
 func CreateScopes(scopes []ScopeType) []string {

@@ -82,16 +82,16 @@ func (c *Client) BreakingNewsAttributesType() *endpoints.AttributesMethods {
 	return m
 }
 
-// HelpDesks manages the help desks
-// See https://releases.invgate.com/service-desk/api/#helpdesks
-func (c *Client) HelpDesks() *endpoints.HelpDesksMethods {
-	return NewPublicMethod[endpoints.HelpDesksMethods](c, "/helpdesks")
-}
-
 // Categories is used to get all categories for the current Invgate instance
 // See https://releases.invgate.com/service-desk/api/#categories
 func (c *Client) Categories() *endpoints.CategoriesMethods {
 	return NewPublicMethod[endpoints.CategoriesMethods](c, "/categories")
+}
+
+// HelpDesks manages the help desks
+// See https://releases.invgate.com/service-desk/api/#helpdesks
+func (c *Client) HelpDesks() *endpoints.HelpDesksMethods {
+	return NewPublicMethod[endpoints.HelpDesksMethods](c, "/helpdesks")
 }
 
 // Incident manages the /incident endpoint
@@ -135,4 +135,16 @@ func (c *Client) IncidentAttributesType() *endpoints.AttributesMethods {
 // See https://releases.invgate.com/service-desk/api/#sdversion
 func (c *Client) ServiceDeskVersion() *endpoints.ServiceDeskVersionMethods {
 	return NewPublicMethod[endpoints.ServiceDeskVersionMethods](c, "/sd.version")
+}
+
+// Triggers returns user defined tiggers in the Service Desk instance
+// See https://releases.invgate.com/service-desk/api/#triggers
+func (c *Client) Triggers() *endpoints.TriggersMethods {
+	return NewPublicMethod[endpoints.TriggersMethods](c, "/triggers")
+}
+
+// TriggersExecutions returns a list of each time a trigger was executed in the Service Desk instance
+// See https://releases.invgate.com/service-desk/api/#triggers
+func (c *Client) TriggersExecutions() *endpoints.TriggersExecutionsMethods {
+	return NewPublicMethod[endpoints.TriggersExecutionsMethods](c, "/triggers.executions")
 }
