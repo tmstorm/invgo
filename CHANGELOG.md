@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/tmstorm/invgo/compare/v0.3.2...v0.4.0) (2025-12-09)
+
+
+### 🚀 Features
+
+* add Triggers endpoint ([1653aa4](https://github.com/tmstorm/invgo/commit/1653aa4692ee46601e5bd30eb52c667b9435e43c))
+* partially implement user endpoints ([75a34d6](https://github.com/tmstorm/invgo/commit/75a34d68cadb279c9b6a00f06dc7c62ac3a10c4f))
+
 ## [0.3.2](https://github.com/tmstorm/invgo/compare/v0.3.1...v0.3.2) (2025-12-08)
 
 
