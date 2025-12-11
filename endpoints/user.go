@@ -10,7 +10,7 @@ import (
 )
 
 type (
-	// UserMethods is use to call methods for User
+	// UserMethods is used to call methods for User
 	UserMethods struct{ methods.MethodCall }
 
 	// UserBase is used to map an trigger returned from the Invgate API
@@ -27,7 +27,7 @@ type (
 		City           string `json:"city,omitempty" url:"city"`
 		Department     string `json:"department,omitempty" url:"department"`
 		RoleName       string `json:"role_name,omitempty" url:"role_name"`
-		UserName       string `json:"user_name,omitempty" url:"user_name"`
+		UserName       string `json:"username,omitempty" url:"username"`
 		Birthday       string `json:"birthday,omitempty" url:"birthday"`
 		Position       string `json:"position,omitempty" url:"position"`
 		EmployeeNumber string `json:"employee_number,omitempty" url:"employee_number"`
@@ -50,7 +50,7 @@ type (
 		ID       int    `json:"id,omitempty"`
 		Email    string `json:"email,omitempty"`
 		Name     string `json:"name,omitempty"`
-		LastName string `json:"last_name,omitempty"`
+		LastName string `json:"lastname,omitempty"`
 		UserBase
 	}
 )
@@ -74,7 +74,7 @@ func (c *UserMethods) Get(p UserGetParams) (UserGetResponse, error) {
 		return u, err
 	}
 
-	// Ingate returns a bool of false if the user is not found
+	// Invgate returns a bool of false if the user is not found
 	err = json.Unmarshal(resp, &u)
 	if err != nil {
 		var isFalse bool
@@ -94,7 +94,7 @@ type (
 		ID       int    `json:"id,omitempty" url:"id,required"`
 		Email    string `json:"email,omitempty" url:"email"`
 		Name     string `json:"name,omitempty" url:"name"`
-		LastName string `json:"last_name,omitempty" url:"last_name"`
+		LastName string `json:"lastname,omitempty" url:"lastname"`
 		UserBase
 	}
 
@@ -141,7 +141,7 @@ type (
 		ID       int    `json:"id,omitempty" url:"id"`
 		Email    string `json:"email,omitempty" url:"email,required"`
 		Name     string `json:"name,omitempty" url:"name,required"`
-		LastName string `json:"last_name,omitempty" url:"last_name,required"`
+		LastName string `json:"lastname,omitempty" url:"lastname,required"`
 		UserBase
 	}
 
@@ -211,7 +211,6 @@ func (c *UserMethods) Delete(p UserDeleteParams) ([]UserDeleteResponse, error) {
 		return u, err
 	}
 
-	// Ingate returns a bool of false if the user is not found
 	err = json.Unmarshal(resp, &u)
 	if err != nil {
 		return u, err
@@ -221,7 +220,333 @@ func (c *UserMethods) Delete(p UserDeleteParams) ([]UserDeleteResponse, error) {
 }
 
 type (
-	// UsersMethods is use to call methods for Users
+	// UserByMethods is used to call methods for UserBy
+	UserByMethods struct{ methods.MethodCall }
+
+	UserByGetParams struct {
+		Email    string `url:"email"`
+		Username string `url:"username"`
+	}
+
+	// UserByGetResponse is used to map a user returned from the Invgate API
+	UserByGetResponse struct{ UserGetResponse }
+)
+
+// Get for UserBy
+// Requires scope: UserByGet
+// See https://releases.invgate.com/service-desk/api/#userby-GET
+// At least one param must be provided.
+func (c *UserByMethods) Get(p UserByGetParams) (UserByGetResponse, error) {
+	u := UserByGetResponse{}
+
+	c.RequiredScope = scopes.UserByGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemoteGet()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	return u, nil
+}
+
+type (
+	// UserConvertMethods is used to call methods for UserConvert
+	UserConvertMethods struct{ methods.MethodCall }
+
+	UserConvertPostParams struct {
+		ID int `url:"id,required"`
+	}
+
+	// UserConvertPostResponse is used to map a user conversion response from the Invgate API
+	UserConvertPostResponse struct {
+		// OK if user was correctly updated, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Post for UserConvert
+// Requires scope: UserConvertPost
+// See https://releases.invgate.com/service-desk/api/#userconvert-POST
+// An ID must be provided
+func (c *UserConvertMethods) Post(p UserConvertPostParams) (UserConvertPostResponse, error) {
+	u := UserConvertPostResponse{}
+
+	c.RequiredScope = scopes.UserConvertPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemotePost()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	if u.Status == "ERROR" {
+		return u, fmt.Errorf("invgate returned a status of %s when converting user (id: %d) ", u.Status, p.ID)
+	}
+
+	return u, nil
+}
+
+type (
+	// UserDisableMethods is used to call methods for UserDisable
+	UserDisableMethods struct{ methods.MethodCall }
+
+	UserDisablePutParams struct {
+		ID int `url:"id,required"`
+	}
+
+	// UserDisablePutResponse is used to map a user disable response from the Invgate API
+	UserDisablePutResponse struct {
+		// OK if user was correctly updated, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for UserDisable
+// Requires scope: UserDisablePut
+// See https://releases.invgate.com/service-desk/api/#userdisable-PUT
+// An ID must be provided
+func (c *UserDisableMethods) Put(p UserDisablePutParams) (UserDisablePutResponse, error) {
+	u := UserDisablePutResponse{}
+
+	c.RequiredScope = scopes.UserDisablePut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemotePut()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	if u.Status == "ERROR" {
+		return u, fmt.Errorf("invgate returned a status of %s when disabling user (id: %d) ", u.Status, p.ID)
+	}
+
+	return u, nil
+}
+
+type (
+	// UserEnableMethods is used to call methods for UserDisable
+	UserEnableMethods struct{ methods.MethodCall }
+
+	UserEnablePutParams struct {
+		ID int `url:"id,required"`
+	}
+
+	// UserEnablePutResponse is used to map a user enable response from the Invgate API
+	UserEnablePutResponse struct {
+		// OK if user was correctly updated, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for UserEnable
+// Requires scope: UserEnablePut
+// See https://releases.invgate.com/service-desk/api/#userenable-PUT
+// An ID must be provided
+func (c *UserEnableMethods) Put(p UserEnablePutParams) (UserEnablePutResponse, error) {
+	u := UserEnablePutResponse{}
+
+	c.RequiredScope = scopes.UserEnablePut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemotePut()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	if u.Status == "ERROR" {
+		return u, fmt.Errorf("invgate returned a status of %s when enabling user (id: %d) ", u.Status, p.ID)
+	}
+
+	return u, nil
+}
+
+type (
+	// UserPasswordMethods is used to call methods for UserPassword
+	UserPasswordMethods struct{ methods.MethodCall }
+
+	UserPasswordPutParams struct {
+		// ForcePasswordChange is is true user will be forced to change their password on next login
+		ForcePasswordChange bool   `url:"force_password_change"`
+		ID                  int    `url:"id,required"`
+		Password            string `url:"password,required"`
+	}
+
+	// UserPasswordPutResponse is used to map a user disable password change from the Invgate API
+	UserPasswordPutResponse struct {
+		// OK if user was correctly updated, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for UserPassword
+// Requires scope: UserPasswordPut
+// See https://releases.invgate.com/service-desk/api/#userpassword-PUT
+// An ID and Password must be provided
+func (c *UserPasswordMethods) Put(p UserPasswordPutParams) (UserPasswordPutResponse, error) {
+	u := UserPasswordPutResponse{}
+
+	c.RequiredScope = scopes.UserPasswordPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemotePut()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	if u.Status == "ERROR" {
+		return u, fmt.Errorf("invgate returned a status of %s when changing user password (id: %d) ", u.Status, p.ID)
+	}
+
+	return u, nil
+}
+
+type (
+	// UserPasswordResetMethods is used to call methods for UserPasswordReset
+	UserPasswordResetMethods struct{ methods.MethodCall }
+
+	UserPasswordResetPostParams struct {
+		// Type only accepts 'NEW_USER' and 'RESET_PASSWORD'
+		Type string `url:"type,required"`
+		ID   int    `url:"id,required"`
+	}
+
+	// UserPasswordResetPostResponse is used to map a user password reset response from the Invgate API
+	UserPasswordResetPostResponse struct {
+		// OK if user was correctly updated, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Post for UserPasswordReset
+// Requires scope: UserPasswordResetPost
+// See https://releases.invgate.com/service-desk/api/#userpasswordreset-POST
+// An ID and Type must be provided
+// Invgate Accepts two types
+// 'NEW_USER': for new users
+// 'RESET_PASSWORD': for existing users
+func (c *UserPasswordResetMethods) Post(p UserPasswordResetPostParams) (UserPasswordResetPostResponse, error) {
+	u := UserPasswordResetPostResponse{}
+
+	c.RequiredScope = scopes.UserPasswordResetPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemotePost()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	if u.Status == "ERROR" {
+		return u, fmt.Errorf("invgate returned a status of %s when resetting user password (id: %d) ", u.Status, p.ID)
+	}
+
+	return u, nil
+}
+
+type (
+	// UserTokenMethods is used to call methods for UserToken
+	UserTokenMethods struct{ methods.MethodCall }
+
+	UserTokenPostParams struct {
+		ID int `url:"id,required"`
+	}
+
+	// UserTokenPostResponse is used to map a user token response from the Invgate API
+	UserTokenPostResponse struct {
+		Token string `json:"token"`
+	}
+)
+
+// Post for UserToken
+// Requires scope: UserTokenPost
+// See https://releases.invgate.com/service-desk/api/#usertoken-POST
+// An ID and Type must be provided
+func (c *UserTokenMethods) Post(p UserTokenPostParams) (UserTokenPostResponse, error) {
+	u := UserTokenPostResponse{}
+
+	c.RequiredScope = scopes.UserTokenPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemotePost()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	return u, nil
+}
+
+type (
+	// UsersMethods is used to call methods for Users
 	UsersMethods struct{ methods.MethodCall }
 
 	UsersGetParams struct {
@@ -253,7 +578,6 @@ func (c *UsersMethods) Get(p UsersGetParams) ([]UsersGetResponse, error) {
 		return u, err
 	}
 
-	// Ingate returns a bool of false if the user is not found
 	err = json.Unmarshal(resp, &u)
 	if err != nil {
 		return u, err

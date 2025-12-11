@@ -162,6 +162,48 @@ func (c *Client) User() *endpoints.UserMethods {
 	return newPublicMethod[endpoints.UserMethods](c, "/user")
 }
 
+// UserBy gets a user by username or email
+// See https://releases.invgate.com/service-desk/api/#userby
+func (c *Client) UserBy() *endpoints.UserByMethods {
+	return newPublicMethod[endpoints.UserByMethods](c, "/user.by")
+}
+
+// UserConvert converts external user to internal user
+// See https://releases.invgate.com/service-desk/api/#userconvert
+func (c *Client) UserConvert() *endpoints.UserConvertMethods {
+	return newPublicMethod[endpoints.UserConvertMethods](c, "/user.convert")
+}
+
+// UserDisable disables a user
+// See https://releases.invgate.com/service-desk/api/#userdisable
+func (c *Client) UserDisable() *endpoints.UserDisableMethods {
+	return newPublicMethod[endpoints.UserDisableMethods](c, "/user.disable")
+}
+
+// UserEnable enables a user
+// See https://releases.invgate.com/service-desk/api/#userenable
+func (c *Client) UserEnable() *endpoints.UserEnableMethods {
+	return newPublicMethod[endpoints.UserEnableMethods](c, "/user.enable")
+}
+
+// UserPassword changes a users password
+// See https://releases.invgate.com/service-desk/api/#userpassword
+func (c *Client) UserPassword() *endpoints.UserPasswordMethods {
+	return newPublicMethod[endpoints.UserPasswordMethods](c, "/user.password")
+}
+
+// UserPasswordReset forces a user to do a password reset
+// See https://releases.invgate.com/service-desk/api/#userpasswordreset
+func (c *Client) UserPasswordReset() *endpoints.UserPasswordResetMethods {
+	return newPublicMethod[endpoints.UserPasswordResetMethods](c, "/user.password.reset")
+}
+
+// UserToken creates a session token for a user
+// See https://releases.invgate.com/service-desk/api/#usertoken
+func (c *Client) UserToken() *endpoints.UserTokenMethods {
+	return newPublicMethod[endpoints.UserTokenMethods](c, "/user.token")
+}
+
 // Users returns a list of each of users in the Service Desk instance
 // See https://releases.invgate.com/service-desk/api/#users
 func (c *Client) Users() *endpoints.UsersMethods {

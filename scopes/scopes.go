@@ -113,11 +113,18 @@ var (
 
 // User
 var (
-	user                 = ".user"
-	UserGet    ScopeType = ScopeType(base + user + methods.Get)
-	UserPost   ScopeType = ScopeType(base + user + methods.Post)
-	UserPut    ScopeType = ScopeType(base + user + methods.Put)
-	UserDelete ScopeType = ScopeType(base + user + methods.Delete)
+	user                            = ".user"
+	UserGet               ScopeType = ScopeType(base + user + methods.Get)
+	UserPost              ScopeType = ScopeType(base + user + methods.Post)
+	UserPut               ScopeType = ScopeType(base + user + methods.Put)
+	UserDelete            ScopeType = ScopeType(base + user + methods.Delete)
+	UserByGet             ScopeType = ScopeType(base + user + ".by" + methods.Get)
+	UserConvertPost       ScopeType = ScopeType(base + user + ".convert" + methods.Post)
+	UserDisablePut        ScopeType = ScopeType(base + user + ".disable" + methods.Put)
+	UserEnablePut         ScopeType = ScopeType(base + user + ".enable" + methods.Put)
+	UserPasswordPut       ScopeType = ScopeType(base + user + ".password" + methods.Put)
+	UserPasswordResetPost ScopeType = ScopeType(base + user + ".password.reset" + methods.Post)
+	UserTokenPost         ScopeType = ScopeType(base + user + ".token" + methods.Post)
 )
 
 // Users

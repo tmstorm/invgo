@@ -76,6 +76,144 @@ func TestUserDelete(t *testing.T) {
 	a.EqualValues(users, got)
 }
 
+func TestUserByGet(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserByGetResponse
+	gofakeit.Struct(&u)
+
+	server := newTestServer(t, http.MethodGet, "/user.by", u)
+
+	c := newTestClient(t, server, scopes.UserByGet)
+
+	got, err := c.UserBy().Get(endpoints.UserByGetParams{Username: "john"})
+	a.NoError(err)
+	a.EqualValues(u, got)
+}
+
+func TestUserConvertPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserConvertPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/user.convert", u)
+
+	c := newTestClient(t, server, scopes.UserConvertPost)
+
+	got, err := c.UserConvert().Post(endpoints.UserConvertPostParams{ID: 1})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/user.convert", u)
+
+	cErr := newTestClient(t, serverErr, scopes.UserConvertPost)
+	gotErr, err := cErr.UserConvert().Post(endpoints.UserConvertPostParams{ID: 1})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestUserDisablePut(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserDisablePutResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPut, "/user.disable", u)
+
+	c := newTestClient(t, server, scopes.UserDisablePut)
+
+	got, err := c.UserDisable().Put(endpoints.UserDisablePutParams{ID: 1})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPut, "/user.disable", u)
+
+	cErr := newTestClient(t, serverErr, scopes.UserDisablePut)
+	gotErr, err := cErr.UserDisable().Put(endpoints.UserDisablePutParams{ID: 1})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestUserEnablePut(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserEnablePutResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPut, "/user.enable", u)
+
+	c := newTestClient(t, server, scopes.UserEnablePut)
+
+	got, err := c.UserEnable().Put(endpoints.UserEnablePutParams{ID: 1})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPut, "/user.enable", u)
+
+	cErr := newTestClient(t, serverErr, scopes.UserEnablePut)
+	gotErr, err := cErr.UserEnable().Put(endpoints.UserEnablePutParams{ID: 1})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestUserPasswordPut(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserPasswordPutResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPut, "/user.password", u)
+
+	c := newTestClient(t, server, scopes.UserPasswordPut)
+
+	got, err := c.UserPassword().Put(endpoints.UserPasswordPutParams{ID: 1, Password: "somenewpass"})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPut, "/user.password", u)
+
+	cErr := newTestClient(t, serverErr, scopes.UserPasswordPut)
+	gotErr, err := cErr.UserPassword().Put(endpoints.UserPasswordPutParams{ID: 1, Password: "somenewpass"})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestUserPasswordResetPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserPasswordResetPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/user.password.reset", u)
+
+	c := newTestClient(t, server, scopes.UserPasswordResetPost)
+
+	got, err := c.UserPasswordReset().Post(endpoints.UserPasswordResetPostParams{ID: 1, Type: "NEW_USER"})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/user.password.reset", u)
+
+	cErr := newTestClient(t, serverErr, scopes.UserPasswordResetPost)
+	gotErr, err := cErr.UserPasswordReset().Post(endpoints.UserPasswordResetPostParams{ID: 1, Type: "RESET_PASSWORD"})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestUserTokenPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.UserTokenPostResponse
+	gofakeit.Struct(&u)
+
+	server := newTestServer(t, http.MethodPost, "/user.token", u)
+
+	c := newTestClient(t, server, scopes.UserTokenPost)
+
+	got, err := c.UserToken().Post(endpoints.UserTokenPostParams{ID: 1})
+	a.NoError(err)
+	a.Equal(u, got)
+}
+
 func TestUsersGet(t *testing.T) {
 	a := assert.New(t)
 	users := []endpoints.UsersGetResponse{}

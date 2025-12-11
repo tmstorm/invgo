@@ -20,5 +20,12 @@ var ImplementedEndpoints = map[string][]string{
 	"/triggers":                       {"GET"},
 	"/triggers.executions":            {"GET"},
 	"/user":                           {"GET", "POST", "PUT", "DELETE"},
+	"/user.by":                        {"GET"},
+	"/user.convert":                   {"POST"},
+	"/user.disable":                   {"PUT"},
+	"/user.enable":                    {"PUT"},
+	"/user.password":                  {"PUT"},
+	"/user.password.reset":            {"POST"},
+	"/user.token":                     {"POST"},
 	"/users":                          {"GET"},
 }
