@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/tmstorm/invgo/compare/v0.4.0...v0.4.1) (2025-12-11)
+
+
+### 🔨 Refactoring
+
+* make NewPublicMethod private ([e0f87cc](https://github.com/tmstorm/invgo/commit/e0f87cc3ab48c6e9042b91b69d0b4f2027b8b21f))
+* use reflect to create newPublicMethods ([68e7e1f](https://github.com/tmstorm/invgo/commit/68e7e1f88706b829c6eb6a6e67766233435634cf))
+
 ## [0.4.0](https://github.com/tmstorm/invgo/compare/v0.3.2...v0.4.0) (2025-12-09)
 
 
