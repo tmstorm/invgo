@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/tmstorm/invgo/compare/v0.4.1...v0.5.0) (2025-12-11)
+
+
+### 🚀 Features
+
+* add remaining user endpoints ([3eb6566](https://github.com/tmstorm/invgo/commit/3eb6566836875603c21b7c2c0e3334e3446aa100))
+
+
+### 🐛 Bug Fixes
+
+* tests were still using old newPublicMethod ([97cc503](https://github.com/tmstorm/invgo/commit/97cc5030ff68030d9304972efca4d70e1ae4c6ee))
+
 ## [0.4.1](https://github.com/tmstorm/invgo/compare/v0.4.0...v0.4.1) (2025-12-11)
 
 
