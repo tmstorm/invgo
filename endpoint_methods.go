@@ -13,7 +13,7 @@ Example:
 */
 
 import (
-	"unsafe"
+	"reflect"
 
 	"github.com/tmstorm/invgo/endpoints"
 	"github.com/tmstorm/invgo/internal/methods"
@@ -23,23 +23,27 @@ import (
 // newPublicMethod should be used when adding a new enpoint to the Invgo public API
 // T must be a struct whose first field is methods.MethodCall
 func newPublicMethod[T any](c *Client, endpoint string) *T {
-	var zero T
-	result := &zero
+	var result T
+	v := reflect.ValueOf(&result).Elem()
 
 	ep := c.APIURL.JoinPath(endpoint)
 
-	mcPtr := (*methods.MethodCall)(unsafe.Pointer(result))
-
-	*mcPtr = methods.MethodCall{
-		Client: &methods.Client{
-			HTTPClient:    c.HTTPClient,
-			CurrentScopes: c.CurrentScopes,
-			APIURL:        c.APIURL,
-		},
-		Endpoint: ep,
+	for i := range v.NumField() {
+		if v.Field(i).Type() == reflect.TypeOf(methods.MethodCall{}) {
+			mc := methods.MethodCall{
+				Client: &methods.Client{
+					HTTPClient:    c.HTTPClient,
+					CurrentScopes: c.CurrentScopes,
+					APIURL:        c.APIURL,
+				},
+				Endpoint: ep,
+			}
+			v.Field(i).Set(reflect.ValueOf(mc))
+			break
+		}
 	}
 
-	return result
+	return &result
 }
 
 // BreakingNews manages the /breakingnews endpoint
