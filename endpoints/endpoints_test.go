@@ -14,7 +14,7 @@ import (
 var testScope = scopes.ScopeType("api.v1.test:get")
 
 func testAttrs(c *invgo.Client) *endpoints.AttributesMethods {
-	m := invgo.NewPublicMethod[endpoints.AttributesMethods](c, "/attrs.test")
+	m := newPublicMethod[endpoints.AttributesMethods](c, "/attrs.test")
 	m.RequiredScope = testScope
 	return m
 }

@@ -49,7 +49,7 @@
 3. Add to `invgo/endpoint_methods.go`:
     ```go
     func (c *Client) NewEndpoint() *endpoints.NewEndpointMethods {
-        return NewPublicMethod[endpoints.NewEndpointMethods](c, "/newendpoint")
+        return newPublicMethod[endpoints.NewEndpointMethods](c, "/newendpoint")
     }
     ```
 4. Add tests to `invgo/endpoints/endpoint_name_test.go`, one for each method call the endpoint implements.

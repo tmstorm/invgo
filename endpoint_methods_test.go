@@ -1,4 +1,4 @@
-package invgo_test
+package invgo
 
 import (
 	"errors"
@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tmstorm/invgo"
 	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/scopes"
 )
@@ -27,7 +26,7 @@ func (c *testEndpointMethods) get() error {
 	return nil
 }
 
-func TestNewPublicMethod(t *testing.T) {
+func Test_newPublicMethod(t *testing.T) {
 	a := assert.New(t)
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -38,13 +37,13 @@ func TestNewPublicMethod(t *testing.T) {
 	u, err := url.Parse("https://test.com")
 	a.NoError(err)
 
-	c := &invgo.Client{
+	c := &Client{
 		HTTPClient:    server.Client(),
 		CurrentScopes: []scopes.ScopeType{scopes.BreakingNewsGet},
 		APIURL:        u,
 	}
 
-	m := invgo.NewPublicMethod[testEndpointMethods](c, testEndpoint)
+	m := newPublicMethod[testEndpointMethods](c, testEndpoint)
 	m.RequiredScope = testScope
 
 	err = m.get()
