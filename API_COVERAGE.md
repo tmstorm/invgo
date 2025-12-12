@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 22.50% (36/160 methods implemented)
+**coverage:** 25.00% (40/160 methods implemented)
 
 ### /breakingnews
 
@@ -564,15 +564,15 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| DELETE | ❌ |
-| GET | ❌ |
+| POST | ✅ |
+| DELETE | ✅ |
+| GET | ✅ |
 
 ### /timetracking.attributes.category
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /triggers
 

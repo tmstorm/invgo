@@ -70,7 +70,10 @@ var (
 )
 
 // CategoriesGet
-var CategoriesGet ScopeType = ScopeType(base + ".categories" + methods.Get)
+var (
+	categories              = ".categories"
+	CategoriesGet ScopeType = ScopeType(base + categories + methods.Get)
+)
 
 // Help Desks
 var (
@@ -102,7 +105,19 @@ var (
 )
 
 // ServiceDeskVersionGet
-var ServiceDeskVersionGet ScopeType = ScopeType(base + ".sd.version" + methods.Get)
+var (
+	serviceDesk                     = ".sd"
+	ServiceDeskVersionGet ScopeType = ScopeType(base + serviceDesk + ".version" + methods.Get)
+)
+
+// TimeTracking
+var (
+	timeTracking                                = ".timetracking"
+	TimeTrackingGet                   ScopeType = ScopeType(base + timeTracking + methods.Get)
+	TimeTrackingPost                  ScopeType = ScopeType(base + timeTracking + methods.Post)
+	TimeTrackingDelete                ScopeType = ScopeType(base + timeTracking + methods.Delete)
+	TimeTrackingAttributesCategoryGet ScopeType = ScopeType(base + timeTracking + ".attributes.category" + methods.Get)
+)
 
 // Triggers
 var (

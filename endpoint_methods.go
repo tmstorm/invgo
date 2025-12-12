@@ -141,6 +141,18 @@ func (c *Client) ServiceDeskVersion() *endpoints.ServiceDeskVersionMethods {
 	return newPublicMethod[endpoints.ServiceDeskVersionMethods](c, "/sd.version")
 }
 
+// TimeTracking manages time tracking records in the Service Desk instance
+// See https://releases.invgate.com/service-desk/api/#timetracking
+func (c *Client) TimeTracking() *endpoints.TimeTrackingMethods {
+	return newPublicMethod[endpoints.TimeTrackingMethods](c, "/timetracking")
+}
+
+// TimeTrackingAttributesCategory manages time tracking records attributes by category in the Service Desk instance
+// See https://releases.invgate.com/service-desk/api/#timetracking
+func (c *Client) TimeTrackingAttributesCategory() *endpoints.TimeTrackingAttributesCategoryMethods {
+	return newPublicMethod[endpoints.TimeTrackingAttributesCategoryMethods](c, "/timetracking.attributes.category")
+}
+
 // Triggers returns user defined tiggers in the Service Desk instance
 // See https://releases.invgate.com/service-desk/api/#triggers
 func (c *Client) Triggers() *endpoints.TriggersMethods {
