@@ -30,4 +30,6 @@ var ImplementedEndpoints = map[string][]string{
 	"/users":                          {"GET"},
 	"/users.by":                       {"GET"},
 	"/users.groups":                   {"GET"},
+	"/wf.deploy":                      {"PUT"},
+	"/wf.initialfields.by.category":   {"GET"},
 }

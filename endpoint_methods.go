@@ -221,3 +221,15 @@ func (c *Client) UsersBy() *endpoints.UsersByMethods {
 func (c *Client) UsersGroups() *endpoints.UsersGroupsMethods {
 	return newPublicMethod[endpoints.UsersGroupsMethods](c, "/users.groups")
 }
+
+// WorkflowDeploy is used to deploy a workflow
+// See https://releases.invgate.com/service-desk/api/#wfdeploy
+func (c *Client) WorkflowDeploy() *endpoints.WorkflowDeployMethods {
+	return newPublicMethod[endpoints.WorkflowDeployMethods](c, "/wf.deploy")
+}
+
+// WorkflowInitialFieldsByCategory is used to get the initial fields needed to create a workflow
+// See https://releases.invgate.com/service-desk/api/#wfinitialfieldsbycategory
+func (c *Client) WorkflowInitialFieldsByCategory() *endpoints.WorkflowInitialFieldsByCategoryMethods {
+	return newPublicMethod[endpoints.WorkflowInitialFieldsByCategoryMethods](c, "/wf.initialfields.by.category")
+}

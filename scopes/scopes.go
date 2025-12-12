@@ -135,6 +135,13 @@ var (
 	UsersGroupsGet ScopeType = ScopeType(base + users + ".groups" + methods.Get)
 )
 
+// Workflow
+var (
+	workflow                                     = ".wf"
+	WorkflowDeployPut                  ScopeType = ScopeType(base + workflow + ".deploy" + methods.Put)
+	WorkflowInitialFieldsByCategoryGet ScopeType = ScopeType(base + workflow + ".initialfields.by.category" + methods.Get)
+)
+
 // CreateScopes is used to take all scopes provided in the config and convert them to strings
 // for creating the initial Invgate connection
 func CreateScopes(scopes []ScopeType) []string {
