@@ -10,7 +10,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/breakingnews.attributes.type":   {"GET"},
 	"/breakingnews.status":            {"POST", "GET"},
 	"/categories":                     {"GET"},
-	"/helpesks":                       {"GET"},
+	"/helpdesks":                      {"GET"},
 	"/incident":                       {"POST", "PUT", "GET"},
 	"/incident.attributes.status":     {"GET"},
 	"/incident.attributes.type":       {"GET"},

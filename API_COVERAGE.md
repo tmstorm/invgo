@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 21.88% (35/160 methods implemented)
+**coverage:** 22.50% (36/160 methods implemented)
 
 ### /breakingnews
 
@@ -149,7 +149,7 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /helpdesks.observers
 
