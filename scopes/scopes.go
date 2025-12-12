@@ -129,8 +129,10 @@ var (
 
 // Users
 var (
-	users              = ".users"
-	UsersGet ScopeType = ScopeType(base + users + methods.Get)
+	users                    = ".users"
+	UsersGet       ScopeType = ScopeType(base + users + methods.Get)
+	UsersByGet     ScopeType = ScopeType(base + users + ".by" + methods.Get)
+	UsersGroupsGet ScopeType = ScopeType(base + users + ".groups" + methods.Get)
 )
 
 // CreateScopes is used to take all scopes provided in the config and convert them to strings

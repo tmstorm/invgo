@@ -204,8 +204,20 @@ func (c *Client) UserToken() *endpoints.UserTokenMethods {
 	return newPublicMethod[endpoints.UserTokenMethods](c, "/user.token")
 }
 
-// Users returns a list of each of users in the Service Desk instance
+// Users returns a list of each of the specified list or all users
 // See https://releases.invgate.com/service-desk/api/#users
 func (c *Client) Users() *endpoints.UsersMethods {
 	return newPublicMethod[endpoints.UsersMethods](c, "/users")
+}
+
+// UsersBy returns a list of users matching the filter
+// See https://releases.invgate.com/service-desk/api/#usersby
+func (c *Client) UsersBy() *endpoints.UsersByMethods {
+	return newPublicMethod[endpoints.UsersByMethods](c, "/users.by")
+}
+
+// UsersGroups returns a users groups, companies, helpdesks, and locations
+// See https://releases.invgate.com/service-desk/api/#usersgroups
+func (c *Client) UsersGroups() *endpoints.UsersGroupsMethods {
+	return newPublicMethod[endpoints.UsersGroupsMethods](c, "/users.groups")
 }

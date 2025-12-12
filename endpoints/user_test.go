@@ -229,3 +229,33 @@ func TestUsersGet(t *testing.T) {
 	a.NoError(err)
 	a.EqualValues(users, got)
 }
+
+func TestUsersByGet(t *testing.T) {
+	a := assert.New(t)
+	users := endpoints.UsersByGetResponse{}
+	gofakeit.Struct(&users)
+
+	server := newTestServer(t, http.MethodGet, "/users.by", users)
+
+	c := newTestClient(t, server, scopes.UsersByGet)
+
+	got, err := c.UsersBy().Get(endpoints.UsersByGetParams{Username: "johndoe@example.com"})
+	a.NoError(err)
+	a.EqualValues(users, got)
+}
+
+func TestUsersGroupsGet(t *testing.T) {
+	a := assert.New(t)
+	users := []endpoints.UsersGroupsGetResponse{}
+	var u endpoints.UsersGroupsGetResponse
+	gofakeit.Struct(&u)
+	users = append(users, u)
+
+	server := newTestServer(t, http.MethodGet, "/users.groups", users)
+
+	c := newTestClient(t, server, scopes.UsersGroupsGet)
+
+	got, err := c.UsersGroups().Get(endpoints.UsersGroupsGetParams{IDs: []int{u.ID}})
+	a.NoError(err)
+	a.EqualValues(users, got)
+}

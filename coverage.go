@@ -28,4 +28,6 @@ var ImplementedEndpoints = map[string][]string{
 	"/user.password.reset":            {"POST"},
 	"/user.token":                     {"POST"},
 	"/users":                          {"GET"},
+	"/users.by":                       {"GET"},
+	"/users.groups":                   {"GET"},
 }

@@ -585,3 +585,145 @@ func (c *UsersMethods) Get(p UsersGetParams) ([]UsersGetResponse, error) {
 
 	return u, nil
 }
+
+type (
+	// UsersByMethods is used to call methods for UsersBy
+	UsersByMethods struct{ methods.MethodCall }
+
+	UsersByGetParams struct {
+		OfficePhone     string `url:"office_phone"`
+		Phone           string `url:"phone"`
+		Username        string `url:"username"`
+		EmployeeNumber  string `url:"employee_number"`
+		OtherPhone      string `url:"other_phone"`
+		IncludeDisabled bool   `url:"include_disabled"`
+		Email           string `url:"email"`
+		ExactMatch      bool   `url:"exact_match"`
+		Phones          string `url:"phones"`
+		PageKey         string `url:"page_key"`
+		FaxPhone        string `url:"fax_phone"`
+		MobilePhone     string `url:"mobile_phone"`
+	}
+
+	// UsersByGetResponse is used to map users returned from the Invgate API
+	// Invgate says this is an array but it is actually a map which looks like
+	// map[string]map[int]map[string]any
+	// To accomidate this users are bound to UsersByGetResponse.Data map.
+	// If you know the user id you can get them from the map like so:
+	// i := id
+	// user := UsersByGetResponse.Data[i]
+	UsersByGetResponse struct {
+		Data        map[int]UserGetResponse `json:"data,omitempty"`
+		NextPageKey []int                   `json:"next_page_key,omitempty"`
+	}
+)
+
+// Get for UsersBy
+// Requires scope: UsersByGet
+// See https://releases.invgate.com/service-desk/api/#usersby-GET
+func (c *UsersByMethods) Get(p UsersByGetParams) (UsersByGetResponse, error) {
+	u := UsersByGetResponse{}
+
+	c.RequiredScope = scopes.UsersByGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemoteGet()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	return u, nil
+}
+
+type (
+	// UsersGroupsMethods is used to call methods for UsersGroups
+	UsersGroupsMethods struct{ methods.MethodCall }
+
+	UsersGroupsGetParams struct {
+		IDs []int `url:"ids,required"`
+	}
+
+	// UsersGroupsGetResponse is used to map a users group information returned from the Invgate API
+	//
+	// NOTE: Some of these might not be correct. The Invgate API docs only say array
+	// for some return types and not everything has a value in the instance I am testing in.
+	// I have already found that some Fields like Groups and Helpdesks return maps instead of an Array.
+	// I suspect that the others do the same. With this in mind I have set all type to `any` where the docs
+	// declare them as an Array but I do not yet know what is actually returned.
+	UsersGroupsGetResponse struct {
+		CompaniesObserved any           `json:"companies_observed,omitempty"`
+		LocationsObserved any           `json:"locations_observed,omitempty"`
+		Companies         any           `json:"companies,omitempty"`
+		ID                int           `json:"id,omitempty"`
+		GroupsObserved    any           `json:"groups_observed,omitempty"`
+		Groups            CollectionMap `json:"groups,omitempty"`
+		Helpdesks         CollectionMap `json:"helpdesks,omitempty"`
+		HelpdesksObserved any           `json:"helpdesks_observed,omitempty"`
+		Username          string        `json:"username,omitempty"`
+		Email             string        `json:"email,omitempty"`
+		Locations         any           `json:"locations,omitempty"`
+	}
+
+	// CollectionMap is used to map both groups and helpdesks for UsersGroups
+	// The map index is collections ID e.g. If the group id is 2 then CollectionMap[2] will return this groups collection.
+	CollectionMap map[int]Collection
+
+	// Collection is the struct used by CollectionMap
+	//
+	// WARNING: The Invgate API docs are not clear on what data this returns.
+	// This has been constructed using what I know although some types might be wrong
+	Collection struct {
+		EngineID          int    `json:"engine_id,omitempty"`
+		HolidaysCalendar  bool   `json:"holidays_calendar,omitempty"`
+		ID                int    `json:"id,omitempty"`
+		IsDefault         int    `json:"is_default,omitempty"` // Should be a bool but Invgate sends int
+		LevelOrder        int    `json:"level_order,omitempty"`
+		Name              string `json:"name,omitempty"`
+		OrgID             int    `json:"org_id,omitempty"`
+		ParentID          int    `json:"parent_id,omitempty"`
+		QueueForNextShift int    `json:"queue_for_next_shift,omitempty"`
+		Restricted        int    `json:"restricted,omitempty"` // Probably should be a bool but is sent as int
+		ScaleRuleID       int    `json:"scale_rule_id,omitempty"`
+		StatusID          int    `json:"status_id,omitempty"`
+		TimeZone          int    `json:"time_zone,omitempty"` // Invgate uses an internal 5 digit number for time zones
+		TypeID            int    `json:"type_id,omitempty"`
+	}
+)
+
+// Get for UsersGroups
+// Requires scope: UsersGroupsGet
+// See https://releases.invgate.com/service-desk/api/#usersgroups-GET
+// At least one user ID is required
+func (c *UsersGroupsMethods) Get(p UsersGroupsGetParams) ([]UsersGroupsGetResponse, error) {
+	u := []UsersGroupsGetResponse{}
+
+	c.RequiredScope = scopes.UsersGroupsGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return u, err
+	}
+	c.Endpoint.RawQuery = q.Encode()
+
+	resp, err := c.RemoteGet()
+	if err != nil {
+		return u, err
+	}
+
+	err = json.Unmarshal(resp, &u)
+	if err != nil {
+		return u, err
+	}
+
+	return u, nil
+}

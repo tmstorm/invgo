@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 19.38% (31/160 methods implemented)
+**coverage:** 20.62% (33/160 methods implemented)
 
 ### /breakingnews
 
@@ -647,13 +647,13 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /users.groups
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /wf.deploy
 
