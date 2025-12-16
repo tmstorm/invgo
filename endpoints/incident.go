@@ -259,6 +259,128 @@ func (i *IncidentApprovalMethods) Get(p IncidentApprovalGetParams) ([]IncidentAp
 }
 
 type (
+	// IncidentApprovalAcceptMethods is use to call methods for IncidentApprovalAccept
+	IncidentApprovalAcceptMethods struct{ methods.MethodCall }
+
+	IncidentApprovalAcceptPutParams struct {
+		RequestID int    `url:"request_id,required"`
+		UserID    int    `url:"user_id,required"`
+		Note      string `url:"note"`
+	}
+
+	IncidentApprovalAcceptPutResponse struct {
+		// OK if approval was accepted, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for IncidentApprovalAccept
+// Requires scope: IncidentApprovalAcceptPut
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalaccept-PUT
+func (i *IncidentApprovalAcceptMethods) Put(p IncidentApprovalAcceptPutParams) (IncidentApprovalAcceptPutResponse, error) {
+	inc := IncidentApprovalAcceptPutResponse{}
+	i.RequiredScope = scopes.IncidentApprovalAcceptPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
+	// IncidentApprovalCancelMethods is use to call methods for IncidentApprovalCancel
+	IncidentApprovalCancelMethods struct{ methods.MethodCall }
+
+	IncidentApprovalCancelPutParams struct {
+		RequestID int `url:"request_id,required"`
+		UserID    int `url:"user_id,required"`
+	}
+
+	IncidentApprovalCancelPutResponse struct {
+		// OK if approval was canceled, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for IncidentApprovalCancel
+// Requires scope: IncidentApprovalCancelPut
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel-PUT
+func (i *IncidentApprovalCancelMethods) Put(p IncidentApprovalCancelPutParams) (IncidentApprovalCancelPutResponse, error) {
+	inc := IncidentApprovalCancelPutResponse{}
+	i.RequiredScope = scopes.IncidentApprovalCancelPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
+	// IncidentApprovalRejectMethods is use to call methods for IncidentApprovalReject
+	IncidentApprovalRejectMethods struct{ methods.MethodCall }
+
+	IncidentApprovalRejectPutParams struct {
+		RequestID int `url:"request_id,required"`
+		UserID    int `url:"user_id,required"`
+		Note      int `url:"note"`
+	}
+
+	IncidentApprovalRejectPutResponse struct {
+		// OK if approval was rejected, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for IncidentApprovalReject
+// Requires scope: IncidentApprovalRejectPut
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalreject-PUT
+func (i *IncidentApprovalRejectMethods) Put(p IncidentApprovalRejectPutParams) (IncidentApprovalRejectPutResponse, error) {
+	inc := IncidentApprovalRejectPutResponse{}
+	i.RequiredScope = scopes.IncidentApprovalRejectPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
 	// IncidentApprovalStatusMethods is use to call methods for IncidentApprovalStatus
 	IncidentApprovalStatusMethods struct{ methods.MethodCall }
 

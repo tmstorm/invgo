@@ -81,6 +81,57 @@ func TestIncidentApprovalGet(t *testing.T) {
 	a.Equal(incs, resp)
 }
 
+func TestIncidentApprovalAcceptPut(t *testing.T) {
+	a := assert.New(t)
+
+	var r endpoints.IncidentApprovalAcceptPutResponse
+	var inc endpoints.IncidentApprovalAcceptPutParams
+	gofakeit.Struct(&r)
+	gofakeit.Struct(&inc)
+
+	server := newTestServer(t, http.MethodPut, "/incident.approval.accept", r)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalAcceptPut)
+
+	resp, err := c.IncidentApprovalAccept().Put(inc)
+	a.NoError(err)
+	a.Equal(r, resp)
+}
+
+func TestIncidentApprovalCancelPut(t *testing.T) {
+	a := assert.New(t)
+
+	var r endpoints.IncidentApprovalCancelPutResponse
+	var inc endpoints.IncidentApprovalCancelPutParams
+	gofakeit.Struct(&r)
+	gofakeit.Struct(&inc)
+
+	server := newTestServer(t, http.MethodPut, "/incident.approval.cancel", r)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalCancelPut)
+
+	resp, err := c.IncidentApprovalCancel().Put(inc)
+	a.NoError(err)
+	a.Equal(r, resp)
+}
+
+func TestIncidentApprovalRejectPut(t *testing.T) {
+	a := assert.New(t)
+
+	var r endpoints.IncidentApprovalRejectPutResponse
+	var inc endpoints.IncidentApprovalRejectPutParams
+	gofakeit.Struct(&r)
+	gofakeit.Struct(&inc)
+
+	server := newTestServer(t, http.MethodPut, "/incident.approval.reject", r)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalRejectPut)
+
+	resp, err := c.IncidentApprovalReject().Put(inc)
+	a.NoError(err)
+	a.Equal(r, resp)
+}
+
 func TestIncidentApprovalStatusGet(t *testing.T) {
 	a := assert.New(t)
 

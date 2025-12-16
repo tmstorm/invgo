@@ -113,6 +113,24 @@ func (c *Client) IncidentApproval() *endpoints.IncidentApprovalMethods {
 	return newPublicMethod[endpoints.IncidentApprovalMethods](c, "/incident.approval")
 }
 
+// IncidentApprovalAccept returnns an incidents approval accept
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalaccept
+func (c *Client) IncidentApprovalAccept() *endpoints.IncidentApprovalAcceptMethods {
+	return newPublicMethod[endpoints.IncidentApprovalAcceptMethods](c, "/incident.approval.accept")
+}
+
+// IncidentApprovalCancel returnns an incidents approval cancel
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel
+func (c *Client) IncidentApprovalCancel() *endpoints.IncidentApprovalCancelMethods {
+	return newPublicMethod[endpoints.IncidentApprovalCancelMethods](c, "/incident.approval.cancel")
+}
+
+// IncidentApprovalReject returnns an incidents approval reject
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel
+func (c *Client) IncidentApprovalReject() *endpoints.IncidentApprovalRejectMethods {
+	return newPublicMethod[endpoints.IncidentApprovalRejectMethods](c, "/incident.approval.reject")
+}
+
 // IncidentApprovalStatus returns an incidents approval statuses
 // See https://releases.invgate.com/service-desk/api/#incidentapprovalstatus
 func (c *Client) IncidentApprovalStatus() *endpoints.IncidentApprovalStatusMethods {
