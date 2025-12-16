@@ -6,8 +6,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
 | PUT | ✅ |
+| POST | ✅ |
 | GET | ✅ |
 
 ### /breakingnews.all
@@ -45,17 +45,17 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /cf.field.options.tree
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
+| PUT | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /cf.fields.all
@@ -86,33 +86,33 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
+| PUT | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /companies.groups
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /companies.observers
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /companies.users
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /data.export
@@ -125,24 +125,24 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /groups.observers
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /groups.users
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /helpdesks
@@ -155,8 +155,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /helpdesksandlevels
@@ -169,8 +169,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
 | PUT | ✅ |
+| POST | ✅ |
 | GET | ✅ |
 
 ### /incident.approval
@@ -289,8 +289,8 @@
 | Method | Status |
 |--------|--------|
 | DELETE | ❌ |
-| PATCH | ❌ |
 | POST | ❌ |
+| PATCH | ❌ |
 
 ### /incident.external_entity
 
@@ -461,26 +461,26 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
+| PUT | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /kb.articles
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
+| PUT | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /kb.articles.attachments
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /kb.articles.by.category
@@ -505,9 +505,9 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
+| PUT | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /kb.categories.by.ids
@@ -526,32 +526,32 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /locations
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /locations.observers
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /locations.users
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
+| POST | ❌ |
 | GET | ❌ |
 
 ### /sd.version
@@ -564,8 +564,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
 | DELETE | ✅ |
+| POST | ✅ |
 | GET | ✅ |
 
 ### /timetracking.attributes.category
@@ -590,9 +590,9 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
-| PUT | ✅ |
 | DELETE | ✅ |
+| PUT | ✅ |
+| POST | ✅ |
 | GET | ✅ |
 
 ### /user.by

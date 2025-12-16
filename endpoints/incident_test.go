@@ -64,6 +64,107 @@ func TestIncidentPut(t *testing.T) {
 	a.Equal(incs, resp)
 }
 
+func TestIncidentApprovalGet(t *testing.T) {
+	a := assert.New(t)
+
+	incs := make([]endpoints.IncidentApprovalGetResponse, 1)
+	var inc endpoints.IncidentApprovalGetResponse
+	gofakeit.Struct(&inc)
+	incs = append(incs, inc)
+
+	server := newTestServer(t, http.MethodGet, "/incident.approval", incs)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalGet)
+
+	resp, err := c.IncidentApproval().Get(endpoints.IncidentApprovalGetParams{RequestID: inc.ID})
+	a.NoError(err)
+	a.Equal(incs, resp)
+}
+
+func TestIncidentApprovalStatusGet(t *testing.T) {
+	a := assert.New(t)
+
+	d := make(map[int]string, 3)
+	d[0] = "Desc1"
+	d[1] = "Desc2"
+	d[2] = "Desc3"
+
+	incs := make([]endpoints.IncidentApprovalStatusGetResponse, 0, len(d))
+	for k, v := range d {
+		s := endpoints.IncidentApprovalStatusGetResponse{
+			ID:          k,
+			Description: v,
+		}
+		incs = append(incs, s)
+	}
+
+	server := newTestServer(t, http.MethodGet, "/incident.approval.status", d)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalStatusGet)
+
+	resp, err := c.IncidentApprovalStatus().Get()
+	a.NoError(err)
+	for i := range resp {
+		a.Contains(incs, resp[i])
+	}
+}
+
+func TestIncidentApprovalTypeGet(t *testing.T) {
+	a := assert.New(t)
+
+	d := make(map[int]string, 3)
+	d[0] = "Desc1"
+	d[1] = "Desc2"
+	d[2] = "Desc3"
+
+	incs := make([]endpoints.IncidentApprovalTypeGetResponse, 0, len(d))
+	for k, v := range d {
+		s := endpoints.IncidentApprovalTypeGetResponse{
+			ID:          k,
+			Description: v,
+		}
+		incs = append(incs, s)
+	}
+
+	server := newTestServer(t, http.MethodGet, "/incident.approval.type", d)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalTypeGet)
+
+	resp, err := c.IncidentApprovalType().Get()
+	a.NoError(err)
+	for i := range resp {
+		a.Contains(incs, resp[i])
+	}
+}
+
+func TestIncidentApprovalVoteStatusGet(t *testing.T) {
+	a := assert.New(t)
+
+	d := make(map[int]string, 3)
+	d[0] = "Desc1"
+	d[1] = "Desc2"
+	d[2] = "Desc3"
+
+	incs := make([]endpoints.IncidentApprovalVoteStatusGetResponse, 0, len(d))
+	for k, v := range d {
+		s := endpoints.IncidentApprovalVoteStatusGetResponse{
+			ID:          k,
+			Description: v,
+		}
+		incs = append(incs, s)
+	}
+
+	server := newTestServer(t, http.MethodGet, "/incident.approval.vote_status", d)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalVoteStatusGet)
+
+	resp, err := c.IncidentApprovalVoteStatus().Get()
+	a.NoError(err)
+	for i := range resp {
+		a.Contains(incs, resp[i])
+	}
+}
+
 func TestIncidentsGet(t *testing.T) {
 	a := assert.New(t)
 
