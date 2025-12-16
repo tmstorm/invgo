@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 25.00% (40/160 methods implemented)
+**coverage:** 29.38% (47/160 methods implemented)
 
 ### /breakingnews
 
@@ -177,13 +177,13 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /incident.approval.accept
 
 | Method | Status |
 |--------|--------|
-| PUT | ❌ |
+| PUT | ✅ |
 
 ### /incident.approval.add_voter
 
@@ -195,7 +195,7 @@
 
 | Method | Status |
 |--------|--------|
-| PUT | ❌ |
+| PUT | ✅ |
 
 ### /incident.approval.possible_voters
 
@@ -207,25 +207,25 @@
 
 | Method | Status |
 |--------|--------|
-| PUT | ❌ |
+| PUT | ✅ |
 
 ### /incident.approval.status
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /incident.approval.type
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /incident.approval.vote_status
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /incident.attachment
 
