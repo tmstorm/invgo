@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.0](https://github.com/tmstorm/invgo/compare/v0.5.0...v0.6.0) (2025-12-16)
+
+
+### 🚀 Features
+
+* add incident approval accept, cancel, reject ([96f53ad](https://github.com/tmstorm/invgo/commit/96f53ade5d04d93cee708ed64732b279f057dca7))
+* add incident approval, approval.status, approval.type, approval.vote_status ([d4b37c7](https://github.com/tmstorm/invgo/commit/d4b37c726d53cf41aa6c4ddf9e46b5a2cd19cad1))
+* add remaining users endpoints ([5352178](https://github.com/tmstorm/invgo/commit/5352178938e5263820d6734666c9ec381f1f7245))
+* add timetracking endpoints ([4d0c41a](https://github.com/tmstorm/invgo/commit/4d0c41a6d8e1730afb4c8d50eba6f57510f081ce))
+* add workflow endpoints ([3aaa0a2](https://github.com/tmstorm/invgo/commit/3aaa0a23ec765d352e1460e0f3bb85e28fc47d82))
+
+
+### 🐛 Bug Fixes
+
+* **coverage:** helpdesks was misspelled in coverage.go ([fcd1e3e](https://github.com/tmstorm/invgo/commit/fcd1e3ea37d0a61f49bb216d83381db1dfac4eba))
+* incident endpoints were under incidents in coverage.go ([e405166](https://github.com/tmstorm/invgo/commit/e4051669789c36b632074a49b8c9903c715366fb))
+
 ## [0.5.0](https://github.com/tmstorm/invgo/compare/v0.4.1...v0.5.0) (2025-12-11)
 
 
