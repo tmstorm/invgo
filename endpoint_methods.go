@@ -107,13 +107,13 @@ func (c *Client) Incident() *endpoints.IncidentMethods {
 	return newPublicMethod[endpoints.IncidentMethods](c, "/incident")
 }
 
-// IncidentApproval returnns an incidents approvals
+// IncidentApproval returns an incidents approvals
 // See https://releases.invgate.com/service-desk/api/#incidentapproval
 func (c *Client) IncidentApproval() *endpoints.IncidentApprovalMethods {
 	return newPublicMethod[endpoints.IncidentApprovalMethods](c, "/incident.approval")
 }
 
-// IncidentApprovalAccept returnns an incidents approval accept
+// IncidentApprovalAccept returns an incidents approval accept
 // See https://releases.invgate.com/service-desk/api/#incidentapprovalaccept
 func (c *Client) IncidentApprovalAccept() *endpoints.IncidentApprovalAcceptMethods {
 	return newPublicMethod[endpoints.IncidentApprovalAcceptMethods](c, "/incident.approval.accept")
@@ -125,7 +125,13 @@ func (c *Client) IncidentApprovalCancel() *endpoints.IncidentApprovalCancelMetho
 	return newPublicMethod[endpoints.IncidentApprovalCancelMethods](c, "/incident.approval.cancel")
 }
 
-// IncidentApprovalReject returnns an incidents approval reject
+// IncidentComment manages an incidents comments
+// See https://releases.invgate.com/service-desk/api/#incidentcomment
+func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {
+	return newPublicMethod[endpoints.IncidentCommentMethods](c, "/incident.comment")
+}
+
+// IncidentApprovalReject returns an incidents approval reject
 // See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel
 func (c *Client) IncidentApprovalReject() *endpoints.IncidentApprovalRejectMethods {
 	return newPublicMethod[endpoints.IncidentApprovalRejectMethods](c, "/incident.approval.reject")
@@ -147,6 +153,12 @@ func (c *Client) IncidentApprovalType() *endpoints.IncidentApprovalTypeMethods {
 // See https://releases.invgate.com/service-desk/api/#incidentapprovalvote_status
 func (c *Client) IncidentApprovalVoteStatus() *endpoints.IncidentApprovalVoteStatusMethods {
 	return newPublicMethod[endpoints.IncidentApprovalVoteStatusMethods](c, "/incident.approval.vote_status")
+}
+
+// IncidentAttachment returns an incidents attachment
+// See https://releases.invgate.com/service-desk/api/#incidentattachment
+func (c *Client) IncidentAttachment() *endpoints.IncidentAttachmentMethods {
+	return newPublicMethod[endpoints.IncidentAttachmentMethods](c, "/incident.attachment")
 }
 
 // Incidents is used to get Incidents from the Invgate API

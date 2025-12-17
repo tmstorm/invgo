@@ -115,6 +115,40 @@ func TestIncidentApprovalCancelPut(t *testing.T) {
 	a.Equal(r, resp)
 }
 
+func TestIncidentCommentPost(t *testing.T) {
+	a := assert.New(t)
+
+	var r endpoints.IncidentCommentPostResponse
+	var comm endpoints.IncidentCommentPostParams
+	gofakeit.Struct(&r)
+	gofakeit.Struct(&comm)
+
+	server := newTestServer(t, http.MethodPost, "/incident.comment", r)
+
+	c := newTestClient(t, server, scopes.IncidentCommentPost)
+
+	resp, err := c.IncidentComment().Post(comm)
+	a.NoError(err)
+	a.Equal(r, resp)
+}
+
+func TestIncidentCommentGet(t *testing.T) {
+	a := assert.New(t)
+
+	incs := make([]endpoints.IncidentCommentGetResponse, 1)
+	var inc endpoints.IncidentCommentGetResponse
+	gofakeit.Struct(&inc)
+	incs = append(incs, inc)
+
+	server := newTestServer(t, http.MethodGet, "/incident.comment", incs)
+
+	c := newTestClient(t, server, scopes.IncidentCommentGet)
+
+	resp, err := c.IncidentComment().Get(endpoints.IncidentCommentGetParams{RequestID: inc.ID})
+	a.NoError(err)
+	a.Equal(incs, resp)
+}
+
 func TestIncidentApprovalRejectPut(t *testing.T) {
 	a := assert.New(t)
 
@@ -214,6 +248,21 @@ func TestIncidentApprovalVoteStatusGet(t *testing.T) {
 	for i := range resp {
 		a.Contains(incs, resp[i])
 	}
+}
+
+func TestIncidentAttachmentGet(t *testing.T) {
+	a := assert.New(t)
+
+	var att endpoints.IncidentAttachmentGetResponse
+	gofakeit.Struct(&att)
+
+	server := newTestServer(t, http.MethodGet, "/incident.attachment", att)
+
+	c := newTestClient(t, server, scopes.IncidentAttachmentGet)
+
+	resp, err := c.IncidentAttachment().Get(endpoints.IncidentAttachmentGetParams{ID: att.ID})
+	a.NoError(err)
+	a.Equal(att, resp)
 }
 
 func TestIncidentsGet(t *testing.T) {

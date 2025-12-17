@@ -42,26 +42,22 @@ type (
 	}
 
 	// IncidentCommentResponse is used to map an comment returned from the Invgate API
+	//
+	// NOTE: An incident returns a slightly different response structure for comments than
+	// calling the /incident.comment endpoint so a they have different structs defined.
+	// For example customer_visible returns 0-1 for a bool here but in /incident.comment it
+	// returns a false-true for bool.
 	IncidentCommentResponse struct {
-		ID              int    `json:"id,omitempty"`
-		Attachments     []int  `json:"attachments,omitempty"`
-		Message         string `json:"message,omitempty"`
-		CreatedAt       int    `json:"created_at,omitempty"`
-		Reference       int    `json:"reference,omitempty"`
 		AuthorID        int    `json:"author_id,omitempty"`
+		Reference       int    `json:"reference,omitempty"`
+		IsSolution      bool   `json:"is_solution,omitempty"`
+		ID              int    `json:"id,omitempty"`
+		CreatedAt       int    `json:"created_at,omitempty"`
+		CustomerVisible int    `json:"customer_visible,omitempty"` // NOTE: this is a bool but is returned as an 0-1 int
+		Attachments     []int  `json:"attached_files,omitempty"`
 		MsgNum          int    `json:"msg_num,omitempty"`
 		IncidentID      int    `json:"incident_id,omitempty"`
-		CustomerVisible int    `json:"customer_visible,omitempty"` // this is a bool but is returned as an 0-1 int
-		IsSolution      bool   `json:"is_solution,omitempty"`
-	}
-
-	// IncidentAttachmentResponse is use to map an attachment returned from the Invgate API
-	IncidentAttachmentResponse struct {
-		ID        int    `json:"id,omitempty"`
-		Extension string `json:"extension,omitempty"`
-		Name      string `json:"name,omitempty"`
-		Hash      string `json:"hash,omitempty"`
-		URL       string `json:"url,omitempty"`
+		Message         string `json:"message,omitempty"`
 	}
 
 	// IncidentMethods is use to call methods for Incident
@@ -110,18 +106,18 @@ func (i *IncidentMethods) Get(p IncidentGetParams) ([]Incident, error) {
 type (
 	// IncidentPostParams is used to construct a new POST request to create a new incident
 	IncidentPostParams struct {
-		Title       string                       `url:"title,required"`
-		TypeID      int                          `url:"type_id,required"`
-		CreatorID   int                          `url:"creator_id,required"`
-		PriorityID  int                          `url:"priority_id,required"`
-		CustomerID  int                          `url:"customer_id,required"`
-		Date        string                       `url:"date"`
-		CategoryID  int                          `url:"category_id"`
-		SourceID    int                          `url:"source_id"`
-		LocationID  int                          `url:"location_id"`
-		Description string                       `url:"description"`
-		RelatedTo   []int                        `url:"related_to"`
-		Attachments []IncidentAttachmentResponse `url:"attachments"`
+		Title       string                          `url:"title,required"`
+		TypeID      int                             `url:"type_id,required"`
+		CreatorID   int                             `url:"creator_id,required"`
+		PriorityID  int                             `url:"priority_id,required"`
+		CustomerID  int                             `url:"customer_id,required"`
+		Date        string                          `url:"date"`
+		CategoryID  int                             `url:"category_id"`
+		SourceID    int                             `url:"source_id"`
+		LocationID  int                             `url:"location_id"`
+		Description string                          `url:"description"`
+		RelatedTo   []int                           `url:"related_to"`
+		Attachments []IncidentAttachmentGetResponse `url:"attachments"`
 	}
 
 	// IncidentPostResponse is used to map the response after posting a new incident
@@ -280,46 +276,6 @@ type (
 func (i *IncidentApprovalAcceptMethods) Put(p IncidentApprovalAcceptPutParams) (IncidentApprovalAcceptPutResponse, error) {
 	inc := IncidentApprovalAcceptPutResponse{}
 	i.RequiredScope = scopes.IncidentApprovalAcceptPut
-
-	q, err := utils.StructToQuery(p)
-	if err != nil {
-		return inc, err
-	}
-	i.Endpoint.RawQuery = q.Encode()
-
-	resp, err := i.RemotePut()
-	if err != nil {
-		return inc, err
-	}
-
-	err = json.Unmarshal(resp, &inc)
-	if err != nil {
-		return inc, err
-	}
-	return inc, nil
-}
-
-type (
-	// IncidentApprovalCancelMethods is use to call methods for IncidentApprovalCancel
-	IncidentApprovalCancelMethods struct{ methods.MethodCall }
-
-	IncidentApprovalCancelPutParams struct {
-		RequestID int `url:"request_id,required"`
-		UserID    int `url:"user_id,required"`
-	}
-
-	IncidentApprovalCancelPutResponse struct {
-		// OK if approval was canceled, ERROR if something went wrong
-		Status string `json:"status"`
-	}
-)
-
-// Put for IncidentApprovalCancel
-// Requires scope: IncidentApprovalCancelPut
-// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel-PUT
-func (i *IncidentApprovalCancelMethods) Put(p IncidentApprovalCancelPutParams) (IncidentApprovalCancelPutResponse, error) {
-	inc := IncidentApprovalCancelPutResponse{}
-	i.RequiredScope = scopes.IncidentApprovalCancelPut
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
@@ -513,6 +469,187 @@ func (i *IncidentApprovalVoteStatusMethods) Get() ([]IncidentApprovalVoteStatusG
 	}
 
 	return incs, nil
+}
+
+type (
+	// IncidentAttachmentMethods is use to call methods for IncidentAttachment
+	IncidentAttachmentMethods struct{ methods.MethodCall }
+
+	IncidentAttachmentGetParams struct {
+		ID int `url:"id,required"`
+	}
+
+	// IncidentAttachmentGetResponse map approval types
+	IncidentAttachmentGetResponse struct {
+		Name      string `json:"name,omitempty" url:"name"`
+		URL       string `json:"url,omitempty" url:"url"`
+		Hash      string `json:"hash,omitempty" url:"hash"`
+		ID        int    `json:"id,omitempty" url:"id"`
+		Extension string `json:"extension,omitempty" url:"extension"`
+	}
+)
+
+// Get for IncidentAttachment
+// Requires scope: IncidentAttachmentGet
+// See https://releases.invgate.com/service-desk/api/#incidentattachment-GET
+func (i *IncidentAttachmentMethods) Get(p IncidentAttachmentGetParams) (IncidentAttachmentGetResponse, error) {
+	att := IncidentAttachmentGetResponse{}
+	i.RequiredScope = scopes.IncidentAttachmentGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return att, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return att, err
+	}
+
+	err = json.Unmarshal(resp, &att)
+	if err != nil {
+		return att, err
+	}
+
+	return att, nil
+}
+
+type (
+	// IncidentApprovalCancelMethods is use to call methods for IncidentApprovalCancel
+	IncidentApprovalCancelMethods struct{ methods.MethodCall }
+
+	IncidentApprovalCancelPutParams struct {
+		RequestID int `url:"request_id,required"`
+		UserID    int `url:"user_id,required"`
+	}
+
+	IncidentApprovalCancelPutResponse struct {
+		// OK if approval was canceled, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for IncidentApprovalCancel
+// Requires scope: IncidentApprovalCancelPut
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel-PUT
+func (i *IncidentApprovalCancelMethods) Put(p IncidentApprovalCancelPutParams) (IncidentApprovalCancelPutResponse, error) {
+	inc := IncidentApprovalCancelPutResponse{}
+	i.RequiredScope = scopes.IncidentApprovalCancelPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
+	// IncidentCommentMethods is use to call methods for IncidentComment
+	IncidentCommentMethods struct{ methods.MethodCall }
+
+	IncidentCommentGetParams struct {
+		RequestID int `url:"request_id,required"`
+		// Indicate the date format. The available formats are 'epoch' or 'iso8601'.
+		// If null, epoch format is returned.
+		DateFormat               string `url:"date_format"`
+		IsSolution               bool   `url:"is_solution"`
+		DecodedSpecialCharacters bool   `url:"decoded_special_characters"`
+	}
+
+	// IncidentCommentGetResponse is used to map an comment returned from the Invgate API
+	IncidentCommentGetResponse struct {
+		AuthorID        int    `json:"author_id,omitempty"`
+		Reference       int    `json:"reference,omitempty"`
+		IsSolution      bool   `json:"is_solution,omitempty"`
+		ID              int    `json:"id,omitempty"`
+		CreatedAt       int    `json:"created_at,omitempty"`
+		CustomerVisible bool   `json:"customer_visible,omitempty"`
+		Attachments     []int  `json:"attached_files,omitempty"`
+		MsgNum          int    `json:"msg_num,omitempty"`
+		IncidentID      int    `json:"incident_id,omitempty"`
+		Message         string `json:"message,omitempty"`
+	}
+)
+
+// Get for IncidentComment
+// Requires scope: IncidentCommentGet
+// See https://releases.invgate.com/service-desk/api/#incidentcomment-GET
+func (i *IncidentCommentMethods) Get(p IncidentCommentGetParams) ([]IncidentCommentGetResponse, error) {
+	comms := []IncidentCommentGetResponse{}
+	i.RequiredScope = scopes.IncidentCommentGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return comms, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return comms, err
+	}
+
+	err = json.Unmarshal(resp, &comms)
+	if err != nil {
+		return nil, err
+	}
+	return comms, nil
+}
+
+type (
+	IncidentCommentPostParams struct {
+		IsSolution      bool   `url:"is_solution"`
+		AuthorID        int    `url:"author_id,required"`
+		RequestID       int    `url:"request_id,required"`
+		CustomerVisible bool   `url:"customer_visible"`
+		Comment         string `url:"comment,required"`
+		IsPropagation   bool   `url:"is_propagation"`
+		Attachments     []int  `url:"attached_files"`
+	}
+
+	// IncidentCommentPostResponse is used to map an comment post response returned from the Invgate API
+	IncidentCommentPostResponse struct {
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status"`
+		Error  string `json:"error"`
+	}
+)
+
+// Post for IncidentComment
+// Requires scope: IncidentCommentPost
+// See https://releases.invgate.com/service-desk/api/#incidentcomment-POST
+func (i *IncidentCommentMethods) Post(p IncidentCommentPostParams) (IncidentCommentPostResponse, error) {
+	com := IncidentCommentPostResponse{}
+	i.RequiredScope = scopes.IncidentCommentPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return com, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return com, err
+	}
+
+	err = json.Unmarshal(resp, &com)
+	if err != nil {
+		return com, err
+	}
+	return com, nil
 }
 
 // IncidentsMethods is used to call methods for Incidents
