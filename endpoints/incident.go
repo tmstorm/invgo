@@ -221,9 +221,17 @@ type (
 		ID                         int    `json:"id,omitempty"`
 		// CreatedAt Date when the approval was triggered
 		// in epoch or ISO-8601 format depending on the date_format parameter.
-		CreatedAt         string `json:"created_at,omitempty"`
-		ApprovalRequestID int    `json:"approval_request_id,omitempty"`
-		AuthorID          int    `json:"author_id,omitempty"`
+		CreatedAt         int `json:"created_at,omitempty"` // NOTE: Docs say this returns a string but returns an int
+		ApprovalRequestID int `json:"approval_request_id,omitempty"`
+		AuthorID          int `json:"author_id,omitempty"`
+
+		// NOTE: The fields below are not in the docs but are sent from the API
+		// so the types are best guesses
+		IsUsingApprovalManager int `json:"is_using_approval_manager,omitempty"` // I think this is a bool but int is returned
+		ReminderCount          int `json:"reminder_count,omitempty"`
+		Reassigned             int `json:"reassigned"`     // I think this is a bool but int is returned
+		RemindersSent          int `json:"reminders_sent"` // I think this is a bool but int is returned
+		LastReminderDate       int `json:"last_reminder_date"`
 	}
 )
 
