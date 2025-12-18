@@ -101,6 +101,7 @@ var (
 	IncidentApprovalTypeGet           ScopeType = ScopeType(base + incident + ".approval.type" + methods.Get)
 	IncidentApprovalVoteStatusGet     ScopeType = ScopeType(base + incident + ".approval.vote_status" + methods.Get)
 	IncidentAttachmentGet             ScopeType = ScopeType(base + incident + ".attachment" + methods.Get)
+	IncidentCancelPost                ScopeType = ScopeType(base + incident + ".cancel" + methods.Post)
 	IncidentCommentPost               ScopeType = ScopeType(base + incident + ".comment" + methods.Post)
 	IncidentCommentGet                ScopeType = ScopeType(base + incident + ".comment" + methods.Get)
 	IncidentAttributesPriorityGet     ScopeType = ScopeType(base + incident + attributes + ".priority" + methods.Get)

@@ -690,6 +690,47 @@ func (i *IncidentCommentMethods) Get(p IncidentCommentGetParams) ([]IncidentComm
 }
 
 type (
+	// IncidentCancelMethods is use to call methods for IncidentCancel
+	IncidentCancelMethods struct{ methods.MethodCall }
+
+	IncidentCancelPostParams struct {
+		Comment   string `url:"comment"`
+		AuthorID  int    `url:"author_id,required"`
+		RequestID int    `url:"request_id,required"`
+	}
+
+	IncidentCancelPostResponse struct {
+		// OK if incident was canceled, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Post for IncidentCancel
+// Requires scope: IncidentCancelPost
+// See https://releases.invgate.com/service-desk/api/#incidentcancel-POST
+func (i *IncidentCancelMethods) Post(p IncidentCancelPostParams) (IncidentCancelPostResponse, error) {
+	inc := IncidentCancelPostResponse{}
+	i.RequiredScope = scopes.IncidentCancelPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
 	IncidentCommentPostParams struct {
 		IsSolution      bool   `url:"is_solution"`
 		AuthorID        int    `url:"author_id,required"`

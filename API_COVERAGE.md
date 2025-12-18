@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 33.75% (54/160 methods implemented)
+**coverage:** 34.38% (55/160 methods implemented)
 
 ### /breakingnews
 
@@ -261,7 +261,7 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
+| POST | ✅ |
 
 ### /incident.collaborator
 

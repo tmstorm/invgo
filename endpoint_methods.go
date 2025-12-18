@@ -167,24 +167,6 @@ func (c *Client) IncidentAttachment() *endpoints.IncidentAttachmentMethods {
 	return newPublicMethod[endpoints.IncidentAttachmentMethods](c, "/incident.attachment")
 }
 
-// IncidentComment manages an incidents comments
-// See https://releases.invgate.com/service-desk/api/#incidentcomment
-func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {
-	return newPublicMethod[endpoints.IncidentCommentMethods](c, "/incident.comment")
-}
-
-// Incidents is used to get Incidents from the Invgate API
-// See https://releases.invgate.com/service-desk/api/#incidents
-func (c *Client) Incidents() *endpoints.IncidentsMethods {
-	return newPublicMethod[endpoints.IncidentsMethods](c, "/incidents")
-}
-
-// IncidentsByStatus gets incidents by the given set of status IDs
-// See https://releases.invgate.com/service-desk/api/#incidentsbystatus
-func (c *Client) IncidentsByStatus() *endpoints.IncidentsByStatusMethods {
-	return newPublicMethod[endpoints.IncidentsByStatusMethods](c, "/incidents.by.status")
-}
-
 // IncidentAttributesPriority gets all the priority types usable for an incident or the one provided
 // See https://releases.invgate.com/service-desk/api/#incidentattributespriority
 func (c *Client) IncidentAttributesPriority() *endpoints.AttributesMethods {
@@ -215,6 +197,30 @@ func (c *Client) IncidentAttributesType() *endpoints.AttributesMethods {
 	m := newPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.type")
 	m.RequiredScope = scopes.IncidentAttributesTypeGet
 	return m
+}
+
+// IncidentCancel manages canceling an incident
+// See https://releases.invgate.com/service-desk/api/#incidentcancel
+func (c *Client) IncidentCancel() *endpoints.IncidentCancelMethods {
+	return newPublicMethod[endpoints.IncidentCancelMethods](c, "/incident.cancel")
+}
+
+// IncidentComment manages an incidents comments
+// See https://releases.invgate.com/service-desk/api/#incidentcomment
+func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {
+	return newPublicMethod[endpoints.IncidentCommentMethods](c, "/incident.comment")
+}
+
+// Incidents is used to get Incidents from the Invgate API
+// See https://releases.invgate.com/service-desk/api/#incidents
+func (c *Client) Incidents() *endpoints.IncidentsMethods {
+	return newPublicMethod[endpoints.IncidentsMethods](c, "/incidents")
+}
+
+// IncidentsByStatus gets incidents by the given set of status IDs
+// See https://releases.invgate.com/service-desk/api/#incidentsbystatus
+func (c *Client) IncidentsByStatus() *endpoints.IncidentsByStatusMethods {
+	return newPublicMethod[endpoints.IncidentsByStatusMethods](c, "/incidents.by.status")
 }
 
 // ServiceDeskVersion returns the current version of the Service Desk instance

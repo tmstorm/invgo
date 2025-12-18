@@ -147,6 +147,23 @@ func TestIncidentApprovalPossibleVotersGet(t *testing.T) {
 	a.Equal(incs, resp)
 }
 
+func TestIncidentCancelPost(t *testing.T) {
+	a := assert.New(t)
+
+	var r endpoints.IncidentCancelPostResponse
+	var inc endpoints.IncidentCancelPostParams
+	gofakeit.Struct(&r)
+	gofakeit.Struct(&inc)
+
+	server := newTestServer(t, http.MethodPost, "/incident.cancel", r)
+
+	c := newTestClient(t, server, scopes.IncidentCancelPost)
+
+	resp, err := c.IncidentCancel().Post(inc)
+	a.NoError(err)
+	a.Equal(r, resp)
+}
+
 func TestIncidentCommentGet(t *testing.T) {
 	a := assert.New(t)
 
