@@ -119,16 +119,16 @@ func (c *Client) IncidentApprovalAccept() *endpoints.IncidentApprovalAcceptMetho
 	return newPublicMethod[endpoints.IncidentApprovalAcceptMethods](c, "/incident.approval.accept")
 }
 
-// IncidentApprovalCancel returnns an incidents approval cancel
+// IncidentApprovalCancel returns an incidents approval cancel
 // See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel
 func (c *Client) IncidentApprovalCancel() *endpoints.IncidentApprovalCancelMethods {
 	return newPublicMethod[endpoints.IncidentApprovalCancelMethods](c, "/incident.approval.cancel")
 }
 
-// IncidentComment manages an incidents comments
-// See https://releases.invgate.com/service-desk/api/#incidentcomment
-func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {
-	return newPublicMethod[endpoints.IncidentCommentMethods](c, "/incident.comment")
+// IncidentApprovalPossibleVoters returns an incidents approval possible voters
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalpossible_voters
+func (c *Client) IncidentApprovalPossibleVoters() *endpoints.IncidentApprovalPossibleVotersMethods {
+	return newPublicMethod[endpoints.IncidentApprovalPossibleVotersMethods](c, "/incident.approval.possible_voters")
 }
 
 // IncidentApprovalReject returns an incidents approval reject
@@ -159,6 +159,12 @@ func (c *Client) IncidentApprovalVoteStatus() *endpoints.IncidentApprovalVoteSta
 // See https://releases.invgate.com/service-desk/api/#incidentattachment
 func (c *Client) IncidentAttachment() *endpoints.IncidentAttachmentMethods {
 	return newPublicMethod[endpoints.IncidentAttachmentMethods](c, "/incident.attachment")
+}
+
+// IncidentComment manages an incidents comments
+// See https://releases.invgate.com/service-desk/api/#incidentcomment
+func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {
+	return newPublicMethod[endpoints.IncidentCommentMethods](c, "/incident.comment")
 }
 
 // Incidents is used to get Incidents from the Invgate API

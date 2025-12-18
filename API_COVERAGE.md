@@ -1,14 +1,14 @@
 # API Coverage Report
 
-**coverage:** 31.25% (50/160 methods implemented)
+**coverage:** 31.87% (51/160 methods implemented)
 
 ### /breakingnews
 
 | Method | Status |
 |--------|--------|
+| GET | ✅ |
 | POST | ✅ |
 | PUT | ✅ |
-| GET | ✅ |
 
 ### /breakingnews.all
 
@@ -32,8 +32,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
 | GET | ✅ |
+| POST | ✅ |
 
 ### /categories
 
@@ -45,18 +45,18 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /cf.field.options.tree
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
+| PUT | ❌ |
 
 ### /cf.fields.all
 
@@ -86,34 +86,34 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
+| PUT | ❌ |
 
 ### /companies.groups
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /companies.observers
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /companies.users
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /data.export
 
@@ -125,25 +125,25 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /groups.observers
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /groups.users
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /helpdesks
 
@@ -155,9 +155,9 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /helpdesksandlevels
 
@@ -169,9 +169,9 @@
 
 | Method | Status |
 |--------|--------|
+| GET | ✅ |
 | POST | ✅ |
 | PUT | ✅ |
-| GET | ✅ |
 
 ### /incident.approval
 
@@ -201,7 +201,7 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### /incident.approval.reject
 
@@ -267,44 +267,44 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /incident.comment
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
 | GET | ✅ |
+| POST | ✅ |
 
 ### /incident.custom_approval
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /incident.custom_field
 
 | Method | Status |
 |--------|--------|
+| DELETE | ❌ |
 | PATCH | ❌ |
 | POST | ❌ |
-| DELETE | ❌ |
 
 ### /incident.external_entity
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /incident.link
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /incident.linked_cis.counters.from
 
@@ -316,8 +316,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /incident.reassign
 
@@ -461,27 +461,27 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
+| PUT | ❌ |
 
 ### /kb.articles
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
+| PUT | ❌ |
 
 ### /kb.articles.attachments
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /kb.articles.by.category
 
@@ -505,10 +505,10 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| PUT | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
+| PUT | ❌ |
 
 ### /kb.categories.by.ids
 
@@ -526,33 +526,33 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /locations
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /locations.observers
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /locations.users
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
 | DELETE | ❌ |
 | GET | ❌ |
+| POST | ❌ |
 
 ### /sd.version
 
@@ -564,9 +564,9 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
 | DELETE | ✅ |
 | GET | ✅ |
+| POST | ✅ |
 
 ### /timetracking.attributes.category
 
@@ -590,10 +590,10 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ✅ |
-| PUT | ✅ |
 | DELETE | ✅ |
 | GET | ✅ |
+| POST | ✅ |
+| PUT | ✅ |
 
 ### /user.by
 

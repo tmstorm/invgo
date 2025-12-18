@@ -296,6 +296,87 @@ func (i *IncidentApprovalAcceptMethods) Put(p IncidentApprovalAcceptPutParams) (
 }
 
 type (
+	// IncidentApprovalCancelMethods is use to call methods for IncidentApprovalCancel
+	IncidentApprovalCancelMethods struct{ methods.MethodCall }
+
+	IncidentApprovalCancelPutParams struct {
+		RequestID int `url:"request_id,required"`
+		UserID    int `url:"user_id,required"`
+	}
+
+	IncidentApprovalCancelPutResponse struct {
+		// OK if approval was canceled, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Put for IncidentApprovalCancel
+// Requires scope: IncidentApprovalCancelPut
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel-PUT
+func (i *IncidentApprovalCancelMethods) Put(p IncidentApprovalCancelPutParams) (IncidentApprovalCancelPutResponse, error) {
+	inc := IncidentApprovalCancelPutResponse{}
+	i.RequiredScope = scopes.IncidentApprovalCancelPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
+	// IncidentApprovalPossibleVotersMethods is use to call methods for IncidentApprovalPossibleVoters
+	IncidentApprovalPossibleVotersMethods struct{ methods.MethodCall }
+
+	IncidentApprovalPossibleVotersGetParams struct {
+		ApprovalID  int  `url:"approval_id,required"`
+		OnlyPending bool `url:"only_pending"`
+	}
+
+	IncidentApprovalPossibleVotersGetResponse struct {
+		ID int `json:"user_id,omitempty"` // NOTE: invgate says ti returns id but is actually user_id
+		// Approval status ID. -2: Annulled, -1: Waiting, 0: Rejected, 1: Approved, 2:Expired.
+		Status int `json:"status"`
+	}
+)
+
+// Get for IncidentApprovalPossibleVoters
+// Requires scope: IncidentApprovalPossibleVotersGet
+// See https://releases.invgate.com/service-desk/api/#incidentapprovalpossible_voters-GET
+func (i *IncidentApprovalPossibleVotersMethods) Get(p IncidentApprovalPossibleVotersGetParams) ([]IncidentApprovalPossibleVotersGetResponse, error) {
+	inc := []IncidentApprovalPossibleVotersGetResponse{}
+	i.RequiredScope = scopes.IncidentApprovalPossibleVotersGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+	return inc, nil
+}
+
+type (
 	// IncidentApprovalRejectMethods is use to call methods for IncidentApprovalReject
 	IncidentApprovalRejectMethods struct{ methods.MethodCall }
 
@@ -513,46 +594,6 @@ func (i *IncidentAttachmentMethods) Get(p IncidentAttachmentGetParams) (Incident
 	}
 
 	return att, nil
-}
-
-type (
-	// IncidentApprovalCancelMethods is use to call methods for IncidentApprovalCancel
-	IncidentApprovalCancelMethods struct{ methods.MethodCall }
-
-	IncidentApprovalCancelPutParams struct {
-		RequestID int `url:"request_id,required"`
-		UserID    int `url:"user_id,required"`
-	}
-
-	IncidentApprovalCancelPutResponse struct {
-		// OK if approval was canceled, ERROR if something went wrong
-		Status string `json:"status"`
-	}
-)
-
-// Put for IncidentApprovalCancel
-// Requires scope: IncidentApprovalCancelPut
-// See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel-PUT
-func (i *IncidentApprovalCancelMethods) Put(p IncidentApprovalCancelPutParams) (IncidentApprovalCancelPutResponse, error) {
-	inc := IncidentApprovalCancelPutResponse{}
-	i.RequiredScope = scopes.IncidentApprovalCancelPut
-
-	q, err := utils.StructToQuery(p)
-	if err != nil {
-		return inc, err
-	}
-	i.Endpoint.RawQuery = q.Encode()
-
-	resp, err := i.RemotePut()
-	if err != nil {
-		return inc, err
-	}
-
-	err = json.Unmarshal(resp, &inc)
-	if err != nil {
-		return inc, err
-	}
-	return inc, nil
 }
 
 type (
