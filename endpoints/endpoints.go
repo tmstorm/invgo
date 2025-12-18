@@ -16,6 +16,8 @@ type (
 	AttributesMethods struct{ methods.MethodCall }
 
 	// AttributesResponse is used to map all Attributes endpoints
+	// Not every attribute endpoint returns all fields here. Consult
+	// the API docs for each endpoint to see what it returns.
 	AttributesResponse struct {
 		Name        string  `json:"name,omitempty"`
 		ParentID    int     `json:"parent_id,omitempty"`

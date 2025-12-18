@@ -185,7 +185,23 @@ func (c *Client) IncidentsByStatus() *endpoints.IncidentsByStatusMethods {
 	return newPublicMethod[endpoints.IncidentsByStatusMethods](c, "/incidents.by.status")
 }
 
-// IncidentAttributesStatus gets all the status types usable for an incident
+// IncidentAttributesPriority gets all the priority types usable for an incident or the one provided
+// See https://releases.invgate.com/service-desk/api/#incidentattributespriority
+func (c *Client) IncidentAttributesPriority() *endpoints.AttributesMethods {
+	m := newPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.priority")
+	m.RequiredScope = scopes.IncidentAttributesPriorityGet
+	return m
+}
+
+// IncidentAttributesSource gets all the source types usable for an incident or the one provided
+// See https://releases.invgate.com/service-desk/api/#incidentattributesource
+func (c *Client) IncidentAttributesSource() *endpoints.AttributesMethods {
+	m := newPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.source")
+	m.RequiredScope = scopes.IncidentAttributesSourceGet
+	return m
+}
+
+// IncidentAttributesStatus gets all the status types usable for an incident or the one provided
 // See https://releases.invgate.com/service-desk/api/#incidentattributestype
 func (c *Client) IncidentAttributesStatus() *endpoints.AttributesMethods {
 	m := newPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.status")
@@ -193,7 +209,7 @@ func (c *Client) IncidentAttributesStatus() *endpoints.AttributesMethods {
 	return m
 }
 
-// IncidentAttributesType gets all the types usable for an incident
+// IncidentAttributesType gets all the types usable for an incident or the one provided
 // See https://releases.invgate.com/service-desk/api/#incidentattributestype
 func (c *Client) IncidentAttributesType() *endpoints.AttributesMethods {
 	m := newPublicMethod[endpoints.AttributesMethods](c, "/incident.attributes.type")
