@@ -119,6 +119,12 @@ func (c *Client) IncidentApprovalAccept() *endpoints.IncidentApprovalAcceptMetho
 	return newPublicMethod[endpoints.IncidentApprovalAcceptMethods](c, "/incident.approval.accept")
 }
 
+// IncidentApprovalAddVoter add voter to incident
+// See https://releases.invgate.com/service-desk/api/#incidentapprovaladd_voter
+func (c *Client) IncidentApprovalAddVoter() *endpoints.IncidentApprovalAddVoterMethods {
+	return newPublicMethod[endpoints.IncidentApprovalAddVoterMethods](c, "/incident.approval.add_voter")
+}
+
 // IncidentApprovalCancel returns an incidents approval cancel
 // See https://releases.invgate.com/service-desk/api/#incidentapprovalcancel
 func (c *Client) IncidentApprovalCancel() *endpoints.IncidentApprovalCancelMethods {

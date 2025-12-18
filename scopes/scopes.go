@@ -93,6 +93,7 @@ var (
 	IncidentPut                       ScopeType = ScopeType(base + incident + methods.Put)
 	IncidentApprovalGet               ScopeType = ScopeType(base + incident + ".approval" + methods.Get)
 	IncidentApprovalAcceptPut         ScopeType = ScopeType(base + incident + ".approval.accept" + methods.Put)
+	IncidentApprovalAddVoterPost      ScopeType = ScopeType(base + incident + ".approval.add_voter" + methods.Post)
 	IncidentApprovalCancelPut         ScopeType = ScopeType(base + incident + ".approval.cancel" + methods.Put)
 	IncidentApprovalPossibleVotersGet ScopeType = ScopeType(base + incident + ".approval.possible_voters" + methods.Get)
 	IncidentApprovalRejectPut         ScopeType = ScopeType(base + incident + ".approval.reject" + methods.Put)

@@ -98,6 +98,21 @@ func TestIncidentApprovalAcceptPut(t *testing.T) {
 	a.Equal(r, resp)
 }
 
+func TestIncidentApprovalAddVotersPost(t *testing.T) {
+	a := assert.New(t)
+
+	var inc endpoints.IncidentApprovalAddVoterPostResponse
+	gofakeit.Struct(&inc)
+
+	server := newTestServer(t, http.MethodPost, "/incident.approval.add_voter", inc)
+
+	c := newTestClient(t, server, scopes.IncidentApprovalAddVoterPost)
+
+	resp, err := c.IncidentApprovalAddVoter().Post(endpoints.IncidentApprovalAddVoterPostParams{UserID: inc.UserID, ApprovalID: inc.ApprovalID})
+	a.NoError(err)
+	a.Equal(inc, resp)
+}
+
 func TestIncidentApprovalCancelPut(t *testing.T) {
 	a := assert.New(t)
 

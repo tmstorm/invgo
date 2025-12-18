@@ -14,6 +14,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident":                          {"POST", "PUT", "GET"},
 	"/incident.approval":                 {"GET"},
 	"/incident.approval.accept":          {"PUT"},
+	"/incident.approval.add_voter":       {"POST"},
 	"/incident.approval.cancel":          {"PUT"},
 	"/incident.approval.possible_voters": {"GET"},
 	"/incident.approval.reject":          {"PUT"},

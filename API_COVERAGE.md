@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 31.87% (51/160 methods implemented)
+**coverage:** 32.50% (52/160 methods implemented)
 
 ### /breakingnews
 
@@ -189,7 +189,7 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
+| POST | ✅ |
 
 ### /incident.approval.cancel
 
