@@ -205,6 +205,12 @@ func (c *Client) IncidentCancel() *endpoints.IncidentCancelMethods {
 	return newPublicMethod[endpoints.IncidentCancelMethods](c, "/incident.cancel")
 }
 
+// IncidentCollaborator manages an incidents collaborators
+// See https://releases.invgate.com/service-desk/api/#incidentcollaborator
+func (c *Client) IncidentCollaborator() *endpoints.IncidentCollaboratorMethods {
+	return newPublicMethod[endpoints.IncidentCollaboratorMethods](c, "/incident.collaborator")
+}
+
 // IncidentComment manages an incidents comments
 // See https://releases.invgate.com/service-desk/api/#incidentcomment
 func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {

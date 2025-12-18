@@ -27,6 +27,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.attributes.status":        {"GET"},
 	"/incident.attributes.type":          {"GET"},
 	"/incident.cancel":                   {"POST"},
+	"/incident.collaborator":             {"POST", "GET"},
 	"/incident.comment":                  {"POST", "GET"},
 	"/incidents":                         {"GET"},
 	"/incidents.by.status":               {"GET"},

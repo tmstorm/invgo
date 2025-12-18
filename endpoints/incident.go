@@ -2,6 +2,7 @@ package endpoints
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/tmstorm/invgo/internal/methods"
 	"github.com/tmstorm/invgo/internal/utils"
@@ -735,6 +736,95 @@ func (i *IncidentCancelMethods) Post(p IncidentCancelPostParams) (IncidentCancel
 	if err != nil {
 		return inc, err
 	}
+	return inc, nil
+}
+
+type (
+	// IncidentCollaboratorMethods is use to call methods for IncidentCollaborator
+	IncidentCollaboratorMethods struct{ methods.MethodCall }
+
+	IncidentCollaboratorGetParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	IncidentCollaboratorGetResponse struct {
+		IDs []int `json:"ids"`
+	}
+)
+
+// Get for IncidentCollaborator
+// Requires scope: IncidentCollaboratorGet
+// See https://releases.invgate.com/service-desk/api/#incidentcancel-Get
+func (i *IncidentCollaboratorMethods) Get(p IncidentCollaboratorGetParams) (IncidentCollaboratorGetResponse, error) {
+	inc := IncidentCollaboratorGetResponse{}
+	i.RequiredScope = scopes.IncidentCollaboratorGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return inc, err
+	}
+
+	var b []int
+	err = json.Unmarshal(resp, &b)
+	if err != nil {
+		return inc, err
+	}
+
+	for i := range len(b) {
+		coll := b[i]
+		inc.IDs = append(inc.IDs, coll)
+	}
+
+	return inc, nil
+}
+
+type (
+	IncidentCollaboratorPostParams struct {
+		UserID    int   `url:"user_id"`
+		AuthorID  int   `url:"author_id,required"`
+		UsersID   []int `url:"users_id"`
+		RequestID int   `url:"request_id,required"`
+	}
+
+	IncidentCollaboratorPostResponse struct {
+		// OK if incident was canceled, ERROR if something went wrong
+		Status string `json:"status"`
+	}
+)
+
+// Post for IncidentCollaborator
+// Requires scope: IncidentCollaboratorPost
+// See https://releases.invgate.com/service-desk/api/#incidentcancel-POST
+func (i *IncidentCollaboratorMethods) Post(p IncidentCollaboratorPostParams) (IncidentCollaboratorPostResponse, error) {
+	inc := IncidentCollaboratorPostResponse{}
+	i.RequiredScope = scopes.IncidentCollaboratorPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return inc, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return inc, err
+	}
+
+	err = json.Unmarshal(resp, &inc)
+	if err != nil {
+		return inc, err
+	}
+
+	if inc.Status == "ERROR" {
+		return inc, fmt.Errorf("invgate returned a status of %s when adding collaborator (id: %d or ids: %d) ", inc.Status, p.UserID, p.UsersID)
+	}
+
 	return inc, nil
 }
 

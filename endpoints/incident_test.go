@@ -164,6 +164,42 @@ func TestIncidentCancelPost(t *testing.T) {
 	a.Equal(r, resp)
 }
 
+func TestIncidentCollaboratorGet(t *testing.T) {
+	a := assert.New(t)
+
+	incs := []int{1, 2, 3}
+
+	server := newTestServer(t, http.MethodGet, "/incident.collaborator", incs)
+
+	c := newTestClient(t, server, scopes.IncidentCollaboratorGet)
+
+	resp, err := c.IncidentCollaborator().Get(endpoints.IncidentCollaboratorGetParams{RequestID: 1})
+	a.NoError(err)
+	a.Equal(incs, resp.IDs)
+}
+
+func TestIncidentCollaboratorPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentCollaboratorPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.collaborator", u)
+
+	c := newTestClient(t, server, scopes.IncidentCollaboratorPost)
+
+	got, err := c.IncidentCollaborator().Post(endpoints.IncidentCollaboratorPostParams{AuthorID: 1, UserID: 2, RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.collaborator", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentCollaboratorPost)
+	gotErr, err := cErr.IncidentCollaborator().Post(endpoints.IncidentCollaboratorPostParams{AuthorID: 1, UserID: 2, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentCommentGet(t *testing.T) {
 	a := assert.New(t)
 
