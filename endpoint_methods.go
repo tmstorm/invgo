@@ -235,6 +235,12 @@ func (c *Client) IncidentReject() *endpoints.IncidentRejectMethods {
 	return newPublicMethod[endpoints.IncidentRejectMethods](c, "/incident.reject")
 }
 
+// IncidentReopen manages an incidents custom approvals
+// See https://releases.invgate.com/service-desk/api/#incidentreopen
+func (c *Client) IncidentReopen() *endpoints.IncidentReopenMethods {
+	return newPublicMethod[endpoints.IncidentReopenMethods](c, "/incident.reopen")
+}
+
 // IncidentWaitingForExternalEntity manages an incidents custom approvals
 // See https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity
 func (c *Client) IncidentWaitingForExternalEntity() *endpoints.IncidentWaitingForExternalEntityMethods {

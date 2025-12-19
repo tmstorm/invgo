@@ -1068,7 +1068,7 @@ type (
 		RequestID int `url:"request_id,required"`
 	}
 
-	// IncidentRejectPostResponse is used to map an external entity wait for returned from the Invgate API
+	// IncidentRejectPostResponse is used to map an external rejection returned from the Invgate API
 	IncidentRejectPostResponse struct {
 		// OK if comment was added, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
@@ -1099,7 +1099,53 @@ func (i *IncidentRejectMethods) Post(p IncidentRejectPostParams) (IncidentReject
 	}
 
 	if cust.Status == "ERROR" {
-		return cust, fmt.Errorf("invgate returned a status of %s when adding external entity (id: %d) ", cust.Status, p.RequestID)
+		return cust, fmt.Errorf("invgate returned a status of %s when rejecting request (id: %d) ", cust.Status, p.RequestID)
+	}
+
+	return cust, nil
+}
+
+type (
+	// IncidentReopenMethods is use to call methods for IncidentReopen
+	IncidentReopenMethods struct{ methods.MethodCall }
+
+	IncidentReopenPutParams struct {
+		AuthorID  int `url:"author_id,required"`
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentReopenPutResponse is used to map an re-opening returned from the Invgate API
+	IncidentReopenPutResponse struct {
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Put for IncidentReopen
+// Requires scope: IncidentReopenPut
+// See https://releases.invgate.com/service-desk/api/#incidentreopen-PUT
+func (i *IncidentReopenMethods) Put(p IncidentReopenPutParams) (IncidentReopenPutResponse, error) {
+	cust := IncidentReopenPutResponse{}
+	i.RequiredScope = scopes.IncidentReopenPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when re-opening request (id: %d) ", cust.Status, p.RequestID)
 	}
 
 	return cust, nil

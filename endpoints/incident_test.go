@@ -317,6 +317,28 @@ func TestIncidentRejectPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentReopenPut(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentReopenPutResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPut, "/incident.reopen", u)
+
+	c := newTestClient(t, server, scopes.IncidentReopenPut)
+
+	got, err := c.IncidentReopen().Put(endpoints.IncidentReopenPutParams{AuthorID: 1, RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPut, "/incident.reopen", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentReopenPut)
+	gotErr, err := cErr.IncidentReopen().Put(endpoints.IncidentReopenPutParams{AuthorID: 1, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentWaitingForExternalEntityPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentWaitingForExternalEntityPostResponse
