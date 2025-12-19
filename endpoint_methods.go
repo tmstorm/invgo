@@ -229,6 +229,12 @@ func (c *Client) IncidentExternalEntity() *endpoints.IncidentExternalEntityMetho
 	return newPublicMethod[endpoints.IncidentExternalEntityMethods](c, "/incident.external_entity")
 }
 
+// IncidentLink manages incident links
+// See https://releases.invgate.com/service-desk/api/#incidentlink
+func (c *Client) IncidentLink() *endpoints.IncidentLinkMethods {
+	return newPublicMethod[endpoints.IncidentLinkMethods](c, "/incident.link")
+}
+
 // IncidentReassign reassigns an incident
 // See https://releases.invgate.com/service-desk/api/#incidentreassign
 func (c *Client) IncidentReassign() *endpoints.IncidentReassignMethods {

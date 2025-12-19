@@ -295,6 +295,45 @@ func TestIncidentExternalEntityPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentLinkGet(t *testing.T) {
+	a := assert.New(t)
+
+	ents := make([]endpoints.IncidentLinkGetResponse, 1)
+	var ent endpoints.IncidentLinkGetResponse
+	gofakeit.Struct(&ent)
+	ents = append(ents, ent)
+
+	server := newTestServer(t, http.MethodGet, "/incident.link", ents)
+
+	c := newTestClient(t, server, scopes.IncidentLinkGet)
+
+	resp, err := c.IncidentLink().Get(endpoints.IncidentLinkGetParams{RequestID: 1})
+	a.NoError(err)
+	a.Equal(ents, resp)
+}
+
+func TestIncidentLinkPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentLinkPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.link", u)
+
+	c := newTestClient(t, server, scopes.IncidentLinkPost)
+
+	got, err := c.IncidentLink().Post(endpoints.IncidentLinkPostParams{RequestID: 101, RequestIDs: []int{1, 2}})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.link", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentLinkPost)
+	gotErr, err := cErr.IncidentLink().Post(endpoints.IncidentLinkPostParams{RequestID: 101, RequestIDs: []int{1, 2}})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentReassignPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentReassignPostResponse

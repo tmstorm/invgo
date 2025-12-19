@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 41.88% (67/160 methods implemented)
+**coverage:** 43.12% (69/160 methods implemented)
 
 ### /breakingnews
 
@@ -303,8 +303,8 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
-| GET | ❌ |
+| POST | ✅ |
+| GET | ✅ |
 
 ### /incident.linked_cis.counters.from
 

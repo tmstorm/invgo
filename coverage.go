@@ -31,6 +31,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.comment":                    {"POST", "GET"},
 	"/incident.custom_approval":            {"POST", "GET"},
 	"/incident.external_entity":            {"POST", "GET"},
+	"/incident.link":                       {"POST", "GET"},
 	"/incident.reassign":                   {"POST"},
 	"/incident.reject":                     {"POST"},
 	"/incident.reopen":                     {"PUT"},

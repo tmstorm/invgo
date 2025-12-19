@@ -1060,6 +1060,93 @@ func (i *IncidentExternalEntityMethods) Post(p IncidentExternalEntityPostParams)
 }
 
 type (
+	// IncidentLinkMethods is use to call methods for IncidentLink
+	IncidentLinkMethods struct{ methods.MethodCall }
+
+	IncidentLinkGetParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentLinkGetResponse is used to map an incident link returned from the Invgate API
+	IncidentLinkGetResponse struct {
+		ID    int    `json:"id,omitempty"`
+		Title string `json:"title,omitempty"`
+	}
+)
+
+// Get for IncidentLink
+// Requires scope: IncidentLinkGet
+// See https://releases.invgate.com/service-desk/api/#incidentlink-GET
+func (i *IncidentLinkMethods) Get(p IncidentLinkGetParams) ([]IncidentLinkGetResponse, error) {
+	cust := []IncidentLinkGetResponse{}
+	i.RequiredScope = scopes.IncidentLinkGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return nil, err
+	}
+	return cust, nil
+}
+
+type (
+	IncidentLinkPostParams struct {
+		// RequestIDs the ids of all requests to be linked
+		RequestIDs []int `url:"request_ids,required"`
+		// RequestID the id of the request being linked to
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentLinkPostResponse is used to map an inicdent link returned from the Invgate API
+	IncidentLinkPostResponse struct {
+		// OK if incident(s) were linked, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+		Error  string `json:"error,omitempty"`
+		Info   string `json:"info,omitempty"`
+	}
+)
+
+// Post for IncidentLink
+// Requires scope: IncidentLinkPost
+// See https://releases.invgate.com/service-desk/api/#incidentlink-POST
+func (i *IncidentLinkMethods) Post(p IncidentLinkPostParams) (IncidentLinkPostResponse, error) {
+	cust := IncidentLinkPostResponse{}
+	i.RequiredScope = scopes.IncidentLinkPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when linking incident(s) (ids: %d) to (id: %d) ", cust.Status, p.RequestIDs, p.RequestID)
+	}
+
+	return cust, nil
+}
+
+type (
 	// IncidentReassignMethods is use to call methods for IncidentReassign
 	IncidentReassignMethods struct{ methods.MethodCall }
 
