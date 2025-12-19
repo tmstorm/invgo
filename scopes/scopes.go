@@ -110,6 +110,7 @@ var (
 	IncidentCustomApprovalPost           ScopeType = ScopeType(base + incident + ".custom_approval" + methods.Post)
 	IncidentExternalEntityGet            ScopeType = ScopeType(base + incident + ".external_entity" + methods.Get)
 	IncidentExternalEntityPost           ScopeType = ScopeType(base + incident + ".external_entity" + methods.Post)
+	IncidentReassignPost                 ScopeType = ScopeType(base + incident + ".reassign" + methods.Post)
 	IncidentRejectPost                   ScopeType = ScopeType(base + incident + ".reject" + methods.Post)
 	IncidentReopenPut                    ScopeType = ScopeType(base + incident + ".reopen" + methods.Put)
 	IncidentWaitingForExternalEntityPost ScopeType = ScopeType(base + incident + ".waitingfor.external_entity" + methods.Post)

@@ -1060,6 +1060,54 @@ func (i *IncidentExternalEntityMethods) Post(p IncidentExternalEntityPostParams)
 }
 
 type (
+	// IncidentReassignMethods is use to call methods for IncidentReassign
+	IncidentReassignMethods struct{ methods.MethodCall }
+
+	IncidentReassignPostParams struct {
+		AgentID   int `url:"agent_id"`
+		AuthorID  int `url:"author_id,required"`
+		GroupID   int `url:"group_id,required"`
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentReassignPostResponse is used to map an incident reassignment returned from the Invgate API
+	IncidentReassignPostResponse struct {
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentReassign
+// Requires scope: IncidentReassignPost
+// See https://releases.invgate.com/service-desk/api/#incidentreassign-POST
+func (i *IncidentReassignMethods) Post(p IncidentReassignPostParams) (IncidentReassignPostResponse, error) {
+	cust := IncidentReassignPostResponse{}
+	i.RequiredScope = scopes.IncidentReassignPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when re-assigning request (id: %d) ", cust.Status, p.RequestID)
+	}
+
+	return cust, nil
+}
+
+type (
 	// IncidentRejectMethods is use to call methods for IncidentReject
 	IncidentRejectMethods struct{ methods.MethodCall }
 

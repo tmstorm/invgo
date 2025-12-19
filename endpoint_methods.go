@@ -229,13 +229,19 @@ func (c *Client) IncidentExternalEntity() *endpoints.IncidentExternalEntityMetho
 	return newPublicMethod[endpoints.IncidentExternalEntityMethods](c, "/incident.external_entity")
 }
 
-// IncidentReject manages an incidents custom approvals
+// IncidentReassign reassigns an incident
+// See https://releases.invgate.com/service-desk/api/#incidentreassign
+func (c *Client) IncidentReassign() *endpoints.IncidentReassignMethods {
+	return newPublicMethod[endpoints.IncidentReassignMethods](c, "/incident.reassign")
+}
+
+// IncidentReject rejects and incident
 // See https://releases.invgate.com/service-desk/api/#incidentreject
 func (c *Client) IncidentReject() *endpoints.IncidentRejectMethods {
 	return newPublicMethod[endpoints.IncidentRejectMethods](c, "/incident.reject")
 }
 
-// IncidentReopen manages an incidents custom approvals
+// IncidentReopen reopens and incident
 // See https://releases.invgate.com/service-desk/api/#incidentreopen
 func (c *Client) IncidentReopen() *endpoints.IncidentReopenMethods {
 	return newPublicMethod[endpoints.IncidentReopenMethods](c, "/incident.reopen")

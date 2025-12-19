@@ -295,6 +295,28 @@ func TestIncidentExternalEntityPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentReassignPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentReassignPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.reassign", u)
+
+	c := newTestClient(t, server, scopes.IncidentReassignPost)
+
+	got, err := c.IncidentReassign().Post(endpoints.IncidentReassignPostParams{AuthorID: 1, GroupID: 2, RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.reassign", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentReassignPost)
+	gotErr, err := cErr.IncidentReassign().Post(endpoints.IncidentReassignPostParams{AuthorID: 1, GroupID: 2, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentRejectPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentRejectPostResponse
