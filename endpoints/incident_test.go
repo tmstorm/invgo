@@ -256,6 +256,67 @@ func TestIncidentCustomApprovalPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentExternalEntityGet(t *testing.T) {
+	a := assert.New(t)
+
+	ents := make([]endpoints.IncidentExternalEntityGetResponse, 1)
+	var ent endpoints.IncidentExternalEntityGetResponse
+	gofakeit.Struct(&ent)
+	ents = append(ents, ent)
+
+	server := newTestServer(t, http.MethodGet, "/incident.external_entity", ents)
+
+	c := newTestClient(t, server, scopes.IncidentExternalEntityGet)
+
+	resp, err := c.IncidentExternalEntity().Get(endpoints.IncidentExternalEntityGetParams{RequestID: 1})
+	a.NoError(err)
+	a.Equal(ents, resp)
+}
+
+func TestIncidentExternalEntityPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentExternalEntityPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.external_entity", u)
+
+	c := newTestClient(t, server, scopes.IncidentExternalEntityPost)
+
+	got, err := c.IncidentExternalEntity().Post(endpoints.IncidentExternalEntityPostParams{ExternalEntityID: 1, ExternalEntityRefID: "2", RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.external_entity", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentExternalEntityPost)
+	gotErr, err := cErr.IncidentExternalEntity().Post(endpoints.IncidentExternalEntityPostParams{ExternalEntityID: 1, ExternalEntityRefID: "2", RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestIncidentWaitingForExternalEntityPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentWaitingForExternalEntityPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.waitingfor.external_entity", u)
+
+	c := newTestClient(t, server, scopes.IncidentWaitingForExternalEntityPost)
+
+	got, err := c.IncidentWaitingForExternalEntity().Post(endpoints.IncidentWaitingForExternalEntityPostParams{EntityLinkID: 1, RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.waitingfor.external_entity", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentWaitingForExternalEntityPost)
+	gotErr, err := cErr.IncidentWaitingForExternalEntity().Post(endpoints.IncidentWaitingForExternalEntityPostParams{EntityLinkID: 1, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentApprovalRejectPut(t *testing.T) {
 	a := assert.New(t)
 

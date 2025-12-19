@@ -223,6 +223,18 @@ func (c *Client) IncidentCustomApproval() *endpoints.IncidentCustomApprovalMetho
 	return newPublicMethod[endpoints.IncidentCustomApprovalMethods](c, "/incident.custom_approval")
 }
 
+// IncidentExternalEntity manages an incidents custom approvals
+// See https://releases.invgate.com/service-desk/api/#incidentexternal_entity
+func (c *Client) IncidentExternalEntity() *endpoints.IncidentExternalEntityMethods {
+	return newPublicMethod[endpoints.IncidentExternalEntityMethods](c, "/incident.external_entity")
+}
+
+// IncidentWaitingForExternalEntity manages an incidents custom approvals
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity
+func (c *Client) IncidentWaitingForExternalEntity() *endpoints.IncidentWaitingForExternalEntityMethods {
+	return newPublicMethod[endpoints.IncidentWaitingForExternalEntityMethods](c, "/incident.waitingfor.external_entity")
+}
+
 // Incidents is used to get Incidents from the Invgate API
 // See https://releases.invgate.com/service-desk/api/#incidents
 func (c *Client) Incidents() *endpoints.IncidentsMethods {

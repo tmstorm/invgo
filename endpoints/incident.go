@@ -969,6 +969,143 @@ func (i *IncidentCustomApprovalMethods) Post(p IncidentCustomApprovalPostParams)
 	return cust, nil
 }
 
+type (
+	// IncidentExternalEntityMethods is use to call methods for IncidentExternalEntity
+	IncidentExternalEntityMethods struct{ methods.MethodCall }
+
+	IncidentExternalEntityGetParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentExternalEntityGetResponse is used to map an external entity returned from the Invgate API
+	IncidentExternalEntityGetResponse struct {
+		Type     int    `json:"type,omitempty"` // NOTE: Docs say string api returns int
+		Name     string `json:"name,omitempty"`
+		ExtRefID int    `json:"ext_ref_id,omitempty"`
+		RefID    int    `json:"ref_id,omitempty"`
+		LinkID   int    `json:"link_id,omitempty"`
+		Status   bool   `json:"status,omitempty"`
+	}
+)
+
+// Get for IncidentExternalEntity
+// Requires scope: IncidentExternalEntityGet
+// See https://releases.invgate.com/service-desk/api/#incidentexternal_entity-GET
+func (i *IncidentExternalEntityMethods) Get(p IncidentExternalEntityGetParams) ([]IncidentExternalEntityGetResponse, error) {
+	cust := []IncidentExternalEntityGetResponse{}
+	i.RequiredScope = scopes.IncidentExternalEntityGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return nil, err
+	}
+	return cust, nil
+}
+
+type (
+	IncidentExternalEntityPostParams struct {
+		ExternalEntityID    int    `url:"external_entity_id,required"`
+		ExternalEntityRefID string `url:"external_entity_ref_id"`
+		RequestID           int    `url:"request_id,required"`
+	}
+
+	// IncidentExternalEntityPostResponse is used to map an external entity returned from the Invgate API
+	IncidentExternalEntityPostResponse struct {
+		Info string `json:"info,omitempty"`
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+		LinkID string `json:"link_id,omitempty"`
+	}
+)
+
+// Post for IncidentExternalEntity
+// Requires scope: IncidentExternalEntityPost
+// See https://releases.invgate.com/service-desk/api/#incidentexternal_entity-POST
+func (i *IncidentExternalEntityMethods) Post(p IncidentExternalEntityPostParams) (IncidentExternalEntityPostResponse, error) {
+	cust := IncidentExternalEntityPostResponse{}
+	i.RequiredScope = scopes.IncidentExternalEntityPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when adding external entity (id: %d) ", cust.Status, p.RequestID)
+	}
+
+	return cust, nil
+}
+
+type (
+	// IncidentWaitingForExternalEntityMethods is use to call methods for IncidentWaitingForExternalEntity
+	IncidentWaitingForExternalEntityMethods struct{ methods.MethodCall }
+
+	IncidentWaitingForExternalEntityPostParams struct {
+		RequestID    int `url:"request_id,required"`
+		EntityLinkID int `url:"entity_link_id,required"`
+	}
+
+	// IncidentWaitingForExternalEntityPostResponse is used to map an external entity wait for returned from the Invgate API
+	IncidentWaitingForExternalEntityPostResponse struct {
+		Info string `json:"info,omitempty"`
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentWaitingForExternalEntity
+// Requires scope: IncidentWaitingForExternalEntityPost
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity-POST
+func (i *IncidentWaitingForExternalEntityMethods) Post(p IncidentWaitingForExternalEntityPostParams) (IncidentWaitingForExternalEntityPostResponse, error) {
+	cust := IncidentWaitingForExternalEntityPostResponse{}
+	i.RequiredScope = scopes.IncidentWaitingForExternalEntityPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when adding external entity (id: %d) ", cust.Status, p.RequestID)
+	}
+
+	return cust, nil
+}
+
 // IncidentsMethods is used to call methods for Incidents
 type IncidentsMethods struct{ methods.MethodCall }
 
