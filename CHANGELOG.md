@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.7.0](https://github.com/tmstorm/invgo/compare/v0.6.0...v0.7.0) (2025-12-19)
+
+
+### 🚀 Features
+
+* add incident.approval.add_voter ([8a57ccf](https://github.com/tmstorm/invgo/commit/8a57ccf04056034c415e5b1e5b9d5f85be3d752f))
+* add incident.approval.possible_voters ([c997ec5](https://github.com/tmstorm/invgo/commit/c997ec5689c62169a1d821cd721c750cd630d9e6))
+* add incident.attributes.priority, incident.attributes.source ([42ebac9](https://github.com/tmstorm/invgo/commit/42ebac9b365af01188878c828e32359dc116113c))
+* add incident.cancel ([21e1dce](https://github.com/tmstorm/invgo/commit/21e1dce3faf78cdfb1faea11bfde47d5bad14554))
+* add incident.collaborator ([8bc0549](https://github.com/tmstorm/invgo/commit/8bc0549d48e0428469bb657202aedd171d11d5cd))
+* add incident.comment, incident.attachment ([53b5954](https://github.com/tmstorm/invgo/commit/53b59549305bd4fa5a0890e8102e28fdf5b88d1d))
+* add incident.custom_approval ([c1027eb](https://github.com/tmstorm/invgo/commit/c1027eb059a832523cb91c4e92844f5d78005194))
+* add incident.external_entity, incident.waitingfor.external_entity ([1e1e7b6](https://github.com/tmstorm/invgo/commit/1e1e7b6da9d4000fc8e0e9b952f9e474557f75e0))
+* add incident.reassign ([9f51250](https://github.com/tmstorm/invgo/commit/9f51250e9dc6eb2b347625781dbc7d6eef64a9d2))
+* add incident.reject ([46f1fee](https://github.com/tmstorm/invgo/commit/46f1fee0ca3b34b4785dc014747f2baa86b41ffb))
+* add incident.reopen ([f2155cf](https://github.com/tmstorm/invgo/commit/f2155cf8de0f904a0d7cf38c20f68d5b30529ef6))
+* add incident.solution.accept, incident.solution.reject ([195c004](https://github.com/tmstorm/invgo/commit/195c004f61c6f3eae4a6b08e4a6c73b94a5fa893))
+
+
+### 🐛 Bug Fixes
+
+* incident approval get return did not match docs ([a6fbf30](https://github.com/tmstorm/invgo/commit/a6fbf30236f2be08f3d2ed9060ab5210133ba41f))
+* incident.reopen structs were wrong ([3f8a3ef](https://github.com/tmstorm/invgo/commit/3f8a3efd8149d9544c3b963745c3a932ac98d565))
+
 ## [0.6.0](https://github.com/tmstorm/invgo/compare/v0.5.0...v0.6.0) (2025-12-16)
 
 
