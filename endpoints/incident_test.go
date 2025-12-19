@@ -361,6 +361,50 @@ func TestIncidentReopenPut(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentSolutionAcceptPut(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentSolutionAcceptPutResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPut, "/incident.solution.accept", u)
+
+	c := newTestClient(t, server, scopes.IncidentSolutionAcceptPut)
+
+	got, err := c.IncidentSolutionAccept().Put(endpoints.IncidentSolutionAcceptPutParams{ID: 1, Rating: 5})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPut, "/incident.solution.accept", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentSolutionAcceptPut)
+	gotErr, err := cErr.IncidentSolutionAccept().Put(endpoints.IncidentSolutionAcceptPutParams{ID: 1, Rating: 5})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestIncidentSolutionRejectPut(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentSolutionRejectPutResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPut, "/incident.solution.reject", u)
+
+	c := newTestClient(t, server, scopes.IncidentSolutionRejectPut)
+
+	got, err := c.IncidentSolutionReject().Put(endpoints.IncidentSolutionRejectPutParams{ID: 1, Comment: "no"})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPut, "/incident.solution.reject", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentSolutionRejectPut)
+	gotErr, err := cErr.IncidentSolutionReject().Put(endpoints.IncidentSolutionRejectPutParams{ID: 1, Comment: "no"})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentWaitingForExternalEntityPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentWaitingForExternalEntityPostResponse

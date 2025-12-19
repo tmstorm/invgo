@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 40.62% (65/160 methods implemented)
+**coverage:** 41.88% (67/160 methods implemented)
 
 ### /breakingnews
 
@@ -347,13 +347,13 @@
 
 | Method | Status |
 |--------|--------|
-| PUT | ❌ |
+| PUT | ✅ |
 
 ### /incident.solution.reject
 
 | Method | Status |
 |--------|--------|
-| PUT | ❌ |
+| PUT | ✅ |
 
 ### /incident.spontaneous_approval
 

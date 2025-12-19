@@ -34,6 +34,8 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.reassign":                   {"POST"},
 	"/incident.reject":                     {"POST"},
 	"/incident.reopen":                     {"PUT"},
+	"/incident.solution.accept":            {"PUT"},
+	"/incident.solution.reject":            {"PUT"},
 	"/incident.waitingfor.external_entity": {"POST"},
 	"/incidents":                           {"GET"},
 	"/incidents.by.status":                 {"GET"},

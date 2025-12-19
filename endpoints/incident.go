@@ -933,7 +933,7 @@ type (
 
 	// IncidentCustomApprovalPostResponse is used to map an custom approval returned from the Invgate API
 	IncidentCustomApprovalPostResponse struct {
-		// OK if comment was added, ERROR if something went wrong
+		// OK if custom approval was added, ERROR if something went wrong
 		Status string `json:"status"`
 		Error  string `json:"error"`
 	}
@@ -1023,7 +1023,7 @@ type (
 	// IncidentExternalEntityPostResponse is used to map an external entity returned from the Invgate API
 	IncidentExternalEntityPostResponse struct {
 		Info string `json:"info,omitempty"`
-		// OK if comment was added, ERROR if something went wrong
+		// OK if external entity was added, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
 		LinkID string `json:"link_id,omitempty"`
 	}
@@ -1072,7 +1072,7 @@ type (
 
 	// IncidentReassignPostResponse is used to map an incident reassignment returned from the Invgate API
 	IncidentReassignPostResponse struct {
-		// OK if comment was added, ERROR if something went wrong
+		// OK if incident was reassigned, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
 	}
 )
@@ -1118,7 +1118,7 @@ type (
 
 	// IncidentRejectPostResponse is used to map an external rejection returned from the Invgate API
 	IncidentRejectPostResponse struct {
-		// OK if comment was added, ERROR if something went wrong
+		// OK if incident was rejected, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
 	}
 )
@@ -1165,7 +1165,7 @@ type (
 	// IncidentReopenPutResponse is used to map an re-opening returned from the Invgate API
 	IncidentReopenPutResponse struct {
 		Info string `json:"info,omitempty"`
-		// OK if comment was added, ERROR if something went wrong
+		// OK if incident was reopened, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
 		Error  string `json:"error,omitempty"`
 	}
@@ -1196,6 +1196,99 @@ func (i *IncidentReopenMethods) Put(p IncidentReopenPutParams) (IncidentReopenPu
 
 	if cust.Status == "ERROR" {
 		return cust, fmt.Errorf("invgate returned a status of %s when re-opening request (id: %d) ", cust.Status, p.RequestID)
+	}
+
+	return cust, nil
+}
+
+type (
+	// IncidentSolutionAcceptMethods is use to call methods for IncidentSolutionAccept
+	IncidentSolutionAcceptMethods struct{ methods.MethodCall }
+
+	IncidentSolutionAcceptPutParams struct {
+		ID      int    `url:"id,required"`
+		Rating  int    `url:"rating,required"`
+		Comment string `url:"comment"`
+	}
+
+	// IncidentSolutionAcceptPutResponse is used to map an solution acceptance returned from the Invgate API
+	IncidentSolutionAcceptPutResponse struct {
+		// OK if solution was accepted, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Put for IncidentSolutionAccept
+// Requires scope: IncidentSolutionAcceptPut
+// See https://releases.invgate.com/service-desk/api/#incidentsolutionaccept-PUT
+func (i *IncidentSolutionAcceptMethods) Put(p IncidentSolutionAcceptPutParams) (IncidentSolutionAcceptPutResponse, error) {
+	cust := IncidentSolutionAcceptPutResponse{}
+	i.RequiredScope = scopes.IncidentSolutionAcceptPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when accepting solution (id: %d) ", cust.Status, p.ID)
+	}
+
+	return cust, nil
+}
+
+type (
+	// IncidentSolutionRejectMethods is use to call methods for IncidentSolutionReject
+	IncidentSolutionRejectMethods struct{ methods.MethodCall }
+
+	IncidentSolutionRejectPutParams struct {
+		ID      int    `url:"id,required"`
+		Comment string `url:"comment"`
+	}
+
+	// IncidentSolutionRejectPutResponse is used to map an solution rejection returned from the Invgate API
+	IncidentSolutionRejectPutResponse struct {
+		// OK if solution was accepted, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Put for IncidentSolutionReject
+// Requires scope: IncidentSolutionRejectPut
+// See https://releases.invgate.com/service-desk/api/#incidentsolutionareject-PUT
+func (i *IncidentSolutionRejectMethods) Put(p IncidentSolutionRejectPutParams) (IncidentSolutionRejectPutResponse, error) {
+	cust := IncidentSolutionRejectPutResponse{}
+	i.RequiredScope = scopes.IncidentSolutionRejectPut
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePut()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when rejecting solution (id: %d) ", cust.Status, p.ID)
 	}
 
 	return cust, nil
