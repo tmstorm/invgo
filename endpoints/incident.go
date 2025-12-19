@@ -1060,6 +1060,52 @@ func (i *IncidentExternalEntityMethods) Post(p IncidentExternalEntityPostParams)
 }
 
 type (
+	// IncidentRejectMethods is use to call methods for IncidentReject
+	IncidentRejectMethods struct{ methods.MethodCall }
+
+	IncidentRejectPostParams struct {
+		AuthorID  int `url:"author_id,required"`
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentRejectPostResponse is used to map an external entity wait for returned from the Invgate API
+	IncidentRejectPostResponse struct {
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentReject
+// Requires scope: IncidentRejectPost
+// See https://releases.invgate.com/service-desk/api/#incidentreject-POST
+func (i *IncidentRejectMethods) Post(p IncidentRejectPostParams) (IncidentRejectPostResponse, error) {
+	cust := IncidentRejectPostResponse{}
+	i.RequiredScope = scopes.IncidentRejectPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when adding external entity (id: %d) ", cust.Status, p.RequestID)
+	}
+
+	return cust, nil
+}
+
+type (
 	// IncidentWaitingForExternalEntityMethods is use to call methods for IncidentWaitingForExternalEntity
 	IncidentWaitingForExternalEntityMethods struct{ methods.MethodCall }
 
