@@ -239,8 +239,6 @@ type (
 // Get for IncidentApproval
 // Requires scope: IncidentApprovalGet
 // See https://releases.invgate.com/service-desk/api/#incidentapproval-GET
-// While the docs have this as an endpoint I have not been able to get anything other than a response
-// of a nil array for any request.
 func (i *IncidentApprovalMethods) Get(p IncidentApprovalGetParams) ([]IncidentApprovalGetResponse, error) {
 	incs := []IncidentApprovalGetResponse{}
 	i.RequiredScope = scopes.IncidentApprovalGet
@@ -646,59 +644,6 @@ func (i *IncidentAttachmentMethods) Get(p IncidentAttachmentGetParams) (Incident
 }
 
 type (
-	// IncidentCommentMethods is use to call methods for IncidentComment
-	IncidentCommentMethods struct{ methods.MethodCall }
-
-	IncidentCommentGetParams struct {
-		RequestID int `url:"request_id,required"`
-		// Indicate the date format. The available formats are 'epoch' or 'iso8601'.
-		// If null, epoch format is returned.
-		DateFormat               string `url:"date_format"`
-		IsSolution               bool   `url:"is_solution"`
-		DecodedSpecialCharacters bool   `url:"decoded_special_characters"`
-	}
-
-	// IncidentCommentGetResponse is used to map an comment returned from the Invgate API
-	IncidentCommentGetResponse struct {
-		AuthorID        int    `json:"author_id,omitempty"`
-		Reference       int    `json:"reference,omitempty"`
-		IsSolution      bool   `json:"is_solution,omitempty"`
-		ID              int    `json:"id,omitempty"`
-		CreatedAt       int    `json:"created_at,omitempty"`
-		CustomerVisible bool   `json:"customer_visible,omitempty"`
-		Attachments     []int  `json:"attached_files,omitempty"`
-		MsgNum          int    `json:"msg_num,omitempty"`
-		IncidentID      int    `json:"incident_id,omitempty"`
-		Message         string `json:"message,omitempty"`
-	}
-)
-
-// Get for IncidentComment
-// Requires scope: IncidentCommentGet
-// See https://releases.invgate.com/service-desk/api/#incidentcomment-GET
-func (i *IncidentCommentMethods) Get(p IncidentCommentGetParams) ([]IncidentCommentGetResponse, error) {
-	comms := []IncidentCommentGetResponse{}
-	i.RequiredScope = scopes.IncidentCommentGet
-
-	q, err := utils.StructToQuery(p)
-	if err != nil {
-		return comms, err
-	}
-	i.Endpoint.RawQuery = q.Encode()
-
-	resp, err := i.RemoteGet()
-	if err != nil {
-		return comms, err
-	}
-
-	err = json.Unmarshal(resp, &comms)
-	if err != nil {
-		return nil, err
-	}
-	return comms, nil
-}
-
-type (
 	// IncidentCancelMethods is use to call methods for IncidentCancel
 	IncidentCancelMethods struct{ methods.MethodCall }
 
@@ -829,6 +774,59 @@ func (i *IncidentCollaboratorMethods) Post(p IncidentCollaboratorPostParams) (In
 }
 
 type (
+	// IncidentCommentMethods is use to call methods for IncidentComment
+	IncidentCommentMethods struct{ methods.MethodCall }
+
+	IncidentCommentGetParams struct {
+		RequestID int `url:"request_id,required"`
+		// Indicate the date format. The available formats are 'epoch' or 'iso8601'.
+		// If null, epoch format is returned.
+		DateFormat               string `url:"date_format"`
+		IsSolution               bool   `url:"is_solution"`
+		DecodedSpecialCharacters bool   `url:"decoded_special_characters"`
+	}
+
+	// IncidentCommentGetResponse is used to map an comment returned from the Invgate API
+	IncidentCommentGetResponse struct {
+		AuthorID        int    `json:"author_id,omitempty"`
+		Reference       int    `json:"reference,omitempty"`
+		IsSolution      bool   `json:"is_solution,omitempty"`
+		ID              int    `json:"id,omitempty"`
+		CreatedAt       int    `json:"created_at,omitempty"`
+		CustomerVisible bool   `json:"customer_visible,omitempty"`
+		Attachments     []int  `json:"attached_files,omitempty"`
+		MsgNum          int    `json:"msg_num,omitempty"`
+		IncidentID      int    `json:"incident_id,omitempty"`
+		Message         string `json:"message,omitempty"`
+	}
+)
+
+// Get for IncidentComment
+// Requires scope: IncidentCommentGet
+// See https://releases.invgate.com/service-desk/api/#incidentcomment-GET
+func (i *IncidentCommentMethods) Get(p IncidentCommentGetParams) ([]IncidentCommentGetResponse, error) {
+	comms := []IncidentCommentGetResponse{}
+	i.RequiredScope = scopes.IncidentCommentGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return comms, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return comms, err
+	}
+
+	err = json.Unmarshal(resp, &comms)
+	if err != nil {
+		return nil, err
+	}
+	return comms, nil
+}
+
+type (
 	IncidentCommentPostParams struct {
 		IsSolution      bool   `url:"is_solution"`
 		AuthorID        int    `url:"author_id,required"`
@@ -870,6 +868,105 @@ func (i *IncidentCommentMethods) Post(p IncidentCommentPostParams) (IncidentComm
 		return com, err
 	}
 	return com, nil
+}
+
+type (
+	// IncidentCustomApprovalMethods is use to call methods for IncidentCustomApproval
+	IncidentCustomApprovalMethods struct{ methods.MethodCall }
+
+	IncidentCustomApprovalGetParams struct {
+		// Indicate the date format. The available formats are 'epoch' or 'iso8601'.
+		// If null, epoch format is returned.
+		DateFormat string `url:"date_format"`
+		RequestID  int    `url:"request_id,required"`
+	}
+
+	// IncidentCustomApprovalGetResponse is used to map an custom approval returned from the Invgate API
+	IncidentCustomApprovalGetResponse struct {
+		ExpiredIn           int    `json:"expired_in,omitempty"`
+		Title               string `json:"title,omitempty"`
+		DescriptionPrompt   string `json:"description_prompt,omitempty"`
+		Status              int    `json:"status,omitempty"`
+		WfItemID            int    `json:"wf_item_id,omitempty"`
+		CreatedAt           int    `json:"created_at,omitempty"`
+		ExpiredApproved     int    `json:"expired_approved,omitempty"`
+		WfProcessID         int    `json:"wf_process_id,omitempty"`
+		PauseSLA            bool   `json:"pause_sla,omitempty"`
+		Description         string `json:"description,omitempty"`
+		ID                  int    `json:"id,omitempty"`
+		DescriptionRequired bool   `json:"description_required,omitempty"`
+	}
+)
+
+// Get for IncidentCustomApproval
+// Requires scope: IncidentCustomApprovalGet
+// See https://releases.invgate.com/service-desk/api/#incidentcustom_approval-GET
+func (i *IncidentCustomApprovalMethods) Get(p IncidentCustomApprovalGetParams) ([]IncidentCustomApprovalGetResponse, error) {
+	cust := []IncidentCustomApprovalGetResponse{}
+	i.RequiredScope = scopes.IncidentCustomApprovalGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return nil, err
+	}
+	return cust, nil
+}
+
+type (
+	IncidentCustomApprovalPostParams struct {
+		AuthorID    int    `url:"author_id,required"`
+		Description string `url:"description"`
+		RequestID   int    `url:"request_id,required"`
+		ApprovalID  int    `url:"approval_id,required"`
+	}
+
+	// IncidentCustomApprovalPostResponse is used to map an custom approval returned from the Invgate API
+	IncidentCustomApprovalPostResponse struct {
+		// OK if comment was added, ERROR if something went wrong
+		Status string `json:"status"`
+		Error  string `json:"error"`
+	}
+)
+
+// Post for IncidentCustomApproval
+// Requires scope: IncidentCustomApprovalPost
+// See https://releases.invgate.com/service-desk/api/#incidentcustom_approval-POST
+func (i *IncidentCustomApprovalMethods) Post(p IncidentCustomApprovalPostParams) (IncidentCustomApprovalPostResponse, error) {
+	cust := IncidentCustomApprovalPostResponse{}
+	i.RequiredScope = scopes.IncidentCustomApprovalPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return cust, err
+	}
+
+	if cust.Status == "ERROR" {
+		return cust, fmt.Errorf("invgate returned a status of %s when adding custom approval (id: %d) ", cust.Status, p.ApprovalID)
+	}
+
+	return cust, nil
 }
 
 // IncidentsMethods is used to call methods for Incidents

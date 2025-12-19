@@ -106,6 +106,8 @@ var (
 	IncidentCollaboratorPost          ScopeType = ScopeType(base + incident + ".collaborator" + methods.Post)
 	IncidentCommentPost               ScopeType = ScopeType(base + incident + ".comment" + methods.Post)
 	IncidentCommentGet                ScopeType = ScopeType(base + incident + ".comment" + methods.Get)
+	IncidentCustomApprovalGet         ScopeType = ScopeType(base + incident + ".custom_approval" + methods.Get)
+	IncidentCustomApprovalPost        ScopeType = ScopeType(base + incident + ".custom_approval" + methods.Post)
 	IncidentAttributesPriorityGet     ScopeType = ScopeType(base + incident + attributes + ".priority" + methods.Get)
 	IncidentAttributesSourceGet       ScopeType = ScopeType(base + incident + attributes + ".source" + methods.Get)
 	IncidentAttributesStatusGet       ScopeType = ScopeType(base + incident + attributes + status + methods.Get)

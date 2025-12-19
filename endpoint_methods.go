@@ -217,6 +217,12 @@ func (c *Client) IncidentComment() *endpoints.IncidentCommentMethods {
 	return newPublicMethod[endpoints.IncidentCommentMethods](c, "/incident.comment")
 }
 
+// IncidentCustomApproval manages an incidents custom approvals
+// See https://releases.invgate.com/service-desk/api/#incidentcustom_approval
+func (c *Client) IncidentCustomApproval() *endpoints.IncidentCustomApprovalMethods {
+	return newPublicMethod[endpoints.IncidentCustomApprovalMethods](c, "/incident.custom_approval")
+}
+
 // Incidents is used to get Incidents from the Invgate API
 // See https://releases.invgate.com/service-desk/api/#incidents
 func (c *Client) Incidents() *endpoints.IncidentsMethods {

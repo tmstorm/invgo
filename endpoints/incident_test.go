@@ -217,6 +217,45 @@ func TestIncidentCommentGet(t *testing.T) {
 	a.Equal(incs, resp)
 }
 
+func TestIncidentCustomApprovalGet(t *testing.T) {
+	a := assert.New(t)
+
+	incs := make([]endpoints.IncidentCustomApprovalGetResponse, 1)
+	var inc endpoints.IncidentCustomApprovalGetResponse
+	gofakeit.Struct(&inc)
+	incs = append(incs, inc)
+
+	server := newTestServer(t, http.MethodGet, "/incident.custom_approval", incs)
+
+	c := newTestClient(t, server, scopes.IncidentCustomApprovalGet)
+
+	resp, err := c.IncidentCustomApproval().Get(endpoints.IncidentCustomApprovalGetParams{RequestID: inc.ID})
+	a.NoError(err)
+	a.Equal(incs, resp)
+}
+
+func TestIncidentCustomApprovalPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentCustomApprovalPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.custom_approval", u)
+
+	c := newTestClient(t, server, scopes.IncidentCustomApprovalPost)
+
+	got, err := c.IncidentCustomApproval().Post(endpoints.IncidentCustomApprovalPostParams{AuthorID: 1, ApprovalID: 2, RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.custom_approval", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentCustomApprovalPost)
+	gotErr, err := cErr.IncidentCustomApproval().Post(endpoints.IncidentCustomApprovalPostParams{AuthorID: 1, ApprovalID: 2, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentApprovalRejectPut(t *testing.T) {
 	a := assert.New(t)
 
