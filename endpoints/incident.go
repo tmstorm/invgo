@@ -1147,6 +1147,48 @@ func (i *IncidentLinkMethods) Post(p IncidentLinkPostParams) (IncidentLinkPostRe
 }
 
 type (
+	// IncidentLinkedCIsCountersFromMethods is use to call methods for IncidentLinkedCIsCountersFrom
+	IncidentLinkedCIsCountersFromMethods struct{ methods.MethodCall }
+
+	IncidentLinkedCIsCountersFromGetParams struct {
+		From        int `url:"from,required"`
+		CIsSourceID int `url:"cis_source_id,required"`
+	}
+
+	// IncidentLinkedCIsCountersFromGetResponse is used to map an incidents linked CIs counters returned from the Invgate API
+	IncidentLinkedCIsCountersFromGetResponse struct {
+		Group    string `json:"group,omitempty"`
+		Requests any    `json:"requests,omitempty"` // NOTE: I am not currently sure exactly what this returns
+		CiID     int    `json:"ci_id,omitempty"`
+	}
+)
+
+// Get for IncidentLinkedCIsCounterFrom
+// Requires scope: IncidentLinkedCIsCountersFromGet
+// See https://releases.invgate.com/service-desk/api/#incidentlinked_ciscountersfrom-GET
+func (i *IncidentLinkedCIsCountersFromMethods) Get(p IncidentLinkedCIsCountersFromGetParams) ([]IncidentLinkedCIsCountersFromGetResponse, error) {
+	cust := []IncidentLinkedCIsCountersFromGetResponse{}
+	i.RequiredScope = scopes.IncidentLinkedCIsCountersFromGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return cust, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return cust, err
+	}
+
+	err = json.Unmarshal(resp, &cust)
+	if err != nil {
+		return nil, err
+	}
+	return cust, nil
+}
+
+type (
 	// IncidentReassignMethods is use to call methods for IncidentReassign
 	IncidentReassignMethods struct{ methods.MethodCall }
 

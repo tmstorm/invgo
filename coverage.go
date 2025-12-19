@@ -32,6 +32,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.custom_approval":            {"POST", "GET"},
 	"/incident.external_entity":            {"POST", "GET"},
 	"/incident.link":                       {"POST", "GET"},
+	"/incident.linked_cis.counters.from":   {"GET"},
 	"/incident.reassign":                   {"POST"},
 	"/incident.reject":                     {"POST"},
 	"/incident.reopen":                     {"PUT"},

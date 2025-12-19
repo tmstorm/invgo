@@ -334,6 +334,23 @@ func TestIncidentLinkPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentLinkedCIsCountersFromGet(t *testing.T) {
+	a := assert.New(t)
+
+	ents := make([]endpoints.IncidentLinkedCIsCountersFromGetResponse, 1)
+	var ent endpoints.IncidentLinkedCIsCountersFromGetResponse
+	gofakeit.Struct(&ent)
+	ents = append(ents, ent)
+
+	server := newTestServer(t, http.MethodGet, "/incident.linked_cis.counters.from", ents)
+
+	c := newTestClient(t, server, scopes.IncidentLinkedCIsCountersFromGet)
+
+	resp, err := c.IncidentLinkedCIsCountersFrom().Get(endpoints.IncidentLinkedCIsCountersFromGetParams{From: 1, CIsSourceID: 2})
+	a.NoError(err)
+	a.Equal(ents, resp)
+}
+
 func TestIncidentReassignPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentReassignPostResponse

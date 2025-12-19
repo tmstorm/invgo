@@ -235,6 +235,12 @@ func (c *Client) IncidentLink() *endpoints.IncidentLinkMethods {
 	return newPublicMethod[endpoints.IncidentLinkMethods](c, "/incident.link")
 }
 
+// IncidentLinkedCIsCountersFrom manages incident links
+// See https://releases.invgate.com/service-desk/api/#incidentlinked_ciscountersfrom
+func (c *Client) IncidentLinkedCIsCountersFrom() *endpoints.IncidentLinkedCIsCountersFromMethods {
+	return newPublicMethod[endpoints.IncidentLinkedCIsCountersFromMethods](c, "/incident.linked_cis.counters.from")
+}
+
 // IncidentReassign reassigns an incident
 // See https://releases.invgate.com/service-desk/api/#incidentreassign
 func (c *Client) IncidentReassign() *endpoints.IncidentReassignMethods {
