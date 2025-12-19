@@ -1110,14 +1110,16 @@ type (
 	IncidentReopenMethods struct{ methods.MethodCall }
 
 	IncidentReopenPutParams struct {
-		AuthorID  int `url:"author_id,required"`
+		AuthorID  int `url:"author_id"`
 		RequestID int `url:"request_id,required"`
 	}
 
 	// IncidentReopenPutResponse is used to map an re-opening returned from the Invgate API
 	IncidentReopenPutResponse struct {
+		Info string `json:"info,omitempty"`
 		// OK if comment was added, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
+		Error  string `json:"error,omitempty"`
 	}
 )
 
