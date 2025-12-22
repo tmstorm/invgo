@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.8.0](https://github.com/tmstorm/invgo/compare/v0.7.0...v0.8.0) (2025-12-22)
+
+
+### 🚀 Features
+
+* add incident.link ([01b87e8](https://github.com/tmstorm/invgo/commit/01b87e8c37cde8e3efe3761484822480d3daf924))
+* add incident.linked_cis.counters.from ([546c7e9](https://github.com/tmstorm/invgo/commit/546c7e946fcd22d387cc650b8a74657f1887b132))
+* add incident.observer ([06502b5](https://github.com/tmstorm/invgo/commit/06502b55d17aed71bbd65164cde9ce96c0aea912))
+* add incident.spontaneous_approval ([0d64d92](https://github.com/tmstorm/invgo/commit/0d64d924515dd3e871820b5a1f2dd01375a5eed6))
+* add incident.tasks ([de1d16d](https://github.com/tmstorm/invgo/commit/de1d16d2ad904da9855df4ad7bd8abc756fee2d8))
+* add incident.waitingfor.agent ([efd0693](https://github.com/tmstorm/invgo/commit/efd06931e6e821b3ba4c8087c44ff59c6bb572b6))
+* add incident.waitingfor.customer, .date, .incident ([d6b3e4a](https://github.com/tmstorm/invgo/commit/d6b3e4af5a7e5645e2f4b109d367f99c6c452fd5))
+* coverage script now generates json coverage file ([8e966ee](https://github.com/tmstorm/invgo/commit/8e966eeaa7be6cd3ac1f02d068aa6dcaecdd1432))
+
 ## [0.7.0](https://github.com/tmstorm/invgo/compare/v0.6.0...v0.7.0) (2025-12-19)
 
 
