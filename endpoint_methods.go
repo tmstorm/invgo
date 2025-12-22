@@ -259,6 +259,12 @@ func (c *Client) IncidentReject() *endpoints.IncidentRejectMethods {
 	return newPublicMethod[endpoints.IncidentRejectMethods](c, "/incident.reject")
 }
 
+// IncidentSpontaneousApproval creates a spontaneous approval
+// See https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval
+func (c *Client) IncidentSpontaneousApproval() *endpoints.IncidentSpontaneousApprovalMethods {
+	return newPublicMethod[endpoints.IncidentSpontaneousApprovalMethods](c, "/incident.spontaneous_approval")
+}
+
 // IncidentReopen reopens an incident
 // See https://releases.invgate.com/service-desk/api/#incidentreopen
 func (c *Client) IncidentReopen() *endpoints.IncidentReopenMethods {

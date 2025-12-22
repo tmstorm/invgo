@@ -432,6 +432,28 @@ func TestIncidentRejectPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentSpontaneousApprovalPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentSpontaneousApprovalPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.spontaneous_approval", u)
+
+	c := newTestClient(t, server, scopes.IncidentSpontaneousApprovalPost)
+
+	got, err := c.IncidentSpontaneousApproval().Post(endpoints.IncidentSpontaneousApprovalPostParams{ApprovalUserID: 1, AuthorID: 2, Description: "approval test", RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.spontaneous_approval", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentSpontaneousApprovalPost)
+	gotErr, err := cErr.IncidentSpontaneousApproval().Post(endpoints.IncidentSpontaneousApprovalPostParams{ApprovalUserID: 1, AuthorID: 2, Description: "approval test", RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentReopenPut(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentReopenPutResponse

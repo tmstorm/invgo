@@ -117,6 +117,7 @@ var (
 	IncidentObserverPost                 ScopeType = ScopeType(base + incident + ".observer" + methods.Post)
 	IncidentReassignPost                 ScopeType = ScopeType(base + incident + ".reassign" + methods.Post)
 	IncidentRejectPost                   ScopeType = ScopeType(base + incident + ".reject" + methods.Post)
+	IncidentSpontaneousApprovalPost      ScopeType = ScopeType(base + incident + ".spontaneous_approval" + methods.Post)
 	IncidentReopenPut                    ScopeType = ScopeType(base + incident + ".reopen" + methods.Put)
 	IncidentSolutionAcceptPut            ScopeType = ScopeType(base + incident + ".solution.accept" + methods.Put)
 	IncidentSolutionRejectPut            ScopeType = ScopeType(base + incident + ".solution.reject" + methods.Put)

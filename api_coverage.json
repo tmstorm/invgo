@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 45,
-    "total_implemented": 72,
+    "coverage_percent": 45.625,
+    "total_implemented": 73,
     "total_methods": 160,
     "endpoints": [
         {
@@ -257,6 +257,13 @@
             "link": "#incidentsolutionreject",
             "methods": [
                 "PUT"
+            ]
+        },
+        {
+            "name": "/incident.spontaneous_approval",
+            "link": "#incidentspontaneous_approval",
+            "methods": [
+                "POST"
             ]
         },
         {

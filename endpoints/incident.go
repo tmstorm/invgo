@@ -1244,7 +1244,7 @@ type (
 		RequestID int   `url:"request_id,required"`
 	}
 
-	// IncidentObserverPostResponse is used to map the response after posting a new incident
+	// IncidentObserverPostResponse is used to map the response after adding observer(s) to an incident
 	IncidentObserverPostResponse struct {
 		// OK if observers were added, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
@@ -1373,6 +1373,55 @@ func (i *IncidentRejectMethods) Post(p IncidentRejectPostParams) (IncidentReject
 	}
 
 	return cust, nil
+}
+
+type (
+	// IncidentSpontaneousApprovalMethods is use to call methods for IncidentSpontaneousApproval
+	IncidentSpontaneousApprovalMethods struct{ methods.MethodCall }
+
+	// IncidentSpontaneousApprovalPostParams is used to construct a new POST request for incident spontaneous aprroval
+	IncidentSpontaneousApprovalPostParams struct {
+		ApprovalUserID int    `url:"approval_user_id,required"`
+		AuthorID       int    `url:"author_id,required"`
+		Description    string `url:"description,required"`
+		RequestID      int    `url:"request_id,required"`
+	}
+
+	// IncidentSpontaneousApprovalPostResponse is used to map the response after posting a incidents spontaneous approval
+	IncidentSpontaneousApprovalPostResponse struct {
+		// OK if the approval was created, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentSpontaneousApproval
+// Requires scope: IncidentSpontaneousApprovalPost
+// See https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval-POST
+func (i *IncidentSpontaneousApprovalMethods) Post(p IncidentSpontaneousApprovalPostParams) (IncidentSpontaneousApprovalPostResponse, error) {
+	i.RequiredScope = scopes.IncidentSpontaneousApprovalPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return IncidentSpontaneousApprovalPostResponse{}, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return IncidentSpontaneousApprovalPostResponse{}, err
+	}
+
+	var r IncidentSpontaneousApprovalPostResponse
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when adding observer(s) to request (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
 }
 
 type (
