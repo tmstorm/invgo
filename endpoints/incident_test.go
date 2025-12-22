@@ -559,6 +559,50 @@ func TestIncidentWaitingForAgentPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentWaitingForCustomerPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentWaitingForCustomerPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.waitingfor.customer", u)
+
+	c := newTestClient(t, server, scopes.IncidentWaitingForCustomerPost)
+
+	got, err := c.IncidentWaitingForCustomer().Post(endpoints.IncidentWaitingForCustomerPostParams{RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.waitingfor.customer", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentWaitingForCustomerPost)
+	gotErr, err := cErr.IncidentWaitingForCustomer().Post(endpoints.IncidentWaitingForCustomerPostParams{RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestIncidentWaitingForDatePost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentWaitingForDatePostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.waitingfor.date", u)
+
+	c := newTestClient(t, server, scopes.IncidentWaitingForDatePost)
+
+	got, err := c.IncidentWaitingForDate().Post(endpoints.IncidentWaitingForDatePostParams{Timestamp: "01-02-2004", RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.waitingfor.date", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentWaitingForDatePost)
+	gotErr, err := cErr.IncidentWaitingForDate().Post(endpoints.IncidentWaitingForDatePostParams{Timestamp: "01-02-2004", RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentWaitingForExternalEntityPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentWaitingForExternalEntityPostResponse
@@ -577,6 +621,28 @@ func TestIncidentWaitingForExternalEntityPost(t *testing.T) {
 
 	cErr := newTestClient(t, serverErr, scopes.IncidentWaitingForExternalEntityPost)
 	gotErr, err := cErr.IncidentWaitingForExternalEntity().Post(endpoints.IncidentWaitingForExternalEntityPostParams{EntityLinkID: 1, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestIncidentWaitingForIncidentPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentWaitingForIncidentPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.waitingfor.incident", u)
+
+	c := newTestClient(t, server, scopes.IncidentWaitingForIncidentPost)
+
+	got, err := c.IncidentWaitingForIncident().Post(endpoints.IncidentWaitingForIncidentPostParams{RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.waitingfor.incident", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentWaitingForIncidentPost)
+	gotErr, err := cErr.IncidentWaitingForIncident().Post(endpoints.IncidentWaitingForIncidentPostParams{RequestID: 101})
 	a.Error(err)
 	a.Equal(u.Status, gotErr.Status)
 }

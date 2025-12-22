@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 46.88% (75/160 methods implemented)
+**coverage:** 48.75% (78/160 methods implemented)
 
 ### [/breakingnews](https://releases.invgate.com/service-desk/api/#breakingnews)
 
@@ -377,13 +377,13 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
+| POST | ✅ |
 
 ### [/incident.waitingfor.date](https://releases.invgate.com/service-desk/api/#incidentwaitingfordate)
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
+| POST | ✅ |
 
 ### [/incident.waitingfor.external_entity](https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity)
 
@@ -395,7 +395,7 @@
 
 | Method | Status |
 |--------|--------|
-| POST | ❌ |
+| POST | ✅ |
 
 ### [/incidents](https://releases.invgate.com/service-desk/api/#incidents)
 

@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 46.875,
-    "total_implemented": 75,
+    "coverage_percent": 48.75,
+    "total_implemented": 78,
     "total_methods": 160,
     "endpoints": [
         {
@@ -281,8 +281,29 @@
             ]
         },
         {
+            "name": "/incident.waitingfor.customer",
+            "link": "#incidentwaitingforcustomer",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incident.waitingfor.date",
+            "link": "#incidentwaitingfordate",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
             "name": "/incident.waitingfor.external_entity",
             "link": "#incidentwaitingforexternal_entity",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incident.waitingfor.incident",
+            "link": "#incidentwaitingforincident",
             "methods": [
                 "POST"
             ]

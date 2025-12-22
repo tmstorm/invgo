@@ -1665,6 +1665,99 @@ func (i *IncidentWaitingForAgentMethods) Post(p IncidentWaitingForAgentPostParam
 }
 
 type (
+	// IncidentWaitingForCustomerMethods is use to call methods for IncidentWaitingForCustomer
+	IncidentWaitingForCustomerMethods struct{ methods.MethodCall }
+
+	IncidentWaitingForCustomerPostParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentWaitingForCustomerPostResponse is used to map an customer wait for returned from the Invgate API
+	IncidentWaitingForCustomerPostResponse struct {
+		Info string `json:"info,omitempty"`
+		// OK if waiting for was updated, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentWaitingForCustomer
+// Requires scope: IncidentWaitingForCustomerPost
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforagent-POST
+func (i *IncidentWaitingForCustomerMethods) Post(p IncidentWaitingForCustomerPostParams) (IncidentWaitingForCustomerPostResponse, error) {
+	r := IncidentWaitingForCustomerPostResponse{}
+	i.RequiredScope = scopes.IncidentWaitingForCustomerPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when setting waiting for (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentWaitingForDateMethods is use to call methods for IncidentWaitingForDate
+	IncidentWaitingForDateMethods struct{ methods.MethodCall }
+
+	IncidentWaitingForDatePostParams struct {
+		Timestamp string `url:"timestamp,required"`
+		RequestID int    `url:"request_id,required"`
+	}
+
+	// IncidentWaitingForDatePostResponse is used to map an date wait for returned from the Invgate API
+	IncidentWaitingForDatePostResponse struct {
+		Info string `json:"info,omitempty"`
+		// OK if waiting for was updated, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentWaitingForDate
+// Requires scope: IncidentWaitingForDatePost
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforagent-POST
+func (i *IncidentWaitingForDateMethods) Post(p IncidentWaitingForDatePostParams) (IncidentWaitingForDatePostResponse, error) {
+	r := IncidentWaitingForDatePostResponse{}
+	i.RequiredScope = scopes.IncidentWaitingForDatePost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when setting waiting for (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
 	// IncidentWaitingForExternalEntityMethods is use to call methods for IncidentWaitingForExternalEntity
 	IncidentWaitingForExternalEntityMethods struct{ methods.MethodCall }
 
@@ -1687,6 +1780,52 @@ type (
 func (i *IncidentWaitingForExternalEntityMethods) Post(p IncidentWaitingForExternalEntityPostParams) (IncidentWaitingForExternalEntityPostResponse, error) {
 	r := IncidentWaitingForExternalEntityPostResponse{}
 	i.RequiredScope = scopes.IncidentWaitingForExternalEntityPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when setting waiting for (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentWaitingForIncidentMethods is use to call methods for IncidentWaitingForIncident
+	IncidentWaitingForIncidentMethods struct{ methods.MethodCall }
+
+	IncidentWaitingForIncidentPostParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentWaitingForIncidentPostResponse is used to map an incident wait for returned from the Invgate API
+	IncidentWaitingForIncidentPostResponse struct {
+		Info string `json:"info,omitempty"`
+		// OK if waiting for was updated, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentWaitingForIncident
+// Requires scope: IncidentWaitingForIncidentPost
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforagent-POST
+func (i *IncidentWaitingForIncidentMethods) Post(p IncidentWaitingForIncidentPostParams) (IncidentWaitingForIncidentPostResponse, error) {
+	r := IncidentWaitingForIncidentPostResponse{}
+	i.RequiredScope = scopes.IncidentWaitingForIncidentPost
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {

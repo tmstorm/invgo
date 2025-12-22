@@ -295,10 +295,28 @@ func (c *Client) IncidentWaitingForAgent() *endpoints.IncidentWaitingForAgentMet
 	return newPublicMethod[endpoints.IncidentWaitingForAgentMethods](c, "/incident.waitingfor.agent")
 }
 
+// IncidentWaitingForCustomer manages an incidents waiting for
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforcustomer
+func (c *Client) IncidentWaitingForCustomer() *endpoints.IncidentWaitingForCustomerMethods {
+	return newPublicMethod[endpoints.IncidentWaitingForCustomerMethods](c, "/incident.waitingfor.customer")
+}
+
+// IncidentWaitingForDate manages an incidents waiting for
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingfordate
+func (c *Client) IncidentWaitingForDate() *endpoints.IncidentWaitingForDateMethods {
+	return newPublicMethod[endpoints.IncidentWaitingForDateMethods](c, "/incident.waitingfor.date")
+}
+
 // IncidentWaitingForExternalEntity manages an incidents waiting for
 // See https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity
 func (c *Client) IncidentWaitingForExternalEntity() *endpoints.IncidentWaitingForExternalEntityMethods {
 	return newPublicMethod[endpoints.IncidentWaitingForExternalEntityMethods](c, "/incident.waitingfor.external_entity")
+}
+
+// IncidentWaitingForIncident manages an incidents waiting for
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforincident
+func (c *Client) IncidentWaitingForIncident() *endpoints.IncidentWaitingForIncidentMethods {
+	return newPublicMethod[endpoints.IncidentWaitingForIncidentMethods](c, "/incident.waitingfor.incident")
 }
 
 // Incidents is used to get Incidents from the Invgate API
