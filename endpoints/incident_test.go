@@ -454,6 +454,23 @@ func TestIncidentSpontaneousApprovalPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
+func TestIncidentTasksGet(t *testing.T) {
+	a := assert.New(t)
+
+	body := make([]endpoints.IncidentTasksGetResponse, 1)
+	var i endpoints.IncidentTasksGetResponse
+	gofakeit.Struct(&i)
+	body = append(body, i)
+
+	server := newTestServer(t, http.MethodGet, "/incident.tasks", body)
+
+	c := newTestClient(t, server, scopes.IncidentTasksGet)
+
+	resp, err := c.IncidentTasks().Get(endpoints.IncidentTasksGetParams{RequestID: 1})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
 func TestIncidentReopenPut(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentReopenPutResponse

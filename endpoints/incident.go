@@ -1196,8 +1196,9 @@ type (
 		RequestID int `url:"request_id,required"`
 	}
 
-	// IncidentObserverGetResponse Invgate returns an array of integers
-	// with no json key calue pairs. To make this easier they are mapped into the
+	// IncidentObserverGetResponse ...
+	// NOTE: Invgate returns an array of integers
+	// with no json key value pairs. To make this easier they are mapped into the
 	// UserIDs slice of ints.
 	IncidentObserverGetResponse struct {
 		UserIDs []int `json:"user_ids,omitempty"`
@@ -1419,6 +1420,58 @@ func (i *IncidentSpontaneousApprovalMethods) Post(p IncidentSpontaneousApprovalP
 
 	if r.Status == "ERROR" {
 		return r, fmt.Errorf("invgate returned a status of %s when adding observer(s) to request (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentTasksMethods is use to call methods for IncidentTasks
+	IncidentTasksMethods struct{ methods.MethodCall }
+
+	IncidentTasksGetParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	IncidentTasksGetResponse struct {
+		Name            string `json:"name,omitempty"`
+		CreateAt        int    `json:"create_at,omitempty"`
+		IsPredefined    bool   `json:"is_predefined,omitempty"`
+		WfStagedID      string `json:"wf_staged_id,omitempty"`
+		Status          int    `json:"status,omitempty"`
+		Description     string `json:"description,omitempty"`
+		AgentID         int    `json:"agent_id,omitempty"`
+		HelpdeskID      int    `json:"helpdesk_id,omitempty"`
+		IsRequired      bool   `json:"is_required,omitempty"`
+		AssignmentType  int    `json:"assignment_type,omitempty"`
+		LinkedRequestID int    `json:"linked_request_id,omitempty"`
+		TaskID          int    `json:"task_id,omitempty"`
+		ExpirationDate  int    `json:"expiration_date,omitempty"`
+		CompletedAt     int    `json:"completed_at,omitempty"`
+	}
+)
+
+// Get for IncidentTasks
+// Requires scope: IncidentTasksGet
+// See https://releases.invgate.com/service-desk/api/#incidenttasks-GET
+func (i *IncidentTasksMethods) Get(p IncidentTasksGetParams) ([]IncidentTasksGetResponse, error) {
+	var r []IncidentTasksGetResponse
+	i.RequiredScope = scopes.IncidentTasksGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
 	}
 
 	return r, nil

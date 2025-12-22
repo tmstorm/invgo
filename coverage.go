@@ -37,6 +37,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.reassign":                   {"POST"},
 	"/incident.reject":                     {"POST"},
 	"/incident.spontaneous_approval":       {"POST"},
+	"/incident.tasks":                      {"GET"},
 	"/incident.reopen":                     {"PUT"},
 	"/incident.solution.accept":            {"PUT"},
 	"/incident.solution.reject":            {"PUT"},

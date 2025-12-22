@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 45.625,
-    "total_implemented": 73,
+    "coverage_percent": 46.25,
+    "total_implemented": 74,
     "total_methods": 160,
     "endpoints": [
         {
@@ -264,6 +264,13 @@
             "link": "#incidentspontaneous_approval",
             "methods": [
                 "POST"
+            ]
+        },
+        {
+            "name": "/incident.tasks",
+            "link": "#incidenttasks",
+            "methods": [
+                "GET"
             ]
         },
         {
