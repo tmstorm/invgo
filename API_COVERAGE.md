@@ -2,7 +2,7 @@
 
 **coverage:** 43.75% (70/160 methods implemented)
 
-### /breakingnews
+### [/breakingnews](https://releases.invgate.com/service-desk/api/#breakingnews)
 
 | Method | Status |
 |--------|--------|
@@ -10,38 +10,38 @@
 | GET | ✅ |
 | PUT | ✅ |
 
-### /breakingnews.all
+### [/breakingnews.all](https://releases.invgate.com/service-desk/api/#breakingnewsall)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /breakingnews.attributes.status
+### [/breakingnews.attributes.status](https://releases.invgate.com/service-desk/api/#breakingnewsattributesstatus)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /breakingnews.attributes.type
+### [/breakingnews.attributes.type](https://releases.invgate.com/service-desk/api/#breakingnewsattributestype)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /breakingnews.status
+### [/breakingnews.status](https://releases.invgate.com/service-desk/api/#breakingnewsstatus)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 | GET | ✅ |
 
-### /categories
+### [/categories](https://releases.invgate.com/service-desk/api/#categories)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /cf.field.options.list
+### [/cf.field.options.list](https://releases.invgate.com/service-desk/api/#cffieldoptionslist)
 
 | Method | Status |
 |--------|--------|
@@ -49,7 +49,7 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /cf.field.options.tree
+### [/cf.field.options.tree](https://releases.invgate.com/service-desk/api/#cffieldoptionstree)
 
 | Method | Status |
 |--------|--------|
@@ -58,31 +58,31 @@
 | GET | ❌ |
 | PUT | ❌ |
 
-### /cf.fields.all
+### [/cf.fields.all](https://releases.invgate.com/service-desk/api/#cffieldsall)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /cf.fields.by.category
+### [/cf.fields.by.category](https://releases.invgate.com/service-desk/api/#cffieldsbycategory)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /cf.fields.types
+### [/cf.fields.types](https://releases.invgate.com/service-desk/api/#cffieldstypes)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /cis.by.id
+### [/cis.by.id](https://releases.invgate.com/service-desk/api/#cisbyid)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /companies
+### [/companies](https://releases.invgate.com/service-desk/api/#companies)
 
 | Method | Status |
 |--------|--------|
@@ -91,7 +91,7 @@
 | GET | ❌ |
 | PUT | ❌ |
 
-### /companies.groups
+### [/companies.groups](https://releases.invgate.com/service-desk/api/#companiesgroups)
 
 | Method | Status |
 |--------|--------|
@@ -99,7 +99,7 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /companies.observers
+### [/companies.observers](https://releases.invgate.com/service-desk/api/#companiesobservers)
 
 | Method | Status |
 |--------|--------|
@@ -107,7 +107,7 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /companies.users
+### [/companies.users](https://releases.invgate.com/service-desk/api/#companiesusers)
 
 | Method | Status |
 |--------|--------|
@@ -115,21 +115,13 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /data.export
+### [/data.export](https://releases.invgate.com/service-desk/api/#dataexport)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /groups
-
-| Method | Status |
-|--------|--------|
-| POST | ❌ |
-| GET | ❌ |
-| DELETE | ❌ |
-
-### /groups.observers
+### [/groups](https://releases.invgate.com/service-desk/api/#groups)
 
 | Method | Status |
 |--------|--------|
@@ -137,7 +129,7 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /groups.users
+### [/groups.observers](https://releases.invgate.com/service-desk/api/#groupsobservers)
 
 | Method | Status |
 |--------|--------|
@@ -145,13 +137,21 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /helpdesks
+### [/groups.users](https://releases.invgate.com/service-desk/api/#groupsusers)
+
+| Method | Status |
+|--------|--------|
+| POST | ❌ |
+| GET | ❌ |
+| DELETE | ❌ |
+
+### [/helpdesks](https://releases.invgate.com/service-desk/api/#helpdesks)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /helpdesks.observers
+### [/helpdesks.observers](https://releases.invgate.com/service-desk/api/#helpdesksobservers)
 
 | Method | Status |
 |--------|--------|
@@ -159,13 +159,13 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /helpdesksandlevels
+### [/helpdesksandlevels](https://releases.invgate.com/service-desk/api/#helpdesksandlevels)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incident
+### [/incident](https://releases.invgate.com/service-desk/api/#incident)
 
 | Method | Status |
 |--------|--------|
@@ -173,118 +173,118 @@
 | GET | ✅ |
 | PUT | ✅ |
 
-### /incident.approval
+### [/incident.approval](https://releases.invgate.com/service-desk/api/#incidentapproval)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.approval.accept
+### [/incident.approval.accept](https://releases.invgate.com/service-desk/api/#incidentapprovalaccept)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /incident.approval.add_voter
+### [/incident.approval.add_voter](https://releases.invgate.com/service-desk/api/#incidentapprovaladd_voter)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /incident.approval.cancel
+### [/incident.approval.cancel](https://releases.invgate.com/service-desk/api/#incidentapprovalcancel)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /incident.approval.possible_voters
+### [/incident.approval.possible_voters](https://releases.invgate.com/service-desk/api/#incidentapprovalpossible_voters)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.approval.reject
+### [/incident.approval.reject](https://releases.invgate.com/service-desk/api/#incidentapprovalreject)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /incident.approval.status
+### [/incident.approval.status](https://releases.invgate.com/service-desk/api/#incidentapprovalstatus)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.approval.type
+### [/incident.approval.type](https://releases.invgate.com/service-desk/api/#incidentapprovaltype)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.approval.vote_status
+### [/incident.approval.vote_status](https://releases.invgate.com/service-desk/api/#incidentapprovalvote_status)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.attachment
+### [/incident.attachment](https://releases.invgate.com/service-desk/api/#incidentattachment)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.attributes.priority
+### [/incident.attributes.priority](https://releases.invgate.com/service-desk/api/#incidentattributespriority)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.attributes.source
+### [/incident.attributes.source](https://releases.invgate.com/service-desk/api/#incidentattributessource)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.attributes.status
+### [/incident.attributes.status](https://releases.invgate.com/service-desk/api/#incidentattributesstatus)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.attributes.type
+### [/incident.attributes.type](https://releases.invgate.com/service-desk/api/#incidentattributestype)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.cancel
+### [/incident.cancel](https://releases.invgate.com/service-desk/api/#incidentcancel)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /incident.collaborator
-
-| Method | Status |
-|--------|--------|
-| POST | ✅ |
-| GET | ✅ |
-
-### /incident.comment
+### [/incident.collaborator](https://releases.invgate.com/service-desk/api/#incidentcollaborator)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 | GET | ✅ |
 
-### /incident.custom_approval
+### [/incident.comment](https://releases.invgate.com/service-desk/api/#incidentcomment)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 | GET | ✅ |
 
-### /incident.custom_field
+### [/incident.custom_approval](https://releases.invgate.com/service-desk/api/#incidentcustom_approval)
+
+| Method | Status |
+|--------|--------|
+| POST | ✅ |
+| GET | ✅ |
+
+### [/incident.custom_field](https://releases.invgate.com/service-desk/api/#incidentcustom_field)
 
 | Method | Status |
 |--------|--------|
@@ -292,172 +292,172 @@
 | DELETE | ❌ |
 | PATCH | ❌ |
 
-### /incident.external_entity
+### [/incident.external_entity](https://releases.invgate.com/service-desk/api/#incidentexternal_entity)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 | GET | ✅ |
 
-### /incident.link
+### [/incident.link](https://releases.invgate.com/service-desk/api/#incidentlink)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 | GET | ✅ |
 
-### /incident.linked_cis.counters.from
+### [/incident.linked_cis.counters.from](https://releases.invgate.com/service-desk/api/#incidentlinked_ciscountersfrom)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incident.observer
+### [/incident.observer](https://releases.invgate.com/service-desk/api/#incidentobserver)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 | GET | ❌ |
 
-### /incident.reassign
+### [/incident.reassign](https://releases.invgate.com/service-desk/api/#incidentreassign)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /incident.reject
+### [/incident.reject](https://releases.invgate.com/service-desk/api/#incidentreject)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /incident.relate.ci.by.keyword
+### [/incident.relate.ci.by.keyword](https://releases.invgate.com/service-desk/api/#incidentrelatecibykeyword)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 
-### /incident.reopen
+### [/incident.reopen](https://releases.invgate.com/service-desk/api/#incidentreopen)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /incident.solution.accept
+### [/incident.solution.accept](https://releases.invgate.com/service-desk/api/#incidentsolutionaccept)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /incident.solution.reject
+### [/incident.solution.reject](https://releases.invgate.com/service-desk/api/#incidentsolutionreject)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /incident.spontaneous_approval
+### [/incident.spontaneous_approval](https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 
-### /incident.tasks
+### [/incident.tasks](https://releases.invgate.com/service-desk/api/#incidenttasks)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incident.waitingfor.agent
+### [/incident.waitingfor.agent](https://releases.invgate.com/service-desk/api/#incidentwaitingforagent)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 
-### /incident.waitingfor.customer
+### [/incident.waitingfor.customer](https://releases.invgate.com/service-desk/api/#incidentwaitingforcustomer)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 
-### /incident.waitingfor.date
+### [/incident.waitingfor.date](https://releases.invgate.com/service-desk/api/#incidentwaitingfordate)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 
-### /incident.waitingfor.external_entity
+### [/incident.waitingfor.external_entity](https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /incident.waitingfor.incident
+### [/incident.waitingfor.incident](https://releases.invgate.com/service-desk/api/#incidentwaitingforincident)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
 
-### /incidents
+### [/incidents](https://releases.invgate.com/service-desk/api/#incidents)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incidents.by.agent
+### [/incidents.by.agent](https://releases.invgate.com/service-desk/api/#incidentsbyagent)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.by.cis
+### [/incidents.by.cis](https://releases.invgate.com/service-desk/api/#incidentsbycis)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.by.customer
+### [/incidents.by.customer](https://releases.invgate.com/service-desk/api/#incidentsbycustomer)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.by.helpdesk
+### [/incidents.by.helpdesk](https://releases.invgate.com/service-desk/api/#incidentsbyhelpdesk)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.by.sentiment
+### [/incidents.by.sentiment](https://releases.invgate.com/service-desk/api/#incidentsbysentiment)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.by.status
+### [/incidents.by.status](https://releases.invgate.com/service-desk/api/#incidentsbystatus)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /incidents.by.view
+### [/incidents.by.view](https://releases.invgate.com/service-desk/api/#incidentsbyview)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.details.by.view
+### [/incidents.details.by.view](https://releases.invgate.com/service-desk/api/#incidentsdetailsbyview)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /incidents.last.hour
+### [/incidents.last.hour](https://releases.invgate.com/service-desk/api/#incidentslasthour)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /internalnotes
+### [/internalnotes](https://releases.invgate.com/service-desk/api/#internalnotes)
 
 | Method | Status |
 |--------|--------|
@@ -466,7 +466,7 @@
 | GET | ❌ |
 | PUT | ❌ |
 
-### /kb.articles
+### [/kb.articles](https://releases.invgate.com/service-desk/api/#kbarticles)
 
 | Method | Status |
 |--------|--------|
@@ -475,7 +475,7 @@
 | GET | ❌ |
 | PUT | ❌ |
 
-### /kb.articles.attachments
+### [/kb.articles.attachments](https://releases.invgate.com/service-desk/api/#kbarticlesattachments)
 
 | Method | Status |
 |--------|--------|
@@ -483,25 +483,25 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /kb.articles.by.category
+### [/kb.articles.by.category](https://releases.invgate.com/service-desk/api/#kbarticlesbycategory)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /kb.articles.by.ids
+### [/kb.articles.by.ids](https://releases.invgate.com/service-desk/api/#kbarticlesbyids)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /kb.articles.by.keywords
+### [/kb.articles.by.keywords](https://releases.invgate.com/service-desk/api/#kbarticlesbykeywords)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /kb.categories
+### [/kb.categories](https://releases.invgate.com/service-desk/api/#kbcategories)
 
 | Method | Status |
 |--------|--------|
@@ -510,27 +510,19 @@
 | GET | ❌ |
 | PUT | ❌ |
 
-### /kb.categories.by.ids
+### [/kb.categories.by.ids](https://releases.invgate.com/service-desk/api/#kbcategoriesbyids)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /levels
+### [/levels](https://releases.invgate.com/service-desk/api/#levels)
 
 | Method | Status |
 |--------|--------|
 | GET | ❌ |
 
-### /levels.observers
-
-| Method | Status |
-|--------|--------|
-| POST | ❌ |
-| GET | ❌ |
-| DELETE | ❌ |
-
-### /locations
+### [/levels.observers](https://releases.invgate.com/service-desk/api/#levelsobservers)
 
 | Method | Status |
 |--------|--------|
@@ -538,7 +530,7 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /locations.observers
+### [/locations](https://releases.invgate.com/service-desk/api/#locations)
 
 | Method | Status |
 |--------|--------|
@@ -546,7 +538,7 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /locations.users
+### [/locations.observers](https://releases.invgate.com/service-desk/api/#locationsobservers)
 
 | Method | Status |
 |--------|--------|
@@ -554,13 +546,21 @@
 | GET | ❌ |
 | DELETE | ❌ |
 
-### /sd.version
+### [/locations.users](https://releases.invgate.com/service-desk/api/#locationsusers)
+
+| Method | Status |
+|--------|--------|
+| POST | ❌ |
+| GET | ❌ |
+| DELETE | ❌ |
+
+### [/sd.version](https://releases.invgate.com/service-desk/api/#sdversion)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /timetracking
+### [/timetracking](https://releases.invgate.com/service-desk/api/#timetracking)
 
 | Method | Status |
 |--------|--------|
@@ -568,25 +568,25 @@
 | GET | ✅ |
 | DELETE | ✅ |
 
-### /timetracking.attributes.category
+### [/timetracking.attributes.category](https://releases.invgate.com/service-desk/api/#timetrackingattributescategory)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /triggers
+### [/triggers](https://releases.invgate.com/service-desk/api/#triggers)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /triggers.executions
+### [/triggers.executions](https://releases.invgate.com/service-desk/api/#triggersexecutions)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /user
+### [/user](https://releases.invgate.com/service-desk/api/#user)
 
 | Method | Status |
 |--------|--------|
@@ -595,73 +595,73 @@
 | GET | ✅ |
 | PUT | ✅ |
 
-### /user.by
+### [/user.by](https://releases.invgate.com/service-desk/api/#userby)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /user.convert
+### [/user.convert](https://releases.invgate.com/service-desk/api/#userconvert)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /user.disable
+### [/user.disable](https://releases.invgate.com/service-desk/api/#userdisable)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /user.enable
+### [/user.enable](https://releases.invgate.com/service-desk/api/#userenable)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /user.password
+### [/user.password](https://releases.invgate.com/service-desk/api/#userpassword)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /user.password.reset
+### [/user.password.reset](https://releases.invgate.com/service-desk/api/#userpasswordreset)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /user.token
+### [/user.token](https://releases.invgate.com/service-desk/api/#usertoken)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
 
-### /users
+### [/users](https://releases.invgate.com/service-desk/api/#users)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /users.by
+### [/users.by](https://releases.invgate.com/service-desk/api/#usersby)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /users.groups
+### [/users.groups](https://releases.invgate.com/service-desk/api/#usersgroups)
 
 | Method | Status |
 |--------|--------|
 | GET | ✅ |
 
-### /wf.deploy
+### [/wf.deploy](https://releases.invgate.com/service-desk/api/#wfdeploy)
 
 | Method | Status |
 |--------|--------|
 | PUT | ✅ |
 
-### /wf.initialfields.by.category
+### [/wf.initialfields.by.category](https://releases.invgate.com/service-desk/api/#wfinitialfieldsbycategory)
 
 | Method | Status |
 |--------|--------|

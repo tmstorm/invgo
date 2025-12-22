@@ -1,0 +1,407 @@
+{
+    "coverage_percent": 43.75,
+    "total_implemented": 70,
+    "total_methods": 160,
+    "endpoints": [
+        {
+            "name": "/breakingnews",
+            "link": "#breakingnews",
+            "methods": [
+                "POST",
+                "GET",
+                "PUT"
+            ]
+        },
+        {
+            "name": "/breakingnews.all",
+            "link": "#breakingnewsall",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/breakingnews.attributes.status",
+            "link": "#breakingnewsattributesstatus",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/breakingnews.attributes.type",
+            "link": "#breakingnewsattributestype",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/breakingnews.status",
+            "link": "#breakingnewsstatus",
+            "methods": [
+                "POST",
+                "GET"
+            ]
+        },
+        {
+            "name": "/categories",
+            "link": "#categories",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/helpdesks",
+            "link": "#helpdesks",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident",
+            "link": "#incident",
+            "methods": [
+                "POST",
+                "GET",
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.approval",
+            "link": "#incidentapproval",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.approval.accept",
+            "link": "#incidentapprovalaccept",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.approval.add_voter",
+            "link": "#incidentapprovaladd_voter",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incident.approval.cancel",
+            "link": "#incidentapprovalcancel",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.approval.possible_voters",
+            "link": "#incidentapprovalpossible_voters",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.approval.reject",
+            "link": "#incidentapprovalreject",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.approval.status",
+            "link": "#incidentapprovalstatus",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.approval.type",
+            "link": "#incidentapprovaltype",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.approval.vote_status",
+            "link": "#incidentapprovalvote_status",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.attachment",
+            "link": "#incidentattachment",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.attributes.priority",
+            "link": "#incidentattributespriority",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.attributes.source",
+            "link": "#incidentattributessource",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.attributes.status",
+            "link": "#incidentattributesstatus",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.attributes.type",
+            "link": "#incidentattributestype",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.cancel",
+            "link": "#incidentcancel",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incident.collaborator",
+            "link": "#incidentcollaborator",
+            "methods": [
+                "POST",
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.comment",
+            "link": "#incidentcomment",
+            "methods": [
+                "POST",
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.custom_approval",
+            "link": "#incidentcustom_approval",
+            "methods": [
+                "POST",
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.external_entity",
+            "link": "#incidentexternal_entity",
+            "methods": [
+                "POST",
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.link",
+            "link": "#incidentlink",
+            "methods": [
+                "POST",
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.linked_cis.counters.from",
+            "link": "#incidentlinked_ciscountersfrom",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.reassign",
+            "link": "#incidentreassign",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incident.reject",
+            "link": "#incidentreject",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incident.reopen",
+            "link": "#incidentreopen",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.solution.accept",
+            "link": "#incidentsolutionaccept",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.solution.reject",
+            "link": "#incidentsolutionreject",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/incident.waitingfor.external_entity",
+            "link": "#incidentwaitingforexternal_entity",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/incidents",
+            "link": "#incidents",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incidents.by.status",
+            "link": "#incidentsbystatus",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/sd.version",
+            "link": "#sdversion",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/timetracking",
+            "link": "#timetracking",
+            "methods": [
+                "POST",
+                "GET",
+                "DELETE"
+            ]
+        },
+        {
+            "name": "/timetracking.attributes.category",
+            "link": "#timetrackingattributescategory",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/triggers",
+            "link": "#triggers",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/triggers.executions",
+            "link": "#triggersexecutions",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/user",
+            "link": "#user",
+            "methods": [
+                "DELETE",
+                "POST",
+                "GET",
+                "PUT"
+            ]
+        },
+        {
+            "name": "/user.by",
+            "link": "#userby",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/user.convert",
+            "link": "#userconvert",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/user.disable",
+            "link": "#userdisable",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/user.enable",
+            "link": "#userenable",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/user.password",
+            "link": "#userpassword",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/user.password.reset",
+            "link": "#userpasswordreset",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/user.token",
+            "link": "#usertoken",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "name": "/users",
+            "link": "#users",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/users.by",
+            "link": "#usersby",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/users.groups",
+            "link": "#usersgroups",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/wf.deploy",
+            "link": "#wfdeploy",
+            "methods": [
+                "PUT"
+            ]
+        },
+        {
+            "name": "/wf.initialfields.by.category",
+            "link": "#wfinitialfieldsbycategory",
+            "methods": [
+                "GET"
+            ]
+        }
+    ]
+}
