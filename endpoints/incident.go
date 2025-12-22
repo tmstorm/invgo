@@ -1377,107 +1377,6 @@ func (i *IncidentRejectMethods) Post(p IncidentRejectPostParams) (IncidentReject
 }
 
 type (
-	// IncidentSpontaneousApprovalMethods is use to call methods for IncidentSpontaneousApproval
-	IncidentSpontaneousApprovalMethods struct{ methods.MethodCall }
-
-	// IncidentSpontaneousApprovalPostParams is used to construct a new POST request for incident spontaneous aprroval
-	IncidentSpontaneousApprovalPostParams struct {
-		ApprovalUserID int    `url:"approval_user_id,required"`
-		AuthorID       int    `url:"author_id,required"`
-		Description    string `url:"description,required"`
-		RequestID      int    `url:"request_id,required"`
-	}
-
-	// IncidentSpontaneousApprovalPostResponse is used to map the response after posting a incidents spontaneous approval
-	IncidentSpontaneousApprovalPostResponse struct {
-		// OK if the approval was created, ERROR if something went wrong
-		Status string `json:"status,omitempty"`
-	}
-)
-
-// Post for IncidentSpontaneousApproval
-// Requires scope: IncidentSpontaneousApprovalPost
-// See https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval-POST
-func (i *IncidentSpontaneousApprovalMethods) Post(p IncidentSpontaneousApprovalPostParams) (IncidentSpontaneousApprovalPostResponse, error) {
-	i.RequiredScope = scopes.IncidentSpontaneousApprovalPost
-
-	q, err := utils.StructToQuery(p)
-	if err != nil {
-		return IncidentSpontaneousApprovalPostResponse{}, err
-	}
-	i.Endpoint.RawQuery = q.Encode()
-
-	resp, err := i.RemotePost()
-	if err != nil {
-		return IncidentSpontaneousApprovalPostResponse{}, err
-	}
-
-	var r IncidentSpontaneousApprovalPostResponse
-	err = json.Unmarshal(resp, &r)
-	if err != nil {
-		return r, err
-	}
-
-	if r.Status == "ERROR" {
-		return r, fmt.Errorf("invgate returned a status of %s when adding observer(s) to request (id: %d) ", r.Status, p.RequestID)
-	}
-
-	return r, nil
-}
-
-type (
-	// IncidentTasksMethods is use to call methods for IncidentTasks
-	IncidentTasksMethods struct{ methods.MethodCall }
-
-	IncidentTasksGetParams struct {
-		RequestID int `url:"request_id,required"`
-	}
-
-	IncidentTasksGetResponse struct {
-		Name            string `json:"name,omitempty"`
-		CreateAt        int    `json:"create_at,omitempty"`
-		IsPredefined    bool   `json:"is_predefined,omitempty"`
-		WfStagedID      string `json:"wf_staged_id,omitempty"`
-		Status          int    `json:"status,omitempty"`
-		Description     string `json:"description,omitempty"`
-		AgentID         int    `json:"agent_id,omitempty"`
-		HelpdeskID      int    `json:"helpdesk_id,omitempty"`
-		IsRequired      bool   `json:"is_required,omitempty"`
-		AssignmentType  int    `json:"assignment_type,omitempty"`
-		LinkedRequestID int    `json:"linked_request_id,omitempty"`
-		TaskID          int    `json:"task_id,omitempty"`
-		ExpirationDate  int    `json:"expiration_date,omitempty"`
-		CompletedAt     int    `json:"completed_at,omitempty"`
-	}
-)
-
-// Get for IncidentTasks
-// Requires scope: IncidentTasksGet
-// See https://releases.invgate.com/service-desk/api/#incidenttasks-GET
-func (i *IncidentTasksMethods) Get(p IncidentTasksGetParams) ([]IncidentTasksGetResponse, error) {
-	var r []IncidentTasksGetResponse
-	i.RequiredScope = scopes.IncidentTasksGet
-
-	q, err := utils.StructToQuery(p)
-	if err != nil {
-		return r, err
-	}
-	i.Endpoint.RawQuery = q.Encode()
-
-	resp, err := i.RemoteGet()
-	if err != nil {
-		return r, err
-	}
-
-	err = json.Unmarshal(resp, &r)
-	if err != nil {
-		return r, err
-	}
-
-	return r, nil
-}
-
-type (
 	// IncidentReopenMethods is use to call methods for IncidentReopen
 	IncidentReopenMethods struct{ methods.MethodCall }
 
@@ -1619,6 +1518,153 @@ func (i *IncidentSolutionRejectMethods) Put(p IncidentSolutionRejectPutParams) (
 }
 
 type (
+	// IncidentSpontaneousApprovalMethods is use to call methods for IncidentSpontaneousApproval
+	IncidentSpontaneousApprovalMethods struct{ methods.MethodCall }
+
+	// IncidentSpontaneousApprovalPostParams is used to construct a new POST request for incident spontaneous aprroval
+	IncidentSpontaneousApprovalPostParams struct {
+		ApprovalUserID int    `url:"approval_user_id,required"`
+		AuthorID       int    `url:"author_id,required"`
+		Description    string `url:"description,required"`
+		RequestID      int    `url:"request_id,required"`
+	}
+
+	// IncidentSpontaneousApprovalPostResponse is used to map the response after posting a incidents spontaneous approval
+	IncidentSpontaneousApprovalPostResponse struct {
+		// OK if the approval was created, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentSpontaneousApproval
+// Requires scope: IncidentSpontaneousApprovalPost
+// See https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval-POST
+func (i *IncidentSpontaneousApprovalMethods) Post(p IncidentSpontaneousApprovalPostParams) (IncidentSpontaneousApprovalPostResponse, error) {
+	i.RequiredScope = scopes.IncidentSpontaneousApprovalPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return IncidentSpontaneousApprovalPostResponse{}, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return IncidentSpontaneousApprovalPostResponse{}, err
+	}
+
+	var r IncidentSpontaneousApprovalPostResponse
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when adding observer(s) to request (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentTasksMethods is use to call methods for IncidentTasks
+	IncidentTasksMethods struct{ methods.MethodCall }
+
+	IncidentTasksGetParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	IncidentTasksGetResponse struct {
+		Name            string `json:"name,omitempty"`
+		CreateAt        int    `json:"create_at,omitempty"`
+		IsPredefined    bool   `json:"is_predefined,omitempty"`
+		WfStagedID      string `json:"wf_staged_id,omitempty"`
+		Status          int    `json:"status,omitempty"`
+		Description     string `json:"description,omitempty"`
+		AgentID         int    `json:"agent_id,omitempty"`
+		HelpdeskID      int    `json:"helpdesk_id,omitempty"`
+		IsRequired      bool   `json:"is_required,omitempty"`
+		AssignmentType  int    `json:"assignment_type,omitempty"`
+		LinkedRequestID int    `json:"linked_request_id,omitempty"`
+		TaskID          int    `json:"task_id,omitempty"`
+		ExpirationDate  int    `json:"expiration_date,omitempty"`
+		CompletedAt     int    `json:"completed_at,omitempty"`
+	}
+)
+
+// Get for IncidentTasks
+// Requires scope: IncidentTasksGet
+// See https://releases.invgate.com/service-desk/api/#incidenttasks-GET
+func (i *IncidentTasksMethods) Get(p IncidentTasksGetParams) ([]IncidentTasksGetResponse, error) {
+	var r []IncidentTasksGetResponse
+	i.RequiredScope = scopes.IncidentTasksGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentWaitingForAgentMethods is use to call methods for IncidentWaitingForAgent
+	IncidentWaitingForAgentMethods struct{ methods.MethodCall }
+
+	IncidentWaitingForAgentPostParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentWaitingForAgentPostResponse is used to map an agent wait for returned from the Invgate API
+	IncidentWaitingForAgentPostResponse struct {
+		Info string `json:"info,omitempty"`
+		// OK if waiting for was updated, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentWaitingForAgent
+// Requires scope: IncidentWaitingForAgentPost
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforagent-POST
+func (i *IncidentWaitingForAgentMethods) Post(p IncidentWaitingForAgentPostParams) (IncidentWaitingForAgentPostResponse, error) {
+	r := IncidentWaitingForAgentPostResponse{}
+	i.RequiredScope = scopes.IncidentWaitingForAgentPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when setting waiting for (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
 	// IncidentWaitingForExternalEntityMethods is use to call methods for IncidentWaitingForExternalEntity
 	IncidentWaitingForExternalEntityMethods struct{ methods.MethodCall }
 
@@ -1630,7 +1676,7 @@ type (
 	// IncidentWaitingForExternalEntityPostResponse is used to map an external entity wait for returned from the Invgate API
 	IncidentWaitingForExternalEntityPostResponse struct {
 		Info string `json:"info,omitempty"`
-		// OK if comment was added, ERROR if something went wrong
+		// OK if waiting for was updated, ERROR if something went wrong
 		Status string `json:"status,omitempty"`
 	}
 )
@@ -1639,30 +1685,30 @@ type (
 // Requires scope: IncidentWaitingForExternalEntityPost
 // See https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity-POST
 func (i *IncidentWaitingForExternalEntityMethods) Post(p IncidentWaitingForExternalEntityPostParams) (IncidentWaitingForExternalEntityPostResponse, error) {
-	cust := IncidentWaitingForExternalEntityPostResponse{}
+	r := IncidentWaitingForExternalEntityPostResponse{}
 	i.RequiredScope = scopes.IncidentWaitingForExternalEntityPost
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
-		return cust, err
+		return r, err
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
 	resp, err := i.RemotePost()
 	if err != nil {
-		return cust, err
+		return r, err
 	}
 
-	err = json.Unmarshal(resp, &cust)
+	err = json.Unmarshal(resp, &r)
 	if err != nil {
-		return cust, err
+		return r, err
 	}
 
-	if cust.Status == "ERROR" {
-		return cust, fmt.Errorf("invgate returned a status of %s when adding external entity (id: %d) ", cust.Status, p.RequestID)
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when setting waiting for (id: %d) ", r.Status, p.RequestID)
 	}
 
-	return cust, nil
+	return r, nil
 }
 
 // IncidentsMethods is used to call methods for Incidents

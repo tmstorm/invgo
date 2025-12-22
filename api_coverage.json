@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 46.25,
-    "total_implemented": 74,
+    "coverage_percent": 46.875,
+    "total_implemented": 75,
     "total_methods": 160,
     "endpoints": [
         {
@@ -271,6 +271,13 @@
             "link": "#incidenttasks",
             "methods": [
                 "GET"
+            ]
+        },
+        {
+            "name": "/incident.waitingfor.agent",
+            "link": "#incidentwaitingforagent",
+            "methods": [
+                "POST"
             ]
         },
         {

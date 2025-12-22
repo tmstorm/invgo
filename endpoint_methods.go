@@ -259,18 +259,6 @@ func (c *Client) IncidentReject() *endpoints.IncidentRejectMethods {
 	return newPublicMethod[endpoints.IncidentRejectMethods](c, "/incident.reject")
 }
 
-// IncidentSpontaneousApproval creates a spontaneous approval
-// See https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval
-func (c *Client) IncidentSpontaneousApproval() *endpoints.IncidentSpontaneousApprovalMethods {
-	return newPublicMethod[endpoints.IncidentSpontaneousApprovalMethods](c, "/incident.spontaneous_approval")
-}
-
-// IncidentTasks get an incidents tasks
-// See https://releases.invgate.com/service-desk/api/#incidenttasks
-func (c *Client) IncidentTasks() *endpoints.IncidentTasksMethods {
-	return newPublicMethod[endpoints.IncidentTasksMethods](c, "/incident.tasks")
-}
-
 // IncidentReopen reopens an incident
 // See https://releases.invgate.com/service-desk/api/#incidentreopen
 func (c *Client) IncidentReopen() *endpoints.IncidentReopenMethods {
@@ -289,7 +277,25 @@ func (c *Client) IncidentSolutionReject() *endpoints.IncidentSolutionRejectMetho
 	return newPublicMethod[endpoints.IncidentSolutionRejectMethods](c, "/incident.solution.reject")
 }
 
-// IncidentWaitingForExternalEntity manages an incidents custom approvals
+// IncidentSpontaneousApproval creates a spontaneous approval
+// See https://releases.invgate.com/service-desk/api/#incidentspontaneous_approval
+func (c *Client) IncidentSpontaneousApproval() *endpoints.IncidentSpontaneousApprovalMethods {
+	return newPublicMethod[endpoints.IncidentSpontaneousApprovalMethods](c, "/incident.spontaneous_approval")
+}
+
+// IncidentTasks get an incidents tasks
+// See https://releases.invgate.com/service-desk/api/#incidenttasks
+func (c *Client) IncidentTasks() *endpoints.IncidentTasksMethods {
+	return newPublicMethod[endpoints.IncidentTasksMethods](c, "/incident.tasks")
+}
+
+// IncidentWaitingForAgent manages an incidents waiting for
+// See https://releases.invgate.com/service-desk/api/#incidentwaitingforagent
+func (c *Client) IncidentWaitingForAgent() *endpoints.IncidentWaitingForAgentMethods {
+	return newPublicMethod[endpoints.IncidentWaitingForAgentMethods](c, "/incident.waitingfor.agent")
+}
+
+// IncidentWaitingForExternalEntity manages an incidents waiting for
 // See https://releases.invgate.com/service-desk/api/#incidentwaitingforexternal_entity
 func (c *Client) IncidentWaitingForExternalEntity() *endpoints.IncidentWaitingForExternalEntityMethods {
 	return newPublicMethod[endpoints.IncidentWaitingForExternalEntityMethods](c, "/incident.waitingfor.external_entity")

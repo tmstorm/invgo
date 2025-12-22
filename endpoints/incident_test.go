@@ -432,45 +432,6 @@ func TestIncidentRejectPost(t *testing.T) {
 	a.Equal(u.Status, gotErr.Status)
 }
 
-func TestIncidentSpontaneousApprovalPost(t *testing.T) {
-	a := assert.New(t)
-	var u endpoints.IncidentSpontaneousApprovalPostResponse
-	u.Status = "OK"
-
-	server := newTestServer(t, http.MethodPost, "/incident.spontaneous_approval", u)
-
-	c := newTestClient(t, server, scopes.IncidentSpontaneousApprovalPost)
-
-	got, err := c.IncidentSpontaneousApproval().Post(endpoints.IncidentSpontaneousApprovalPostParams{ApprovalUserID: 1, AuthorID: 2, Description: "approval test", RequestID: 101})
-	a.NoError(err)
-	a.Equal(u.Status, got.Status)
-
-	u.Status = "ERROR"
-	serverErr := newTestServer(t, http.MethodPost, "/incident.spontaneous_approval", u)
-
-	cErr := newTestClient(t, serverErr, scopes.IncidentSpontaneousApprovalPost)
-	gotErr, err := cErr.IncidentSpontaneousApproval().Post(endpoints.IncidentSpontaneousApprovalPostParams{ApprovalUserID: 1, AuthorID: 2, Description: "approval test", RequestID: 101})
-	a.Error(err)
-	a.Equal(u.Status, gotErr.Status)
-}
-
-func TestIncidentTasksGet(t *testing.T) {
-	a := assert.New(t)
-
-	body := make([]endpoints.IncidentTasksGetResponse, 1)
-	var i endpoints.IncidentTasksGetResponse
-	gofakeit.Struct(&i)
-	body = append(body, i)
-
-	server := newTestServer(t, http.MethodGet, "/incident.tasks", body)
-
-	c := newTestClient(t, server, scopes.IncidentTasksGet)
-
-	resp, err := c.IncidentTasks().Get(endpoints.IncidentTasksGetParams{RequestID: 1})
-	a.NoError(err)
-	a.Equal(body, resp)
-}
-
 func TestIncidentReopenPut(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentReopenPutResponse
@@ -533,6 +494,67 @@ func TestIncidentSolutionRejectPut(t *testing.T) {
 
 	cErr := newTestClient(t, serverErr, scopes.IncidentSolutionRejectPut)
 	gotErr, err := cErr.IncidentSolutionReject().Put(endpoints.IncidentSolutionRejectPutParams{ID: 1, Comment: "no"})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestIncidentSpontaneousApprovalPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentSpontaneousApprovalPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.spontaneous_approval", u)
+
+	c := newTestClient(t, server, scopes.IncidentSpontaneousApprovalPost)
+
+	got, err := c.IncidentSpontaneousApproval().Post(endpoints.IncidentSpontaneousApprovalPostParams{ApprovalUserID: 1, AuthorID: 2, Description: "approval test", RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.spontaneous_approval", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentSpontaneousApprovalPost)
+	gotErr, err := cErr.IncidentSpontaneousApproval().Post(endpoints.IncidentSpontaneousApprovalPostParams{ApprovalUserID: 1, AuthorID: 2, Description: "approval test", RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
+func TestIncidentTasksGet(t *testing.T) {
+	a := assert.New(t)
+
+	body := make([]endpoints.IncidentTasksGetResponse, 1)
+	var i endpoints.IncidentTasksGetResponse
+	gofakeit.Struct(&i)
+	body = append(body, i)
+
+	server := newTestServer(t, http.MethodGet, "/incident.tasks", body)
+
+	c := newTestClient(t, server, scopes.IncidentTasksGet)
+
+	resp, err := c.IncidentTasks().Get(endpoints.IncidentTasksGetParams{RequestID: 1})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
+func TestIncidentWaitingForAgentPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentWaitingForAgentPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.waitingfor.agent", u)
+
+	c := newTestClient(t, server, scopes.IncidentWaitingForAgentPost)
+
+	got, err := c.IncidentWaitingForAgent().Post(endpoints.IncidentWaitingForAgentPostParams{RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.waitingfor.agent", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentWaitingForAgentPost)
+	gotErr, err := cErr.IncidentWaitingForAgent().Post(endpoints.IncidentWaitingForAgentPostParams{RequestID: 101})
 	a.Error(err)
 	a.Equal(u.Status, gotErr.Status)
 }
