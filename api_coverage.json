@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 43.75,
-    "total_implemented": 70,
+    "coverage_percent": 45,
+    "total_implemented": 72,
     "total_methods": 160,
     "endpoints": [
         {
@@ -213,6 +213,14 @@
             "name": "/incident.linked_cis.counters.from",
             "link": "#incidentlinked_ciscountersfrom",
             "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incident.observer",
+            "link": "#incidentobserver",
+            "methods": [
+                "POST",
                 "GET"
             ]
         },

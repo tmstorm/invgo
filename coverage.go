@@ -33,6 +33,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.external_entity":            {"POST", "GET"},
 	"/incident.link":                       {"POST", "GET"},
 	"/incident.linked_cis.counters.from":   {"GET"},
+	"/incident.observer":                   {"POST", "GET"},
 	"/incident.reassign":                   {"POST"},
 	"/incident.reject":                     {"POST"},
 	"/incident.reopen":                     {"PUT"},

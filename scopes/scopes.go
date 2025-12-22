@@ -113,6 +113,8 @@ var (
 	IncidentLinkPost                     ScopeType = ScopeType(base + incident + ".link" + methods.Post)
 	IncidentLinkGet                      ScopeType = ScopeType(base + incident + ".link" + methods.Get)
 	IncidentLinkedCIsCountersFromGet     ScopeType = ScopeType(base + incident + ".linked_cis.counters.from" + methods.Get)
+	IncidentObserverGet                  ScopeType = ScopeType(base + incident + ".observer" + methods.Get)
+	IncidentObserverPost                 ScopeType = ScopeType(base + incident + ".observer" + methods.Post)
 	IncidentReassignPost                 ScopeType = ScopeType(base + incident + ".reassign" + methods.Post)
 	IncidentRejectPost                   ScopeType = ScopeType(base + incident + ".reject" + methods.Post)
 	IncidentReopenPut                    ScopeType = ScopeType(base + incident + ".reopen" + methods.Put)

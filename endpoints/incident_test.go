@@ -351,6 +351,43 @@ func TestIncidentLinkedCIsCountersFromGet(t *testing.T) {
 	a.Equal(ents, resp)
 }
 
+func TestIncidentObserverGet(t *testing.T) {
+	a := assert.New(t)
+
+	var b endpoints.IncidentObserverGetResponse
+	gofakeit.Struct(&b)
+
+	server := newTestServer(t, http.MethodGet, "/incident.observer", b.UserIDs)
+
+	c := newTestClient(t, server, scopes.IncidentObserverGet)
+
+	resp, err := c.IncidentObserver().Get(endpoints.IncidentObserverGetParams{RequestID: 1})
+	a.NoError(err)
+	a.Equal(b, resp)
+}
+
+func TestIncidentObserverPost(t *testing.T) {
+	a := assert.New(t)
+	var u endpoints.IncidentObserverPostResponse
+	u.Status = "OK"
+
+	server := newTestServer(t, http.MethodPost, "/incident.observer", u)
+
+	c := newTestClient(t, server, scopes.IncidentObserverPost)
+
+	got, err := c.IncidentObserver().Post(endpoints.IncidentObserverPostParams{UsersID: []int{1, 2}, AuthorID: 3, RequestID: 101})
+	a.NoError(err)
+	a.Equal(u.Status, got.Status)
+
+	u.Status = "ERROR"
+	serverErr := newTestServer(t, http.MethodPost, "/incident.observer", u)
+
+	cErr := newTestClient(t, serverErr, scopes.IncidentObserverPost)
+	gotErr, err := cErr.IncidentObserver().Post(endpoints.IncidentObserverPostParams{UsersID: []int{1, 2}, AuthorID: 3, RequestID: 101})
+	a.Error(err)
+	a.Equal(u.Status, gotErr.Status)
+}
+
 func TestIncidentReassignPost(t *testing.T) {
 	a := assert.New(t)
 	var u endpoints.IncidentReassignPostResponse

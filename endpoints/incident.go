@@ -1189,6 +1189,99 @@ func (i *IncidentLinkedCIsCountersFromMethods) Get(p IncidentLinkedCIsCountersFr
 }
 
 type (
+	// IncidentObserverMethods is use to call methods for IncidentObserver
+	IncidentObserverMethods struct{ methods.MethodCall }
+
+	IncidentObserverGetParams struct {
+		RequestID int `url:"request_id,required"`
+	}
+
+	// IncidentObserverGetResponse Invgate returns an array of integers
+	// with no json key calue pairs. To make this easier they are mapped into the
+	// UserIDs slice of ints.
+	IncidentObserverGetResponse struct {
+		UserIDs []int `json:"user_ids,omitempty"`
+	}
+)
+
+// Get for IncidentObserver
+// Requires scope: IncidentObserverGet
+// See https://releases.invgate.com/service-desk/api/#incidentobserver-GET
+func (i *IncidentObserverMethods) Get(p IncidentObserverGetParams) (IncidentObserverGetResponse, error) {
+	var r IncidentObserverGetResponse
+	i.RequiredScope = scopes.IncidentObserverGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	var b []int
+	err = json.Unmarshal(resp, &b)
+	if err != nil {
+		return r, err
+	}
+
+	r.UserIDs = append(r.UserIDs, b...)
+
+	return r, nil
+}
+
+type (
+	// IncidentObserverPostParams is used to construct a new POST request to add incident observers
+	// NOTE: While Invgate accepts a user_id or users_id param, Invgo only uses the users_id field.
+	// This field is also required. This was done to simplify calls and make it easier to understand,
+	// since an array can by used for a sigle user this doesn't break the Invgate API.
+	IncidentObserverPostParams struct {
+		UsersID   []int `url:"users_id,required"`
+		AuthorID  int   `url:"author_id,required"`
+		RequestID int   `url:"request_id,required"`
+	}
+
+	// IncidentObserverPostResponse is used to map the response after posting a new incident
+	IncidentObserverPostResponse struct {
+		// OK if observers were added, ERROR if something went wrong
+		Status string `json:"status,omitempty"`
+	}
+)
+
+// Post for IncidentObserver
+// Requires scope: IncidentObserverPost
+// See https://releases.invgate.com/service-desk/api/#incidentobserver-POST
+func (i *IncidentObserverMethods) Post(p IncidentObserverPostParams) (IncidentObserverPostResponse, error) {
+	i.RequiredScope = scopes.IncidentObserverPost
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return IncidentObserverPostResponse{}, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemotePost()
+	if err != nil {
+		return IncidentObserverPostResponse{}, err
+	}
+
+	var r IncidentObserverPostResponse
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	if r.Status == "ERROR" {
+		return r, fmt.Errorf("invgate returned a status of %s when adding observer(s) to request (id: %d) ", r.Status, p.RequestID)
+	}
+
+	return r, nil
+}
+
+type (
 	// IncidentReassignMethods is use to call methods for IncidentReassign
 	IncidentReassignMethods struct{ methods.MethodCall }
 

@@ -241,6 +241,12 @@ func (c *Client) IncidentLinkedCIsCountersFrom() *endpoints.IncidentLinkedCIsCou
 	return newPublicMethod[endpoints.IncidentLinkedCIsCountersFromMethods](c, "/incident.linked_cis.counters.from")
 }
 
+// IncidentObserver manages an incidents observers
+// See https://releases.invgate.com/service-desk/api/#incidentobserver
+func (c *Client) IncidentObserver() *endpoints.IncidentObserverMethods {
+	return newPublicMethod[endpoints.IncidentObserverMethods](c, "/incident.observer")
+}
+
 // IncidentReassign reassigns an incident
 // See https://releases.invgate.com/service-desk/api/#incidentreassign
 func (c *Client) IncidentReassign() *endpoints.IncidentReassignMethods {
