@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 51.24999999999999,
-    "total_implemented": 82,
+    "coverage_percent": 51.87500000000001,
+    "total_implemented": 83,
     "total_methods": 160,
     "endpoints": [
         {
@@ -339,6 +339,13 @@
         {
             "name": "/incidents.by.helpdesk",
             "link": "#incidentsbyhelpdesk",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incidents.by.sentiment",
+            "link": "#incidentsbysentiment",
             "methods": [
                 "GET"
             ]

@@ -2092,6 +2092,53 @@ func (i *IncidentsByHelpDeskMethods) Get(p IncidentsByHelpDeskGetParams) (Incide
 }
 
 type (
+	// IncidentsBySentimentMethods is used to call methods for IncidentsBySentiment
+	IncidentsBySentimentMethods struct{ methods.MethodCall }
+
+	IncidentsBySentimentGetParams struct {
+		Limit        int      `url:"limit"`
+		Offset       int      `url:"offset"`
+		SentimentIDs []string `url:"sentiment_ids,required"`
+	}
+
+	// IncidentsBySentimentGetResponse is used to map responses from GET requests for IncidentsBySentiment
+	IncidentsBySentimentGetResponse struct {
+		Status     string `json:"status,omitempty"`
+		Limit      int    `json:"limit,omitempty"`
+		Offset     int    `json:"offset,omitempty"`
+		Info       string `json:"info,omitempty"`
+		RequestIDs []int  `json:"requestIds,omitempty"`
+	}
+)
+
+// Get for IncidentsBySentiment
+// Requires scope: IncidentsBySentimentGet
+// See https://releases.invgate.com/service-desk/api/#incidentsbysentiment-GET
+func (i *IncidentsBySentimentMethods) Get(p IncidentsBySentimentGetParams) (IncidentsBySentimentGetResponse, error) {
+	r := IncidentsBySentimentGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsBySentimentGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+type (
 	// IncidentsByStatusMethods is used to call methods for IncidentsByStatus
 	IncidentsByStatusMethods struct{ methods.MethodCall }
 

@@ -861,6 +861,21 @@ func TestIncidentsByHelpDeskGet(t *testing.T) {
 	a.Equal(body, resp)
 }
 
+func TestIncidentsBySentimentGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body endpoints.IncidentsBySentimentGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.by.sentiment", body)
+
+	c := newTestClient(t, server, scopes.IncidentsBySentimentGet)
+
+	resp, err := c.IncidentsBySentiment().Get(endpoints.IncidentsBySentimentGetParams{SentimentIDs: []string{"neutral", "positive"}})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
 func TestIncidentsByStatusGet(t *testing.T) {
 	a := assert.New(t)
 

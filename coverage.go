@@ -51,6 +51,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incidents.by.cis":                    {"GET"},
 	"/incidents.by.customer":               {"GET"},
 	"/incidents.by.helpdesk":               {"GET"},
+	"/incidents.by.sentiment":              {"GET"},
 	"/incidents.by.status":                 {"GET"},
 	"/sd.version":                          {"GET"},
 	"/timetracking":                        {"GET", "POST", "DELETE"},
