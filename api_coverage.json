@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 50,
-    "total_implemented": 80,
+    "coverage_percent": 50.625,
+    "total_implemented": 81,
     "total_methods": 160,
     "endpoints": [
         {
@@ -325,6 +325,13 @@
         {
             "name": "/incidents.by.cis",
             "link": "#incidentsbycis",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incidents.by.customer",
+            "link": "#incidentsbycustomer",
             "methods": [
                 "GET"
             ]

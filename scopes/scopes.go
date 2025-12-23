@@ -135,11 +135,12 @@ var (
 
 // Incidents
 var (
-	incidents                      = ".incidents"
-	IncidentsGet         ScopeType = ScopeType(base + incidents + methods.Get)
-	IncidentsByAgentGet  ScopeType = ScopeType(base + incidents + ".by" + ".agent" + methods.Get)
-	IncidentsByCIsGet    ScopeType = ScopeType(base + incidents + ".by" + ".cis" + methods.Get)
-	IncidentsByStatusGet ScopeType = ScopeType(base + incidents + ".by" + ".status" + methods.Get)
+	incidents                        = ".incidents"
+	IncidentsGet           ScopeType = ScopeType(base + incidents + methods.Get)
+	IncidentsByAgentGet    ScopeType = ScopeType(base + incidents + ".by" + ".agent" + methods.Get)
+	IncidentsByCIsGet      ScopeType = ScopeType(base + incidents + ".by" + ".cis" + methods.Get)
+	IncidentsByCustomerGet ScopeType = ScopeType(base + incidents + ".by" + ".customer" + methods.Get)
+	IncidentsByStatusGet   ScopeType = ScopeType(base + incidents + ".by" + ".status" + methods.Get)
 )
 
 // ServiceDeskVersionGet

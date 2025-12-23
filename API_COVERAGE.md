@@ -1,6 +1,6 @@
 # API Coverage Report
 
-**coverage:** 50.00% (80/160 methods implemented)
+**coverage:** 50.62% (81/160 methods implemented)
 
 ### [/breakingnews](https://releases.invgate.com/service-desk/api/#breakingnews)
 
@@ -419,7 +419,7 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### [/incidents.by.helpdesk](https://releases.invgate.com/service-desk/api/#incidentsbyhelpdesk)
 

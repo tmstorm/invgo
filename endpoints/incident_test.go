@@ -831,6 +831,21 @@ func TestIncidentsByCIsGet(t *testing.T) {
 	a.Equal(body, resp)
 }
 
+func TestIncidentsByCustomerGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body endpoints.IncidentsByCustomerGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.by.customer", body)
+
+	c := newTestClient(t, server, scopes.IncidentsByCustomerGet)
+
+	resp, err := c.IncidentsByCustomer().Get(endpoints.IncidentsByCustomerGetParams{ID: 1})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
 func TestIncidentsByStatusGet(t *testing.T) {
 	a := assert.New(t)
 

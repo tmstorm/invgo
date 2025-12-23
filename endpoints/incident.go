@@ -1969,11 +1969,65 @@ type (
 
 // Get for IncidentsByCIs
 // Requires scope: IncidentsByCIsGet
-// See https://releases.invgate.com/service-desk/api/#incidentsbyagent-GET
+// See https://releases.invgate.com/service-desk/api/#incidentsbycis-GET
 func (i *IncidentsByCIsMethods) Get(p IncidentsByCIsGetParams) (IncidentsByCIsGetResponse, error) {
 	r := IncidentsByCIsGetResponse{}
 
 	i.RequiredScope = scopes.IncidentsByCIsGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+// IncidentsByCustomerMethods is used to call methods for IncidentsByCustomer
+type (
+	IncidentsByCustomerMethods struct{ methods.MethodCall }
+
+	// IncidentsByCustomerGetParams you must provide an email, id, or username
+	IncidentsByCustomerGetParams struct {
+		Email    string `url:"email"`
+		ID       int    `url:"id"`
+		Limit    int    `url:"limit"`
+		Comments bool   `url:"comments"`
+		PageKey  string `url:"page_key"`
+		Username string `url:"username"`
+	}
+
+	// IncidentsByCustomerGetResponse maps the response for getting incidents by agent
+	// NOTE: While Invgate says it returns an array it actually returns an object.
+	// The incidents returned are in a map nested under Requests. The map is map[int]Incident
+	// where they map int key is the incident id(request id).
+	IncidentsByCustomerGetResponse struct {
+		Status      string           `json:"status,omitempty"`
+		Info        string           `json:"info,omitempty"`
+		Requests    map[int]Incident `json:"requests,omitempty"`
+		NextPageKey string           `json:"next_page_key,omitempty"`
+	}
+)
+
+// Get for IncidentsByCustomer
+// Requires scope: IncidentsByCustomerGet
+// You must provide an email, id, or username
+// See https://releases.invgate.com/service-desk/api/#incidentsbycustomer-GET
+func (i *IncidentsByCustomerMethods) Get(p IncidentsByCustomerGetParams) (IncidentsByCustomerGetResponse, error) {
+	r := IncidentsByCustomerGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsByCustomerGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
