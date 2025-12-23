@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 48.75,
-    "total_implemented": 78,
+    "coverage_percent": 49.375,
+    "total_implemented": 79,
     "total_methods": 160,
     "endpoints": [
         {
@@ -8,8 +8,8 @@
             "link": "#breakingnews",
             "methods": [
                 "POST",
-                "GET",
-                "PUT"
+                "PUT",
+                "GET"
             ]
         },
         {
@@ -60,8 +60,8 @@
             "link": "#incident",
             "methods": [
                 "POST",
-                "GET",
-                "PUT"
+                "PUT",
+                "GET"
             ]
         },
         {
@@ -316,6 +316,13 @@
             ]
         },
         {
+            "name": "/incidents.by.agent",
+            "link": "#incidentsbyagent",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
             "name": "/incidents.by.status",
             "link": "#incidentsbystatus",
             "methods": [
@@ -334,8 +341,8 @@
             "link": "#timetracking",
             "methods": [
                 "POST",
-                "GET",
-                "DELETE"
+                "DELETE",
+                "GET"
             ]
         },
         {
@@ -363,10 +370,10 @@
             "name": "/user",
             "link": "#user",
             "methods": [
-                "DELETE",
                 "POST",
-                "GET",
-                "PUT"
+                "PUT",
+                "DELETE",
+                "GET"
             ]
         },
         {

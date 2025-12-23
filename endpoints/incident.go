@@ -1891,47 +1891,104 @@ func (i *IncidentsMethods) Get(p IncidentsGetParams) ([]Incident, error) {
 	return incs, nil
 }
 
-// IncidentsByStatusMethods is used to call methods for IncidentsByStatus
-type IncidentsByStatusMethods struct{ methods.MethodCall }
+// IncidentsByAgentMethods is used to call methods for IncidentsByAgent
+type (
+	IncidentsByAgentMethods struct{ methods.MethodCall }
 
-// IncidentsByStatusResponse is used to map responses from GET requests for IncidentsByStatus
-type IncidentsByStatusResponse struct {
-	Info       string `json:"info,omitempty"`
-	Limit      int    `json:"limit,omitempty"`
-	Offset     int    `json:"offset,omitempty"`
-	RequestIDs []int  `json:"requestIds,omitempty"`
-	Total      int    `json:"total,omitempty"`
-	Status     string `json:"status,omitempty"`
-}
+	// IncidentsByAgentGetParams you must provide an email, id, or username
+	IncidentsByAgentGetParams struct {
+		Email    string `url:"email"`
+		ID       int    `url:"id"`
+		Limit    int    `url:"limit"`
+		Comments bool   `url:"comments"`
+		PageKey  string `url:"page_key"`
+		Username string `url:"username"`
+	}
 
-type IncidentsByStatusGetParams struct {
-	StatusIDs []int `url:"status_ids"`
-	Limit     int   `url:"limit"`
-	Offset    int   `url:"offset"`
-}
+	// IncidentsByAgentGetResponse maps the response for getting incidents by agent
+	// NOTE: While Invgate says it returns an array it actually returns an object.
+	// The incidents returned are in a map nested under Requests. The map is map[int]Incident
+	// where they map int key is the incident id(request id).
+	IncidentsByAgentGetResponse struct {
+		Status      string           `json:"status,omitempty"`
+		Info        string           `json:"info,omitempty"`
+		Requests    map[int]Incident `json:"requests,omitempty"`
+		NextPageKey string           `json:"next_page_key,omitempty"`
+	}
+)
 
-// Get for IncidentsByStatus
-// Requires scope: IncidentsByStatusGet
-// See https://releases.invgate.com/service-desk/api/#incidentsbystatus-GET
-func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsByStatusResponse, error) {
-	i.RequiredScope = scopes.IncidentsByStatusGet
+// Get for IncidentsByAgent
+// Requires scope: IncidentsByAgentGet
+// You must provide an email, id, or username
+// See https://releases.invgate.com/service-desk/api/#incidentsbyagent-GET
+func (i *IncidentsByAgentMethods) Get(p IncidentsByAgentGetParams) (IncidentsByAgentGetResponse, error) {
+	r := IncidentsByAgentGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsByAgentGet
 
 	q, err := utils.StructToQuery(p)
 	if err != nil {
-		return IncidentsByStatusResponse{}, err
+		return r, err
 	}
 	i.Endpoint.RawQuery = q.Encode()
 
 	resp, err := i.RemoteGet()
 	if err != nil {
-		return IncidentsByStatusResponse{}, err
+		return r, err
 	}
 
-	var d IncidentsByStatusResponse
-	err = json.Unmarshal(resp, &d)
+	err = json.Unmarshal(resp, &r)
 	if err != nil {
-		return IncidentsByStatusResponse{}, err
+		return r, err
 	}
 
-	return d, nil
+	return r, nil
+}
+
+type (
+	// IncidentsByStatusMethods is used to call methods for IncidentsByStatus
+	IncidentsByStatusMethods struct{ methods.MethodCall }
+
+	IncidentsByStatusGetParams struct {
+		StatusIDs []int `url:"status_ids"`
+		Limit     int   `url:"limit"`
+		Offset    int   `url:"offset"`
+	}
+
+	// IncidentsByStatusGetResponse is used to map responses from GET requests for IncidentsByStatus
+	IncidentsByStatusGetResponse struct {
+		Info       string `json:"info,omitempty"`
+		Limit      int    `json:"limit,omitempty"`
+		Offset     int    `json:"offset,omitempty"`
+		RequestIDs []int  `json:"requestIds,omitempty"`
+		Total      int    `json:"total,omitempty"`
+		Status     string `json:"status,omitempty"`
+	}
+)
+
+// Get for IncidentsByStatus
+// Requires scope: IncidentsByStatusGet
+// See https://releases.invgate.com/service-desk/api/#incidentsbystatus-GET
+func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsByStatusGetResponse, error) {
+	r := IncidentsByStatusGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsByStatusGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
 }

@@ -1,14 +1,14 @@
 # API Coverage Report
 
-**coverage:** 48.75% (78/160 methods implemented)
+**coverage:** 49.38% (79/160 methods implemented)
 
 ### [/breakingnews](https://releases.invgate.com/service-desk/api/#breakingnews)
 
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
-| GET | ✅ |
 | PUT | ✅ |
+| GET | ✅ |
 
 ### [/breakingnews.all](https://releases.invgate.com/service-desk/api/#breakingnewsall)
 
@@ -46,17 +46,17 @@
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/cf.field.options.tree](https://releases.invgate.com/service-desk/api/#cffieldoptionstree)
 
 | Method | Status |
 |--------|--------|
-| DELETE | ❌ |
 | POST | ❌ |
-| GET | ❌ |
 | PUT | ❌ |
+| DELETE | ❌ |
+| GET | ❌ |
 
 ### [/cf.fields.all](https://releases.invgate.com/service-desk/api/#cffieldsall)
 
@@ -86,34 +86,34 @@
 
 | Method | Status |
 |--------|--------|
-| DELETE | ❌ |
 | POST | ❌ |
-| GET | ❌ |
 | PUT | ❌ |
+| DELETE | ❌ |
+| GET | ❌ |
 
 ### [/companies.groups](https://releases.invgate.com/service-desk/api/#companiesgroups)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/companies.observers](https://releases.invgate.com/service-desk/api/#companiesobservers)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/companies.users](https://releases.invgate.com/service-desk/api/#companiesusers)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/data.export](https://releases.invgate.com/service-desk/api/#dataexport)
 
@@ -126,24 +126,24 @@
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/groups.observers](https://releases.invgate.com/service-desk/api/#groupsobservers)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/groups.users](https://releases.invgate.com/service-desk/api/#groupsusers)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/helpdesks](https://releases.invgate.com/service-desk/api/#helpdesks)
 
@@ -156,8 +156,8 @@
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/helpdesksandlevels](https://releases.invgate.com/service-desk/api/#helpdesksandlevels)
 
@@ -170,8 +170,8 @@
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
-| GET | ✅ |
 | PUT | ✅ |
+| GET | ✅ |
 
 ### [/incident.approval](https://releases.invgate.com/service-desk/api/#incidentapproval)
 
@@ -289,8 +289,8 @@
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| DELETE | ❌ |
 | PATCH | ❌ |
+| DELETE | ❌ |
 
 ### [/incident.external_entity](https://releases.invgate.com/service-desk/api/#incidentexternal_entity)
 
@@ -407,7 +407,7 @@
 
 | Method | Status |
 |--------|--------|
-| GET | ❌ |
+| GET | ✅ |
 
 ### [/incidents.by.cis](https://releases.invgate.com/service-desk/api/#incidentsbycis)
 
@@ -461,27 +461,27 @@
 
 | Method | Status |
 |--------|--------|
-| DELETE | ❌ |
 | POST | ❌ |
-| GET | ❌ |
 | PUT | ❌ |
+| DELETE | ❌ |
+| GET | ❌ |
 
 ### [/kb.articles](https://releases.invgate.com/service-desk/api/#kbarticles)
 
 | Method | Status |
 |--------|--------|
-| DELETE | ❌ |
 | POST | ❌ |
-| GET | ❌ |
 | PUT | ❌ |
+| DELETE | ❌ |
+| GET | ❌ |
 
 ### [/kb.articles.attachments](https://releases.invgate.com/service-desk/api/#kbarticlesattachments)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/kb.articles.by.category](https://releases.invgate.com/service-desk/api/#kbarticlesbycategory)
 
@@ -505,10 +505,10 @@
 
 | Method | Status |
 |--------|--------|
-| DELETE | ❌ |
 | POST | ❌ |
-| GET | ❌ |
 | PUT | ❌ |
+| DELETE | ❌ |
+| GET | ❌ |
 
 ### [/kb.categories.by.ids](https://releases.invgate.com/service-desk/api/#kbcategoriesbyids)
 
@@ -527,32 +527,32 @@
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/locations](https://releases.invgate.com/service-desk/api/#locations)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/locations.observers](https://releases.invgate.com/service-desk/api/#locationsobservers)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/locations.users](https://releases.invgate.com/service-desk/api/#locationsusers)
 
 | Method | Status |
 |--------|--------|
 | POST | ❌ |
-| GET | ❌ |
 | DELETE | ❌ |
+| GET | ❌ |
 
 ### [/sd.version](https://releases.invgate.com/service-desk/api/#sdversion)
 
@@ -565,8 +565,8 @@
 | Method | Status |
 |--------|--------|
 | POST | ✅ |
-| GET | ✅ |
 | DELETE | ✅ |
+| GET | ✅ |
 
 ### [/timetracking.attributes.category](https://releases.invgate.com/service-desk/api/#timetrackingattributescategory)
 
@@ -590,10 +590,10 @@
 
 | Method | Status |
 |--------|--------|
-| DELETE | ✅ |
 | POST | ✅ |
-| GET | ✅ |
 | PUT | ✅ |
+| DELETE | ✅ |
+| GET | ✅ |
 
 ### [/user.by](https://releases.invgate.com/service-desk/api/#userby)
 

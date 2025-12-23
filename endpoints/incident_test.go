@@ -801,17 +801,32 @@ func TestIncidentsGet(t *testing.T) {
 	a.Equal(incsSlice, resp)
 }
 
+func TestIncidentsByAgentGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body endpoints.IncidentsByAgentGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.by.agent", body)
+
+	c := newTestClient(t, server, scopes.IncidentsByAgentGet)
+
+	resp, err := c.IncidentsByAgent().Get(endpoints.IncidentsByAgentGetParams{ID: 1})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
 func TestIncidentsByStatusGet(t *testing.T) {
 	a := assert.New(t)
 
-	var inc endpoints.IncidentsByStatusResponse
-	gofakeit.Struct(&inc)
+	var body endpoints.IncidentsByStatusGetResponse
+	gofakeit.Struct(&body)
 
-	server := newTestServer(t, http.MethodGet, "/incidents.by.status", inc)
+	server := newTestServer(t, http.MethodGet, "/incidents.by.status", body)
 
 	c := newTestClient(t, server, scopes.IncidentsByStatusGet)
 
 	resp, err := c.IncidentsByStatus().Get(endpoints.IncidentsByStatusGetParams{StatusIDs: []int{0}})
 	a.NoError(err)
-	a.Equal(inc, resp)
+	a.Equal(body, resp)
 }

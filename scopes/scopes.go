@@ -137,6 +137,7 @@ var (
 var (
 	incidents                      = ".incidents"
 	IncidentsGet         ScopeType = ScopeType(base + incidents + methods.Get)
+	IncidentsByAgentGet  ScopeType = ScopeType(base + incidents + ".by" + ".agent" + methods.Get)
 	IncidentsByStatusGet ScopeType = ScopeType(base + incidents + ".by" + ".status" + methods.Get)
 )
 
