@@ -1945,6 +1945,55 @@ func (i *IncidentsByAgentMethods) Get(p IncidentsByAgentGetParams) (IncidentsByA
 	return r, nil
 }
 
+// IncidentsByCIsMethods is used to call methods for IncidentsByCIs
+type (
+	IncidentsByCIsMethods struct{ methods.MethodCall }
+
+	// IncidentsByCIsGetParams ...
+	IncidentsByCIsGetParams struct {
+		CIsSourceID int    `url:"cis_source_id,required"`
+		Group       string `url:"group,required"`
+		CiIDs       []int  `url:"ci_ids,required"`
+	}
+
+	// IncidentsByCIsGetResponse maps the response for getting incidents by agent
+	// NOTE: Since we are not using CI in our instance I am not exactly sure what is
+	// returned for Requests as the documentation is not fully clear on this. The docs
+	// say two arrays are returned but does not provide their structure.
+	IncidentsByCIsGetResponse struct {
+		Requests any    `json:"requests,omitempty"`
+		Group    string `json:"group,omitempty"`
+		CiID     string `json:"ci_id,omitempty"`
+	}
+)
+
+// Get for IncidentsByCIs
+// Requires scope: IncidentsByCIsGet
+// See https://releases.invgate.com/service-desk/api/#incidentsbyagent-GET
+func (i *IncidentsByCIsMethods) Get(p IncidentsByCIsGetParams) (IncidentsByCIsGetResponse, error) {
+	r := IncidentsByCIsGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsByCIsGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
 type (
 	// IncidentsByStatusMethods is used to call methods for IncidentsByStatus
 	IncidentsByStatusMethods struct{ methods.MethodCall }

@@ -816,6 +816,21 @@ func TestIncidentsByAgentGet(t *testing.T) {
 	a.Equal(body, resp)
 }
 
+func TestIncidentsByCIsGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body endpoints.IncidentsByCIsGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.by.cis", body)
+
+	c := newTestClient(t, server, scopes.IncidentsByCIsGet)
+
+	resp, err := c.IncidentsByCIs().Get(endpoints.IncidentsByCIsGetParams{CIsSourceID: 1, Group: "group", CiIDs: []int{2, 3}})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
 func TestIncidentsByStatusGet(t *testing.T) {
 	a := assert.New(t)
 

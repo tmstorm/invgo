@@ -48,6 +48,7 @@ var ImplementedEndpoints = map[string][]string{
 	"/incident.waitingfor.incident":        {"POST"},
 	"/incidents":                           {"GET"},
 	"/incidents.by.agent":                  {"GET"},
+	"/incidents.by.cis":                    {"GET"},
 	"/incidents.by.status":                 {"GET"},
 	"/sd.version":                          {"GET"},
 	"/timetracking":                        {"GET", "POST", "DELETE"},

@@ -331,6 +331,12 @@ func (c *Client) IncidentsByAgent() *endpoints.IncidentsByAgentMethods {
 	return newPublicMethod[endpoints.IncidentsByAgentMethods](c, "/incidents.by.agent")
 }
 
+// IncidentsByCIs gets incidents by the provided agent information
+// See https://releases.invgate.com/service-desk/api/#incidentsbycis
+func (c *Client) IncidentsByCIs() *endpoints.IncidentsByCIsMethods {
+	return newPublicMethod[endpoints.IncidentsByCIsMethods](c, "/incidents.by.cis")
+}
+
 // IncidentsByStatus gets incidents by the given set of status IDs
 // See https://releases.invgate.com/service-desk/api/#incidentsbystatus
 func (c *Client) IncidentsByStatus() *endpoints.IncidentsByStatusMethods {
