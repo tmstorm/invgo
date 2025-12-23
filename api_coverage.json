@@ -1,6 +1,6 @@
 {
-    "coverage_percent": 51.87500000000001,
-    "total_implemented": 83,
+    "coverage_percent": 53.75,
+    "total_implemented": 86,
     "total_methods": 160,
     "endpoints": [
         {
@@ -353,6 +353,27 @@
         {
             "name": "/incidents.by.status",
             "link": "#incidentsbystatus",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incidents.by.view",
+            "link": "#incidentsbyview",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incidents.details.by.view",
+            "link": "#incidentsdetailsbyview",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "name": "/incidents.last.hour",
+            "link": "#incidentslasthour",
             "methods": [
                 "GET"
             ]

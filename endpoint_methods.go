@@ -361,6 +361,24 @@ func (c *Client) IncidentsByStatus() *endpoints.IncidentsByStatusMethods {
 	return newPublicMethod[endpoints.IncidentsByStatusMethods](c, "/incidents.by.status")
 }
 
+// IncidentsByView gets incidents by the provided view
+// See https://releases.invgate.com/service-desk/api/#incidentsbyview
+func (c *Client) IncidentsByView() *endpoints.IncidentsByViewMethods {
+	return newPublicMethod[endpoints.IncidentsByViewMethods](c, "/incidents.by.view")
+}
+
+// IncidentsDetailsByView gets incidents details by the provided view
+// See https://releases.invgate.com/service-desk/api/#incidentsdetailsbyview
+func (c *Client) IncidentsDetailsByView() *endpoints.IncidentsDetailsByViewMethods {
+	return newPublicMethod[endpoints.IncidentsDetailsByViewMethods](c, "/incidents.details.by.view")
+}
+
+// IncidentsLastHour gets incidents in the last hour
+// See https://releases.invgate.com/service-desk/api/#incidentsdetailsbyview
+func (c *Client) IncidentsLastHour() *endpoints.IncidentsLastHourMethods {
+	return newPublicMethod[endpoints.IncidentsLastHourMethods](c, "/incidents.last.hour")
+}
+
 // ServiceDeskVersion returns the current version of the Service Desk instance
 // See https://releases.invgate.com/service-desk/api/#sdversion
 func (c *Client) ServiceDeskVersion() *endpoints.ServiceDeskVersionMethods {

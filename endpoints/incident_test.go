@@ -890,3 +890,48 @@ func TestIncidentsByStatusGet(t *testing.T) {
 	a.NoError(err)
 	a.Equal(body, resp)
 }
+
+func TestIncidentsByViewGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body endpoints.IncidentsByViewGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.by.view", body)
+
+	c := newTestClient(t, server, scopes.IncidentsByViewGet)
+
+	resp, err := c.IncidentsByView().Get(endpoints.IncidentsByViewGetParams{ViewID: 1})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
+func TestIncidentsDetailsByViewGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body endpoints.IncidentsDetailsByViewGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.details.by.view", body)
+
+	c := newTestClient(t, server, scopes.IncidentsDetailsByViewGet)
+
+	resp, err := c.IncidentsDetailsByView().Get(endpoints.IncidentsDetailsByViewGetParams{ViewID: 1})
+	a.NoError(err)
+	a.Equal(body, resp)
+}
+
+func TestIncidentsLastHourGet(t *testing.T) {
+	a := assert.New(t)
+
+	var body []endpoints.IncidentsLastHourGetResponse
+	gofakeit.Struct(&body)
+
+	server := newTestServer(t, http.MethodGet, "/incidents.last.hour", body)
+
+	c := newTestClient(t, server, scopes.IncidentsLastHourGet)
+
+	resp, err := c.IncidentsLastHour().Get(endpoints.IncidentsLastHourGetParams{})
+	a.NoError(err)
+	a.Equal(body, resp)
+}

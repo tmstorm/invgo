@@ -135,14 +135,17 @@ var (
 
 // Incidents
 var (
-	incidents                         = ".incidents"
-	IncidentsGet            ScopeType = ScopeType(base + incidents + methods.Get)
-	IncidentsByAgentGet     ScopeType = ScopeType(base + incidents + ".by" + ".agent" + methods.Get)
-	IncidentsByCIsGet       ScopeType = ScopeType(base + incidents + ".by" + ".cis" + methods.Get)
-	IncidentsByCustomerGet  ScopeType = ScopeType(base + incidents + ".by" + ".customer" + methods.Get)
-	IncidentsByHelpDeskGet  ScopeType = ScopeType(base + incidents + ".by" + ".helpdesk" + methods.Get)
-	IncidentsBySentimentGet ScopeType = ScopeType(base + incidents + ".by" + ".sentiment" + methods.Get)
-	IncidentsByStatusGet    ScopeType = ScopeType(base + incidents + ".by" + ".status" + methods.Get)
+	incidents                           = ".incidents"
+	IncidentsGet              ScopeType = ScopeType(base + incidents + methods.Get)
+	IncidentsByAgentGet       ScopeType = ScopeType(base + incidents + ".by" + ".agent" + methods.Get)
+	IncidentsByCIsGet         ScopeType = ScopeType(base + incidents + ".by" + ".cis" + methods.Get)
+	IncidentsByCustomerGet    ScopeType = ScopeType(base + incidents + ".by" + ".customer" + methods.Get)
+	IncidentsByHelpDeskGet    ScopeType = ScopeType(base + incidents + ".by" + ".helpdesk" + methods.Get)
+	IncidentsBySentimentGet   ScopeType = ScopeType(base + incidents + ".by" + ".sentiment" + methods.Get)
+	IncidentsByStatusGet      ScopeType = ScopeType(base + incidents + ".by" + ".status" + methods.Get)
+	IncidentsByViewGet        ScopeType = ScopeType(base + incidents + ".by" + ".view" + methods.Get)
+	IncidentsDetailsByViewGet ScopeType = ScopeType(base + incidents + ".details" + ".by" + ".view" + methods.Get)
+	IncidentsLastHourGet      ScopeType = ScopeType(base + incidents + ".last" + ".hour" + methods.Get)
 )
 
 // ServiceDeskVersionGet

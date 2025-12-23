@@ -2185,3 +2185,170 @@ func (i *IncidentsByStatusMethods) Get(p IncidentsByStatusGetParams) (IncidentsB
 
 	return r, nil
 }
+
+type (
+	// IncidentsByViewMethods is used to call methods for IncidentsByView
+	IncidentsByViewMethods struct{ methods.MethodCall }
+
+	IncidentsByViewGetParams struct {
+		Limit  int `url:"limit"`
+		Offset int `url:"offset"`
+		ViewID int `url:"view_id,required"`
+	}
+
+	// IncidentsByViewGetResponse is used to map responses from GET requests for IncidentsByView
+	IncidentsByViewGetResponse struct {
+		Status     string `json:"status,omitempty"`
+		Limit      int    `json:"limit,omitempty"`
+		Offset     int    `json:"offset,omitempty"`
+		Info       string `json:"info,omitempty"`
+		RequestIDs []int  `json:"requestIds,omitempty"`
+	}
+)
+
+// Get for IncidentsByView
+// Requires scope: IncidentsByViewGet
+// See https://releases.invgate.com/service-desk/api/#incidentsbyview-GET
+func (i *IncidentsByViewMethods) Get(p IncidentsByViewGetParams) (IncidentsByViewGetResponse, error) {
+	r := IncidentsByViewGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsByViewGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentsDetailsByViewMethods is used to call methods for IncidentsDetailsByView
+	IncidentsDetailsByViewMethods struct{ methods.MethodCall }
+
+	IncidentsDetailsByViewGetParams struct {
+		ViewID  int    `url:"view_id,required"`
+		OrderBy string `url:"order_by"`
+		PageKey string `url:"page_key"`
+		SortBy  string `url:"sort_by"`
+	}
+
+	// IncidentsDetailsByViewGetResponse is used to map responses from GET requests for IncidentsDetailsByView
+	// NOTE: Metadata is set to any, although I can see some of what it returns this might change and is not documented
+	// by the Invgate API docs. Data is also not documented but I have managed to extract its return structure.
+	IncidentsDetailsByViewGetResponse struct {
+		Data []struct {
+			ID      int `json:"id,omitempty"`
+			Request struct {
+				Subject  string `json:"subject,omitempty"`
+				Category struct {
+					ID    int    `json:"id,omitempty"`
+					Label string `json:"label,omitempty"`
+				} `json:"category"`
+				Type struct {
+					ID    int    `json:"id,omitempty"`
+					Label string `json:"label,omitempty"`
+				} `json:"type"`
+			} `json:"request"`
+			WaitingFor struct {
+				Type struct {
+					ID    int    `json:"id,omitempty"`
+					Label string `json:"label,omitempty"`
+				} `json:"type"`
+				Label string `json:"label,omitempty"`
+				Value int    `json:"value,omitempty"`
+			} `json:"waiting_for"`
+			Priority struct {
+				ID    int    `json:"id,omitempty"`
+				Label string `json:"label,omitempty"`
+			} `json:"priority"`
+			LastUpdate struct {
+				Value     int    `json:"value,omitempty"`
+				Formatted string `json:"formatted,omitempty"`
+			} `json:"last_update"`
+			Customer int `json:"customer,omitempty"`
+		} `json:"data,omitempty"`
+		NextPageKey string `json:"next_page_key,omitempty"`
+		Metadata    any    `json:"metadata,omitempty"`
+	}
+)
+
+// Get for IncidentsDetailsByView
+// Requires scope: IncidentsDetailsByViewGet
+// See https://releases.invgate.com/service-desk/api/#incidentsdetailsbyview-GET
+func (i *IncidentsDetailsByViewMethods) Get(p IncidentsDetailsByViewGetParams) (IncidentsDetailsByViewGetResponse, error) {
+	r := IncidentsDetailsByViewGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsDetailsByViewGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+type (
+	// IncidentsLastHourMethods is used to call methods for IncidentsLastHour
+	IncidentsLastHourMethods struct{ methods.MethodCall }
+
+	IncidentsLastHourGetParams struct {
+		Limit   int    `url:"limit"`
+		PageKey string `url:"page_key"`
+	}
+
+	// IncidentsLastHourGetResponse is used to map responses from GET requests for IncidentsLastHour
+	IncidentsLastHourGetResponse struct {
+		Incident
+	}
+)
+
+// Get for IncidentsLastHour
+// Requires scope: IncidentsLastHourGet
+// See https://releases.invgate.com/service-desk/api/#incidentslasthour-GET
+func (i *IncidentsLastHourMethods) Get(p IncidentsLastHourGetParams) ([]IncidentsLastHourGetResponse, error) {
+	r := []IncidentsLastHourGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsLastHourGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
