@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.9.0](https://github.com/tmstorm/invgo/compare/v0.8.0...v0.9.0) (2025-12-23)
+
+
+### 🚀 Features
+
+* add incidents.by.agent ([b623470](https://github.com/tmstorm/invgo/commit/b623470a63f286d22067cf600cfe3af3bd87749a))
+* add incidents.by.cis ([d31229d](https://github.com/tmstorm/invgo/commit/d31229d919480a68f0ee02b0a422e0fa5d3a3541))
+* add incidents.by.customer ([c1da53d](https://github.com/tmstorm/invgo/commit/c1da53dd13e0f45adc751f88727a4a504f3016e6))
+* add incidents.by.helpdesk ([140c6e9](https://github.com/tmstorm/invgo/commit/140c6e93b1a1b109f994f8215726fb4969f16bd3))
+* add incidents.by.sentiment ([08f3cde](https://github.com/tmstorm/invgo/commit/08f3cded6862f84295388cc2a40a1e97bcff411d))
+* add incidents.by.view, .details.by.view, .last.hour ([7a05fb5](https://github.com/tmstorm/invgo/commit/7a05fb5312a98d582944e82796a0c316cee514d2))
+
 ## [0.8.0](https://github.com/tmstorm/invgo/compare/v0.7.0...v0.8.0) (2025-12-22)
 
 
