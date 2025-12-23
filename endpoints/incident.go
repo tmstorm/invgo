@@ -2049,6 +2049,49 @@ func (i *IncidentsByCustomerMethods) Get(p IncidentsByCustomerGetParams) (Incide
 }
 
 type (
+	// IncidentsByHelpDeskMethods is used to call methods for IncidentsByHelpDesk
+	IncidentsByHelpDeskMethods struct{ methods.MethodCall }
+
+	IncidentsByHelpDeskGetParams struct {
+		HelpdeskIDs []int `url:"helpdesk_ids,required"`
+	}
+
+	// IncidentsByHelpDeskGetResponse is used to map responses from GET requests for IncidentsByHelpDesk
+	IncidentsByHelpDeskGetResponse struct {
+		Status     string
+		Info       string `json:"info,omitempty"`
+		RequestIDs []int  `json:"requestIds,omitempty"`
+	}
+)
+
+// Get for IncidentsByHelpDesk
+// Requires scope: IncidentsByHelpDeskGet
+// See https://releases.invgate.com/service-desk/api/#incidentsbyhelpdesk-GET
+func (i *IncidentsByHelpDeskMethods) Get(p IncidentsByHelpDeskGetParams) (IncidentsByHelpDeskGetResponse, error) {
+	r := IncidentsByHelpDeskGetResponse{}
+
+	i.RequiredScope = scopes.IncidentsByHelpDeskGet
+
+	q, err := utils.StructToQuery(p)
+	if err != nil {
+		return r, err
+	}
+	i.Endpoint.RawQuery = q.Encode()
+
+	resp, err := i.RemoteGet()
+	if err != nil {
+		return r, err
+	}
+
+	err = json.Unmarshal(resp, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+type (
 	// IncidentsByStatusMethods is used to call methods for IncidentsByStatus
 	IncidentsByStatusMethods struct{ methods.MethodCall }
 
