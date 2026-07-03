@@ -1,11 +1,11 @@
 module github.com/tmstorm/invgo
 
-go 1.24
+go 1.25.0
 
 require (
 	github.com/brianvoe/gofakeit/v7 v7.2.1
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/net v0.40.0
+	golang.org/x/net v0.55.0
 	golang.org/x/oauth2 v0.30.0
 )
 
